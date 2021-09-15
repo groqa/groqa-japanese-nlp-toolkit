@@ -17,4 +17,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const curtiz_utils_1 = require("curtiz-utils");
 const fs_1 = require("fs");
-const jmdict_furigana_node_1 = require("jmdict-furigana-node")
+const jmdict_furigana_node_1 = require("jmdict-furigana-node");
+const jmdict_simplified_node_1 = require("jmdict-simplified-node");
+const kamiya_codec_1 = require("kamiya-codec");
+const path_1 = __importDefault(require("path"));
+const chino_particles_1 = require("./chino-particles");
+const jdepp_1 = require("./jdepp");
+const kanjidic_1 = require("./kanjidic");
+const mecabUnidic_1 = require("./mecabUnidic");
+__export(requir
