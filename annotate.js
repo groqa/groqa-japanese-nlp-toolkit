@@ -31,4 +31,7 @@ exports.furiganaToString = jmdict_furigana_node_2.furiganaToString;
 exports.setupJmdictFurigana = jmdict_furigana_node_2.setup;
 var jmdict_simplified_node_2 = require("jmdict-simplified-node");
 exports.getField = jmdict_simplified_node_2.getField;
-exports.jmdictFuriganaPromise = jmdi
+exports.jmdictFuriganaPromise = jmdict_furigana_node_1.setup(process.env['JMDICT_FURIGANA']);
+exports.jmdictPromise = jmdict_simplified_node_1.setup(process.env['JMDICT_SIMPLIFIED_LEVELDB'] || 'jmdict-simplified', process.env['JMDICT_SIMPLIFIED_JSON'] ||
+    fs_1.readdirSync('.').sort().reverse().find(s => s.startsWith('jmdict-eng') && s.endsWith('.json')) ||
+    'jmdict-eng-3.1.0.json', true, true
