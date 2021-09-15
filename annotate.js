@@ -25,4 +25,10 @@ const chino_particles_1 = require("./chino-particles");
 const jdepp_1 = require("./jdepp");
 const kanjidic_1 = require("./kanjidic");
 const mecabUnidic_1 = require("./mecabUnidic");
-__export(requir
+__export(require("./interfaces"));
+var jmdict_furigana_node_2 = require("jmdict-furigana-node");
+exports.furiganaToString = jmdict_furigana_node_2.furiganaToString;
+exports.setupJmdictFurigana = jmdict_furigana_node_2.setup;
+var jmdict_simplified_node_2 = require("jmdict-simplified-node");
+exports.getField = jmdict_simplified_node_2.getField;
+exports.jmdictFuriganaPromise = jmdi
