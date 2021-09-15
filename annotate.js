@@ -9,4 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const curtiz_utils_1 = require("curtiz-utils");
+const fs_1 = require("fs");
+const jmdict_furigana_node_1 = require("jmdict-furigana-node")
