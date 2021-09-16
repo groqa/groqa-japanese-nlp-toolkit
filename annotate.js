@@ -34,4 +34,12 @@ exports.getField = jmdict_simplified_node_2.getField;
 exports.jmdictFuriganaPromise = jmdict_furigana_node_1.setup(process.env['JMDICT_FURIGANA']);
 exports.jmdictPromise = jmdict_simplified_node_1.setup(process.env['JMDICT_SIMPLIFIED_LEVELDB'] || 'jmdict-simplified', process.env['JMDICT_SIMPLIFIED_JSON'] ||
     fs_1.readdirSync('.').sort().reverse().find(s => s.startsWith('jmdict-eng') && s.endsWith('.json')) ||
-    'jmdict-eng-3.1.0.json', true, true
+    'jmdict-eng-3.1.0.json', true, true);
+/**
+ * Without this limit on how many Leveldb hits jmdict-simplified-node will get, things slow way down. Not much loss in
+ * usefulness with this set to 20.
+ */
+const DICTIONARY_LIMIT = 20;
+function mecabJdepp(sentence, nBest = 1) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let rawMecab = yield mecabUnidic_1.invokeMecab(sentence, nBest);
