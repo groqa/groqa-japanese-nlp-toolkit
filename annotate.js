@@ -43,3 +43,8 @@ const DICTIONARY_LIMIT = 20;
 function mecabJdepp(sentence, nBest = 1) {
     return __awaiter(this, void 0, void 0, function* () {
         let rawMecab = yield mecabUnidic_1.invokeMecab(sentence, nBest);
+        let { morphemes: allSentencesMorphemes, raws: allSentencesRaws } = mecabUnidic_1.parseMecab(rawMecab, nBest);
+        // throw away multiple sentences, we're only going to pass in one (hopefully)
+        const morphemes = allSentencesMorphemes[0];
+        const raws = allSentencesRaws[0];
+        const bunsetsus = yield Promise.all(morphemes.map((attemp
