@@ -47,4 +47,13 @@ function mecabJdepp(sentence, nBest = 1) {
         // throw away multiple sentences, we're only going to pass in one (hopefully)
         const morphemes = allSentencesMorphemes[0];
         const raws = allSentencesRaws[0];
-        const bunsetsus = yield Promise.all(morphemes.map((attemp
+        const bunsetsus = yield Promise.all(morphemes.map((attempt, idx) => jdepp_1.addJdepp(raws[idx], attempt)));
+        return morphemes.map((attempt, idx) => ({ morphemes: attempt, bunsetsus: bunsetsus[idx] }));
+    });
+}
+exports.mecabJdepp = mecabJdepp;
+const p = (x) => console.dir(x, { depth: null });
+/**
+ * Given MeCab morphemes, return a triply-nested array of JMDict hits.
+ *
+ * The outer-most layer enumerates the *starting* mor
