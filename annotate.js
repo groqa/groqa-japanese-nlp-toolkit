@@ -56,4 +56,10 @@ const p = (x) => console.dir(x, { depth: null });
 /**
  * Given MeCab morphemes, return a triply-nested array of JMDict hits.
  *
- * The outer-most layer enumerates the *starting* mor
+ * The outer-most layer enumerates the *starting* morpheme, the middle layer the ending morpheme, and the final
+ * inner-most layer the list of dictionary hits for the sequence of morphemes between the start and end.
+ *
+ * Roughly, in code (except we might not find anything for all start-to-end sequences):
+ * ```js
+ * for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
+ *  for (let endIdx = mo
