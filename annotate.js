@@ -71,4 +71,7 @@ const p = (x) => console.dir(x, { depth: null });
 function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
     return __awaiter(this, void 0, void 0, function* () {
         const { db } = yield exports.jmdictPromise;
-   
+        const simplify = (c) => (c.left || c.right) ? c : c.cloze;
+        const jmdictFurigana = yield exports.jmdictFuriganaPromise;
+        const morphemes = plainMorphemes.map(m => (Object.assign(Object.assign({}, m), { 
+            // if "symbol" POS, don't needlessly double the number of things to search for later in fork
