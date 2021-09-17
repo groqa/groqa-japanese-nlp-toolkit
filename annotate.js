@@ -62,4 +62,13 @@ const p = (x) => console.dir(x, { depth: null });
  * Roughly, in code (except we might not find anything for all start-to-end sequences):
  * ```js
  * for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
- *  for (let endIdx = mo
+ *  for (let endIdx = morphemes.length; endIdx > startIdx; endIdx--) {
+ *    result.push(JMDict.search(morpehemes.slice(startIdx, endIdx)));
+ *  }
+ * }
+ * ```
+ */
+function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { db } = yield exports.jmdictPromise;
+   
