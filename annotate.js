@@ -74,4 +74,8 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
         const simplify = (c) => (c.left || c.right) ? c : c.cloze;
         const jmdictFurigana = yield exports.jmdictFuriganaPromise;
         const morphemes = plainMorphemes.map(m => (Object.assign(Object.assign({}, m), { 
-            // if "symbol" POS, don't needlessly double the number of things to search for later in fork
+            // if "symbol" POS, don't needlessly double the number of things to search for later in forkingPaths
+            searchKanji: unique(m.partOfSpeech[0].startsWith('symbol') ? [m.literal] : [m.literal, m.lemma]), searchReading: unique(morphemeToSearchLemma(m).concat(morphemeToStringLiteral(m, jmdictFurigana))) })));
+        const superhits = [];
+        for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
+            co
