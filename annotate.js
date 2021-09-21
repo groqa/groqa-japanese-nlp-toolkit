@@ -87,3 +87,7 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                     continue;
                 }
             }
+            for (let endIdx = Math.min(morphemes.length, startIdx + 5); endIdx > startIdx; --endIdx) {
+                const run = morphemes.slice(startIdx, endIdx);
+                const runLiteralCore = bunsetsuToString(run);
+                const runLiteral = simplify(curtiz_utils_1.generateContextClozed(bunsetsuToString(morph
