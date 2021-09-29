@@ -90,4 +90,8 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
             for (let endIdx = Math.min(morphemes.length, startIdx + 5); endIdx > startIdx; --endIdx) {
                 const run = morphemes.slice(startIdx, endIdx);
                 const runLiteralCore = bunsetsuToString(run);
-                const runLiteral = simplify(curtiz_utils_1.generateContextClozed(bunsetsuToString(morph
+                const runLiteral = simplify(curtiz_utils_1.generateContextClozed(bunsetsuToString(morphemes.slice(0, startIdx)), runLiteralCore, bunsetsuToString(morphemes.slice(endIdx))));
+                if (!full) {
+                    // skip particles like は and も if they're by themselves as an optimization
+                    if (runLiteralCore.length === 1 && curtiz_utils_1.hasKana(runLiteralCore[0]) && runLiteralCore === run[0].lemma) {
+                 
