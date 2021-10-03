@@ -101,3 +101,11 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 function helperSearchesHitsToScored(searches, subhits, searchKey) {
                     return curtiz_utils_1.flatten(subhits.map((v, i) => v.map(w => {
                         // help catch issues with automatic type widening and excess property checks
+                        const ret = {
+                            wordId: w.id,
+                            score: scoreMorphemeWord(run, searches[i], searchKey, w),
+                            search: searches[i],
+                            tags: {}
+                            // run: runLiteral,
+                            // runIdx: [startIdx, endIdx - 1],
+            
