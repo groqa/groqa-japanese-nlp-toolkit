@@ -94,4 +94,10 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 if (!full) {
                     // skip particles like は and も if they're by themselves as an optimization
                     if (runLiteralCore.length === 1 && curtiz_utils_1.hasKana(runLiteralCore[0]) && runLiteralCore === run[0].lemma) {
-                 
+                        continue;
+                    }
+                }
+                const scored = [];
+                function helperSearchesHitsToScored(searches, subhits, searchKey) {
+                    return curtiz_utils_1.flatten(subhits.map((v, i) => v.map(w => {
+                        // help catch issues with automatic type widening and excess property checks
