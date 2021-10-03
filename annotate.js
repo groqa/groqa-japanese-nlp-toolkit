@@ -108,4 +108,11 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                             tags: {}
                             // run: runLiteral,
                             // runIdx: [startIdx, endIdx - 1],
-            
+                        };
+                        return ret;
+                    })));
+                }
+                // Search reading
+                {
+                    const readingSearches = forkingPaths(run.map(m => m.searchReading)).map(v => v.join(''));
+                    // Consider searching rendaku above for non-initial morphemes? It'd be n
