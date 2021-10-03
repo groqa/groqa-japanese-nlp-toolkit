@@ -115,4 +115,8 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 // Search reading
                 {
                     const readingSearches = forkingPaths(run.map(m => m.searchReading)).map(v => v.join(''));
-                    // Consider searching rendaku above for non-initial morphemes? It'd be n
+                    // Consider searching rendaku above for non-initial morphemes? It'd be nice if "猿ちえお" (saru chi e o) found
+                    // "猿知恵" (さるぢえ・さるじえ)
+                    const readingSubhits = yield Promise.all(readingSearches.map(search => jmdict_simplified_node_1.readingBeginning(db, search, DICTIONARY_LIMIT)));
+                    scored.push(...helperSearchesHitsToScored(readingSearches, readingSubhits, 'kana'));
+                
