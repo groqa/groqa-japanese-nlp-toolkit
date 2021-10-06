@@ -119,4 +119,8 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                     // "猿知恵" (さるぢえ・さるじえ)
                     const readingSubhits = yield Promise.all(readingSearches.map(search => jmdict_simplified_node_1.readingBeginning(db, search, DICTIONARY_LIMIT)));
                     scored.push(...helperSearchesHitsToScored(readingSearches, readingSubhits, 'kana'));
-                
+                }
+                // Search literals if needed, this works around MeCab mis-readings like お父さん->おちちさん
+                {
+                    const kanjiSearches = forkingPaths(run.map(m => m.searchKanji)).map(v => v.join('')).filter(curtiz_utils_1.hasKanji);
+                    const kanjiSubhits = yield Promise.all(kanjiSearches.map(search => jmdict_simplified_node_1.kan
