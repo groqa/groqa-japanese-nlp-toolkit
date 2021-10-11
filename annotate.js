@@ -123,4 +123,9 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 // Search literals if needed, this works around MeCab mis-readings like お父さん->おちちさん
                 {
                     const kanjiSearches = forkingPaths(run.map(m => m.searchKanji)).map(v => v.join('')).filter(curtiz_utils_1.hasKanji);
-                    const kanjiSubhits = yield Promise.all(kanjiSearches.map(search => jmdict_simplified_node_1.kan
+                    const kanjiSubhits = yield Promise.all(kanjiSearches.map(search => jmdict_simplified_node_1.kanjiBeginning(db, search, DICTIONARY_LIMIT)));
+                    scored.push(...helperSearchesHitsToScored(kanjiSearches, kanjiSubhits, 'kanji'));
+                }
+                scored.sort((a, b) => b.score - a.score);
+                if (scored.length > 0) {
+                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wo
