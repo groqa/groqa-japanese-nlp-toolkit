@@ -135,4 +135,9 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 // we didn't find ANYTHING for this morpheme? Try character by character
                 const m = morphemes[startIdx];
                 const scored = [];
-                for (const [searches, searchFn, key] of [[m.searchReading, jmdict_simplified_nod
+                for (const [searches, searchFn, key] of [[m.searchReading, jmdict_simplified_node_1.readingBeginning, 'kana'],
+                    [m.searchKanji, jmdict_simplified_node_1.kanjiBeginning, 'kanji'],
+                ]) {
+                    for (const search of searches) {
+                        const all = Array.from(curtiz_utils_1.allSubstrings(search));
+                        const subhits = yield Promise.all(all.map(search => searchFn(db, sea
