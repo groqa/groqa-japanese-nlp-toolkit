@@ -128,4 +128,11 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 }
                 scored.sort((a, b) => b.score - a.score);
                 if (scored.length > 0) {
-                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wo
+                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wordId, limit) });
+                }
+            }
+            if (results.length === 0) {
+                // we didn't find ANYTHING for this morpheme? Try character by character
+                const m = morphemes[startIdx];
+                const scored = [];
+                for (const [searches, searchFn, key] of [[m.searchReading, jmdict_simplified_nod
