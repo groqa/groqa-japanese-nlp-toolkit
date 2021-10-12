@@ -145,4 +145,13 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                             const search = all[idx];
                             for (const w of hits) {
                                 const score = scoreMorphemeWord([m], search, key, w);
-                                scored.push({ wordId: w.id, sco
+                                scored.push({ wordId: w.id, score, search, tags: {} });
+                            }
+                        }
+                    }
+                }
+                if (scored.length > 0) {
+                    scored.sort((a, b) => b.score - a.score);
+                    const endIdx = startIdx + 1;
+                    const run = morphemes.slice(startIdx, endIdx);
+          
