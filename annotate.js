@@ -140,4 +140,9 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 ]) {
                     for (const search of searches) {
                         const all = Array.from(curtiz_utils_1.allSubstrings(search));
-                        const subhits = yield Promise.all(all.map(search => searchFn(db, sea
+                        const subhits = yield Promise.all(all.map(search => searchFn(db, search, DICTIONARY_LIMIT)));
+                        for (const [idx, hits] of subhits.entries()) {
+                            const search = all[idx];
+                            for (const w of hits) {
+                                const score = scoreMorphemeWord([m], search, key, w);
+                                scored.push({ wordId: w.id, sco
