@@ -156,4 +156,12 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                     const run = morphemes.slice(startIdx, endIdx);
                     const runLiteralCore = bunsetsuToString(run);
                     const runLiteral = simplify(curtiz_utils_1.generateContextClozed(bunsetsuToString(morphemes.slice(0, startIdx)), runLiteralCore, bunsetsuToString(morphemes.slice(endIdx))));
-                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wordId, limit) 
+                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wordId, limit) });
+                }
+            }
+            {
+                // add relateds
+                for (const r of results) {
+                    const words = yield jmdictIdsToWords(r.results);
+                    const xrefs = words.flatMap(w => w.sense.flatMap(s => s.related));
+                    const references = yield Promise.all(xrefs.flatMap(x => jmdict_simplified_node_1.getXrefs(db, x).then(refs =
