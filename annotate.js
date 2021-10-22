@@ -154,4 +154,6 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                     scored.sort((a, b) => b.score - a.score);
                     const endIdx = startIdx + 1;
                     const run = morphemes.slice(startIdx, endIdx);
-          
+                    const runLiteralCore = bunsetsuToString(run);
+                    const runLiteral = simplify(curtiz_utils_1.generateContextClozed(bunsetsuToString(morphemes.slice(0, startIdx)), runLiteralCore, bunsetsuToString(morphemes.slice(endIdx))));
+                    results.push({ endIdx, run: runLiteral, results: curtiz_utils_1.dedupeLimit(scored, o => o.wordId, limit) 
