@@ -187,4 +187,9 @@ function scoreMorphemeWord(run, searched, searchKey, word) {
     const wordKanjis = new Set(curtiz_utils_1.flatten(word.kanji.map(k => k.text.split('').filter(curtiz_utils_1.hasKanji))));
     const lemmaKanjis = new Set(curtiz_utils_1.flatten(run.map(m => m.lemma.split('').filter(curtiz_utils_1.hasKanji))));
     const literalKanjis = new Set(curtiz_utils_1.flatten(run.map(m => m.literal.split('').filter(curtiz_utils_1.hasKanji))));
-    const lemmaKanjiBonus = intersectionSize(lemmaKanjis, wordKan
+    const lemmaKanjiBonus = intersectionSize(lemmaKanjis, wordKanjis);
+    const literalKanjiBonus = intersectionSize(literalKanjis, wordKanjis);
+    // make sure one-morpheme particles rise to the top of the pile of 10k hits...
+    const particleBonus = +(run.length === 1 && run[0].partOfSpeech.some(pos => pos.includes('particle')) &&
+        word.sense.some(sense => sense.partOfSpeech.includes('prt')));
+    return overrunPenalty * 10 + literalKanjiBonus * 2 + lemma
