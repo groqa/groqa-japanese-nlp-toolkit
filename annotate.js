@@ -184,4 +184,7 @@ function scoreMorphemeWord(run, searched, searchKey, word) {
     // overrun cost be negative. Shortest because we're being optimistic
     const overrunPenalty = Math.min(0, len - Math.min(...word[searchKey].filter(k => k.text.includes(searched)).map(k => k.text.length)));
     // literal may contain kanji that lemma doesn't, e.g., 大阪's literal in UniDic is katakana
-    const wordKanjis = new Set(curtiz_utils_1.flatten(word.kanji.map(
+    const wordKanjis = new Set(curtiz_utils_1.flatten(word.kanji.map(k => k.text.split('').filter(curtiz_utils_1.hasKanji))));
+    const lemmaKanjis = new Set(curtiz_utils_1.flatten(run.map(m => m.lemma.split('').filter(curtiz_utils_1.hasKanji))));
+    const literalKanjis = new Set(curtiz_utils_1.flatten(run.map(m => m.literal.split('').filter(curtiz_utils_1.hasKanji))));
+    const lemmaKanjiBonus = intersectionSize(lemmaKanjis, wordKan
