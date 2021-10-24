@@ -173,4 +173,12 @@ function enumerateDictionaryHits(plainMorphemes, full = true, limit = -1) {
                 }
             }
             superhits.push({ startIdx, results });
-     
+        }
+        return superhits;
+    });
+}
+exports.enumerateDictionaryHits = enumerateDictionaryHits;
+function scoreMorphemeWord(run, searched, searchKey, word) {
+    const len = searched.length;
+    // if the shortest kana is shorter than the search, let the cost be 0. If shortest kana is longer than search, let the
+    // overrun cost be negative. 
