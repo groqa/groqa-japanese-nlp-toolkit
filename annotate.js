@@ -192,4 +192,19 @@ function scoreMorphemeWord(run, searched, searchKey, word) {
     // make sure one-morpheme particles rise to the top of the pile of 10k hits...
     const particleBonus = +(run.length === 1 && run[0].partOfSpeech.some(pos => pos.includes('particle')) &&
         word.sense.some(sense => sense.partOfSpeech.includes('prt')));
-    return overrunPenalty * 10 + literalKanjiBonus * 2 + lemma
+    return overrunPenalty * 10 + literalKanjiBonus * 2 + lemmaKanjiBonus * 1 + 5 * particleBonus;
+}
+function intersection(small, big) {
+    if (small.size > big.size * 1.1) {
+        return intersection(big, small);
+    }
+    const ret = new Set();
+    for (const x of small) {
+        if (big.has(x)) {
+            ret.add(x);
+        }
+    }
+    return ret;
+}
+function intersectionSize(small, big) {
+    if (s
