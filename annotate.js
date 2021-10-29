@@ -207,4 +207,15 @@ function intersection(small, big) {
     return ret;
 }
 function intersectionSize(small, big) {
-    if (s
+    if (small.size > big.size * 1.1) {
+        return intersectionSize(big, small);
+    }
+    let ret = 0;
+    for (const x of small) {
+        ret += +big.has(x);
+    }
+    return ret;
+}
+function unique(v) { return [...new Set(v)]; }
+const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿".split('');
+const prefixNumber = (n) => circledNumbers[n
