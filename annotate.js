@@ -218,4 +218,11 @@ function intersectionSize(small, big) {
 }
 function unique(v) { return [...new Set(v)]; }
 const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿".split('');
-const prefixNumber = (n) => circledNumbers[n
+const prefixNumber = (n) => circledNumbers[n] || `(${n + 1})`;
+function displayWord(w) {
+    return w.kanji.map(k => k.text).join('・') + '「' + w.kana.map(k => k.text).join('・') + '」：' +
+        w.sense.map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/')).join('; ');
+}
+exports.displayWord = displayWord;
+function printXrefs(v) { return v.map(x => x.join(',')).join(';'); }
+fun
