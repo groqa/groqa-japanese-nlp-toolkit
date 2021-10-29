@@ -225,4 +225,10 @@ function displayWord(w) {
 }
 exports.displayWord = displayWord;
 function printXrefs(v) { return v.map(x => x.join(',')).join(';'); }
-fun
+function displayWordLight(w, tags) {
+    const kanji = w.kanji.map(k => k.text).join('・');
+    const kana = w.kana.map(k => k.text).join('・');
+    const tagFields = { dialect: '🗣', field: '🀄️', misc: '✋' };
+    const s = w.sense
+        .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') +
+        (sense.related.lengt
