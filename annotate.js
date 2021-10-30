@@ -239,4 +239,12 @@ function displayWordLight(w, tags) {
             : '')
             .join(''))
         .join(' ');
-    // console.error(re
+    // console.error(related)
+    return `${kanji}「${kana}」| ${s}`;
+}
+exports.displayWordLight = displayWordLight;
+function displayWordDetailed(w, tags) {
+    return w.kanji.concat(w.kana).map(k => k.text).join('・') + '：' +
+        w.sense
+            .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') + ' {*' +
+            sense.partOfSpeech.map(po
