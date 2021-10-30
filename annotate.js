@@ -260,4 +260,13 @@ exports.displayWordDetailed = displayWordDetailed;
  * So [['hi', 'ola'], ['Sal']] => [['hi', 'Sal'], ['ola', 'Sal']]
  *
  */
-function forkingPat
+function forkingPaths(v) {
+    let ret = [[]];
+    for (const u of v) {
+        ret = curtiz_utils_1.flatten(u.map(x => ret.map(v => v.concat(x))));
+    }
+    return ret;
+}
+const bunsetsuToString = (morphemes) => morphemes.map(m => m.literal).join('');
+function betterMorphemePredicate(m) {
+    return !(m.partOfSpeech[0] === 'supplementary_symbol') && !(m.partOfS
