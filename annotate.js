@@ -231,4 +231,12 @@ function displayWordLight(w, tags) {
     const tagFields = { dialect: '🗣', field: '🀄️', misc: '✋' };
     const s = w.sense
         .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') +
-        (sense.related.lengt
+        (sense.related.length ? ` (👉 ${printXrefs(sense.related)})` : '') +
+        (sense.antonym.length ? ` (👈 ${printXrefs(sense.antonym)})` : '') +
+        Object.entries(tagFields)
+            .map(([k, v]) => sense[k].length
+            ? ` (${v} ${sense[k].map(k => tags[k]).join('; ')})`
+            : '')
+            .join(''))
+        .join(' ');
+    // console.error(re
