@@ -247,4 +247,17 @@ function displayWordDetailed(w, tags) {
     return w.kanji.concat(w.kana).map(k => k.text).join('・') + '：' +
         w.sense
             .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') + ' {*' +
-            sense.partOfSpeech.map(po
+            sense.partOfSpeech.map(pos => tags[pos]).join('; ') + '*}')
+            .join('; ') +
+        ' #' + w.id;
+}
+exports.displayWordDetailed = displayWordDetailed;
+/**
+ * Cartesian product.
+ *
+ * Treats each sub-array in an array of arrays as a list of choices for that slot, and enumerates all paths.
+ *
+ * So [['hi', 'ola'], ['Sal']] => [['hi', 'Sal'], ['ola', 'Sal']]
+ *
+ */
+function forkingPat
