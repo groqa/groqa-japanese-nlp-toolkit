@@ -269,4 +269,11 @@ function forkingPaths(v) {
 }
 const bunsetsuToString = (morphemes) => morphemes.map(m => m.literal).join('');
 function betterMorphemePredicate(m) {
-    return !(m.partOfSpeech[0] === 'supplementary_symbol') && !(m.partOfS
+    return !(m.partOfSpeech[0] === 'supplementary_symbol') && !(m.partOfSpeech[0] === 'particle');
+}
+function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = false) {
+    var _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const endIdx = startIdx + goodBunsetsu.length;
+        const cloze = bunsetsuToString(goodBunsetsu);
+        const jf = yield exports.jmdictFuriganaPromi
