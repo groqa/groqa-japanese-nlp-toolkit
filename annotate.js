@@ -304,4 +304,7 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
                     dictionaryForm += goodBunsetsu.slice(1, nonSuffixIdx).map(m => m.lemma.split('-')[0]).join('');
                 }
             }
-    
+            // Often the literal cloze will have fewer kanji than the lemma
+            if (cloze.split('').filter(curtiz_utils_1.hasKanji).length !== dictionaryForm.split('').filter(curtiz_utils_1.hasKanji).length) {
+                // deconjugate won't find anything. Look at lemmas and try to kana-ify the dictionaryForm
+                for (const lemma of lemmas.flat()) {
