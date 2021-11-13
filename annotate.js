@@ -287,4 +287,9 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
             const entry = entries.find(e => e.reading === lemmaReading);
             return entry ? entry.furigana : o.lemma === lemmaReading ? [lemmaReading] : [{ ruby: o.lemma, rt: lemmaReading }];
         });
-        const ret = { deconj: [], startIdx, endIdx, morpheme
+        const ret = { deconj: [], startIdx, endIdx, morphemes: goodBunsetsu, cloze: fullCloze, lemmas };
+        const first = goodBunsetsu[0];
+        const pos0 = first.partOfSpeech[0];
+        const pos0Last = first.partOfSpeech[first.partOfSpeech.length - 1];
+        const verbNotAdj = pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0Last === 'verbal_suru';
+        const ichidan =
