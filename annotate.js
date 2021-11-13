@@ -292,4 +292,9 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
         const pos0 = first.partOfSpeech[0];
         const pos0Last = first.partOfSpeech[first.partOfSpeech.length - 1];
         const verbNotAdj = pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0Last === 'verbal_suru';
-        const ichidan =
+        const ichidan = (_a = first.inflectionType) === null || _a === void 0 ? void 0 : _a[0].includes('ichidan');
+        const iAdj = pos0.endsWith('adjective_i');
+        const deconjs = [];
+        for (const mergeSuffixes of [true, false]) {
+            // sometimes the lemma is too helpful: "ワンダフル-wonderful", so split on dash
+            let dictionaryF
