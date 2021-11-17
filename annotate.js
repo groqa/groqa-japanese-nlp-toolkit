@@ -308,3 +308,10 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
             if (cloze.split('').filter(curtiz_utils_1.hasKanji).length !== dictionaryForm.split('').filter(curtiz_utils_1.hasKanji).length) {
                 // deconjugate won't find anything. Look at lemmas and try to kana-ify the dictionaryForm
                 for (const lemma of lemmas.flat()) {
+                    if (typeof lemma === 'string') {
+                        continue;
+                    }
+                    const { rt } = lemma;
+                    // As above, the lemma is sometimes too detailed: "引く-他動詞"
+                    const ruby = lemma.ruby.split('-')[0];
+                    // Replace the kanji in the dictionary form if it's 
