@@ -323,4 +323,10 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
             if (verbose) {
                 console.log('? ', { verbNotAdj, ichidan, iAdj, dictionaryForm, cloze });
             }
-            const dec
+            const deconj = verbNotAdj ? kamiya_codec_1.verbDeconjugate(cloze, dictionaryForm, ichidan) : kamiya_codec_1.adjDeconjugate(cloze, dictionaryForm, iAdj);
+            if (deconj.length) {
+                deconjs.push(...deconj);
+            }
+            else {
+                // sometimes, the lemma has a totally different kanji: 刺される has lemma "差す-他動詞" lol.
+                /
