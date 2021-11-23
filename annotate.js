@@ -333,4 +333,8 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
                 const clozeKanji = cloze.split('').filter(curtiz_utils_1.hasKanji);
                 const dictKanji = dictionaryForm.split('').filter(curtiz_utils_1.hasKanji);
                 if (clozeKanji.length === dictKanji.length) {
-                    // This is a
+                    // This is a very stupid way to do it but works for 刺される: replace kanji one at a time...
+                    for (const [idx, clozeK] of clozeKanji.entries()) {
+                        const dictK = dictKanji[idx];
+                        const newDictionaryForm = dictionaryForm.replace(dictK, clozeK);
+                        const deconj = ver
