@@ -329,4 +329,8 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
             }
             else {
                 // sometimes, the lemma has a totally different kanji: 刺される has lemma "差す-他動詞" lol.
-                /
+                // in these situations, try replacing kanji from the cloze into the dictionary form.
+                const clozeKanji = cloze.split('').filter(curtiz_utils_1.hasKanji);
+                const dictKanji = dictionaryForm.split('').filter(curtiz_utils_1.hasKanji);
+                if (clozeKanji.length === dictKanji.length) {
+                    // This is a
