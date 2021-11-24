@@ -337,4 +337,10 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
                     for (const [idx, clozeK] of clozeKanji.entries()) {
                         const dictK = dictKanji[idx];
                         const newDictionaryForm = dictionaryForm.replace(dictK, clozeK);
-                        const deconj = ver
+                        const deconj = verbNotAdj ? kamiya_codec_1.verbDeconjugate(cloze, newDictionaryForm, ichidan)
+                            : kamiya_codec_1.adjDeconjugate(cloze, newDictionaryForm, iAdj);
+                        if (deconj.length) {
+                            deconjs.push(...deconj);
+                            break;
+                            // if we find something, pray it's good and bail.
+          
