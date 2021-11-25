@@ -343,4 +343,15 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
                             deconjs.push(...deconj);
                             break;
                             // if we find something, pray it's good and bail.
-          
+                        }
+                    }
+                }
+            }
+        }
+        ret.deconj = uniqueKey(deconjs, x => {
+            if ('auxiliaries' in x) {
+                return x.auxiliaries.join('/') + x.conjugation + x.result.join('/');
+            }
+            return x.conjugation + x.result.join('/');
+        });
+        
