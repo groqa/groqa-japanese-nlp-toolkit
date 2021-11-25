@@ -354,4 +354,22 @@ function morphemesToConjPhrases(startIdx, goodBunsetsu, fullCloze, verbose = fal
             }
             return x.conjugation + x.result.join('/');
         });
-        
+        return ret;
+    });
+}
+function uniqueKey(v, key) {
+    const ys = new Set();
+    const ret = [];
+    for (const x of v) {
+        const y = key(x);
+        if (ys.has(y)) {
+            continue;
+        }
+        ys.add(y);
+        ret.push(x);
+    }
+    return ret;
+}
+function* allSlices(v) {
+    for (let start = 0; start < v.length; start++) {
+        for (let end = start + 1; en
