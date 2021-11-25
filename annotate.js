@@ -372,4 +372,13 @@ function uniqueKey(v, key) {
 }
 function* allSlices(v) {
     for (let start = 0; start < v.length; start++) {
-        for (let end = start + 1; en
+        for (let end = start + 1; end < v.length + 1; end++) {
+            yield { start, end, slice: v.slice(start, end) };
+        }
+    }
+}
+// Find clozes: particles and conjugated verb/adjective phrases
+function identifyFillInBlanks(bunsetsus, verbose = false) {
+    var _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const sentence = bunsetsus.
