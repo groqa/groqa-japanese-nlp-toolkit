@@ -400,4 +400,9 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                 const pos0Last = first.partOfSpeech[first.partOfSpeech.length - 1] || '';
                 /*
                 If a bunsetsu has >1 morphemes, check if it's a verb or an adjective (i or na).
-                If it's just one, make sur
+                If it's just one, make sure it's an adjective that's not a conclusive (catches 朝早く)
+                Also check for copulas (da/desu).
+                */
+                if ((sliceBunsetsu.length === 1 && pos0.startsWith('adjectiv') &&
+                    (((_a = first.inflection) === null || _a === void 0 ? void 0 : _a[0]) ? !first.inflection[0].endsWith('conclusive') : true)) ||
+               
