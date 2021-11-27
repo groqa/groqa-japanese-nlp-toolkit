@@ -389,4 +389,8 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
             if (!fullBunsetsu[0]) {
                 continue;
             }
-            for (const { start, slice: sliceBunsetsu 
+            for (const { start, slice: sliceBunsetsu } of allSlices(fullBunsetsu)) {
+                const left = bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToString(fullBunsetsu.slice(0, start));
+                const first = sliceBunsetsu[0];
+                if (verbose) {
+                    console.log('g', sliceBunsetsu.map(o => o.literal).join(' '
