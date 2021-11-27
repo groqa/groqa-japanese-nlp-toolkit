@@ -381,4 +381,12 @@ function* allSlices(v) {
 function identifyFillInBlanks(bunsetsus, verbose = false) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const sentence = bunsetsus.
+        const sentence = bunsetsus.map(bunsetsuToString).join('');
+        const conjugatedPhrases = [];
+        const particles = [];
+        for (const [bidx, fullBunsetsu] of bunsetsus.entries()) {
+            const startIdx = bunsetsus.slice(0, bidx).map(o => o.length).reduce((p, c) => p + c, 0);
+            if (!fullBunsetsu[0]) {
+                continue;
+            }
+            for (const { start, slice: sliceBunsetsu 
