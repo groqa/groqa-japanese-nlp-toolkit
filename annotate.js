@@ -405,4 +405,8 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                 */
                 if ((sliceBunsetsu.length === 1 && pos0.startsWith('adjectiv') &&
                     (((_a = first.inflection) === null || _a === void 0 ? void 0 : _a[0]) ? !first.inflection[0].endsWith('conclusive') : true)) ||
-               
+                    (sliceBunsetsu.length > 0 &&
+                        (pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0.startsWith('adject') ||
+                            pos0Last === 'verbal_suru' || pos0Last.startsWith('adjectival'))) ||
+                    ((pos0.startsWith('aux') && (pos1.startsWith('desu') || pos1.startsWith('da'))))) {
+                    const middle = bunsetsuToString(sliceBunset
