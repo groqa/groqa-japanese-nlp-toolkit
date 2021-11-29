@@ -409,4 +409,10 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                         (pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0.startsWith('adject') ||
                             pos0Last === 'verbal_suru' || pos0Last.startsWith('adjectival'))) ||
                     ((pos0.startsWith('aux') && (pos1.startsWith('desu') || pos1.startsWith('da'))))) {
-                    const middle = bunsetsuToString(sliceBunset
+                    const middle = bunsetsuToString(sliceBunsetsu);
+                    const right = sentence.slice(left.length + middle.length);
+                    const cloze = curtiz_utils_1.generateContextClozed(left, middle, right);
+                    const res = yield morphemesToConjPhrases(startIdx + start, sliceBunsetsu, cloze);
+                    if (verbose) {
+                        console.log('^ found', res.deconj);
+       
