@@ -415,4 +415,11 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                     const res = yield morphemesToConjPhrases(startIdx + start, sliceBunsetsu, cloze);
                     if (verbose) {
                         console.log('^ found', res.deconj);
-       
+                    }
+                    if (res.deconj.length) {
+                        conjugatedPhrases.push(res);
+                    }
+                }
+            }
+            // Handle particles: identify and look up in Chino's "All About Particles" list
+            const particlePredicate = (p) => p.partOfSpeech[0].
