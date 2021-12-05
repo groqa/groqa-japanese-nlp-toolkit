@@ -431,4 +431,9 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                     const right = bunsetsuToString(fullBunsetsu.slice(pidx + 1)) + bunsetsus.slice(bidx + 1).map(bunsetsuToString).join('');
                     const cloze = curtiz_utils_1.generateContextClozed(left, particle.literal, right);
                     const chino = chino_particles_1.lookup(cloze.cloze);
-                    if (pa
+                    if (particle.literal !== particle.lemma) {
+                        const chinoLemma = chino_particles_1.lookup(particle.lemma);
+                        for (const [chinoNum, chinoStr] of chinoLemma) {
+                            if (!chino.find(([c]) => c === chinoNum)) {
+                                chino.push([chinoNum, chinoStr]);
+                   
