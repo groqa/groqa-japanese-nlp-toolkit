@@ -436,4 +436,12 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                         for (const [chinoNum, chinoStr] of chinoLemma) {
                             if (!chino.find(([c]) => c === chinoNum)) {
                                 chino.push([chinoNum, chinoStr]);
-                   
+                            }
+                        }
+                    }
+                    particles.push({ chino, cloze, startIdx: startIdxParticle, endIdx, morphemes: [particle] });
+                }
+            }
+        }
+        // Try to glue adjacent particles together if they are in Chino's list of particles too
+        const allMorphemes = bunse
