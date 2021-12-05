@@ -422,4 +422,9 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                 }
             }
             // Handle particles: identify and look up in Chino's "All About Particles" list
-            const particlePredicate = (p) => p.partOfSpeech[0].
+            const particlePredicate = (p) => p.partOfSpeech[0].startsWith('particle') && p.partOfSpeech.length > 1;
+            for (const [pidx, particle] of fullBunsetsu.entries()) {
+                if (particlePredicate(particle)) {
+                    const startIdxParticle = startIdx + pidx;
+                    const endIdx = startIdxParticle + 1;
+                    const left = bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToStri
