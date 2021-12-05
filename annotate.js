@@ -427,4 +427,8 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                 if (particlePredicate(particle)) {
                     const startIdxParticle = startIdx + pidx;
                     const endIdx = startIdxParticle + 1;
-                    const left = bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToStri
+                    const left = bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToString(fullBunsetsu.slice(0, pidx));
+                    const right = bunsetsuToString(fullBunsetsu.slice(pidx + 1)) + bunsetsus.slice(bidx + 1).map(bunsetsuToString).join('');
+                    const cloze = curtiz_utils_1.generateContextClozed(left, particle.literal, right);
+                    const chino = chino_particles_1.lookup(cloze.cloze);
+                    if (pa
