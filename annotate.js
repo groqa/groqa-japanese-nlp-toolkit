@@ -449,4 +449,10 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
             // `4` below means we'll try to glue 3 particles together
             // `j<=...` has to be `<=` because `j` will be `slice`'s 2nd arg and is exclusive (not inclusive)
             for (let j = i + 2; (j < i + 4) && (j <= particles.length); j++) {
-                const adjacent = part
+                const adjacent = particles.slice(i, j);
+                if (!adjacent.every((curr, idx, arr) => arr[idx + 1] ? curr.endIdx === arr[idx + 1].startIdx : true)) {
+                    // `adjacent` isn't actually adjacent
+                    continue;
+                }
+                const combined = adjacent.map(o => o.cloze.cloze).join('');
+                const hits = chino_particles_1.lookup(combined);
