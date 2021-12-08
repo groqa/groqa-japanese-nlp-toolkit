@@ -456,3 +456,9 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                 }
                 const combined = adjacent.map(o => o.cloze.cloze).join('');
                 const hits = chino_particles_1.lookup(combined);
+                if (hits.length) {
+                    const first = adjacent[0];
+                    const last = adjacent[adjacent.length - 1];
+                    const left = bunsetsuToString(allMorphemes.slice(0, first.startIdx));
+                    const right = bunsetsuToString(allMorphemes.slice(last.endIdx));
+                    const cloze = curtiz_utils_1.generateCon
