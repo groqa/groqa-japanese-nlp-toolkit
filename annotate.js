@@ -470,4 +470,13 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                         morphemes: adjacent.flatMap(o => o.morphemes)
                     });
                 }
-         
+            }
+        }
+        return { particles, conjugatedPhrases };
+    });
+}
+exports.identifyFillInBlanks = identifyFillInBlanks;
+function morphemeToSearchLemma(m) {
+    var _a, _b;
+    const pos0 = m.partOfSpeech[0];
+    const conjugatable = ((_a = m.inflection) === null || _a === void 0 ? void 0 : _a[0]) || ((_b = m.inflectionType) === null || _b === void 0 ? void 0 : _b[0
