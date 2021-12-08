@@ -479,4 +479,8 @@ exports.identifyFillInBlanks = identifyFillInBlanks;
 function morphemeToSearchLemma(m) {
     var _a, _b;
     const pos0 = m.partOfSpeech[0];
-    const conjugatable = ((_a = m.inflection) === null || _a === void 0 ? void 0 : _a[0]) || ((_b = m.inflectionType) === null || _b === void 0 ? void 0 : _b[0
+    const conjugatable = ((_a = m.inflection) === null || _a === void 0 ? void 0 : _a[0]) || ((_b = m.inflectionType) === null || _b === void 0 ? void 0 : _b[0]) || pos0.startsWith('verb') ||
+        pos0.endsWith('_verb') || pos0.startsWith('adject');
+    const potentialRendaku = m.literal === m.lemma && curtiz_utils_1.hasKanji(m.lemma) && m.lemmaReading !== m.pronunciation;
+    return (conjugatable || potentialRendaku) ? [curtiz_utils_1.kata2hira(m.lemmaReading)] : [];
+    // literal's pronunciation will handle th
