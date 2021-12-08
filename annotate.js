@@ -461,4 +461,13 @@ function identifyFillInBlanks(bunsetsus, verbose = false) {
                     const last = adjacent[adjacent.length - 1];
                     const left = bunsetsuToString(allMorphemes.slice(0, first.startIdx));
                     const right = bunsetsuToString(allMorphemes.slice(last.endIdx));
-                    const cloze = curtiz_utils_1.generateCon
+                    const cloze = curtiz_utils_1.generateContextClozed(left, combined, right);
+                    particles.push({
+                        chino: hits,
+                        cloze,
+                        startIdx: first.startIdx,
+                        endIdx: last.endIdx,
+                        morphemes: adjacent.flatMap(o => o.morphemes)
+                    });
+                }
+         
