@@ -483,4 +483,14 @@ function morphemeToSearchLemma(m) {
         pos0.endsWith('_verb') || pos0.startsWith('adject');
     const potentialRendaku = m.literal === m.lemma && curtiz_utils_1.hasKanji(m.lemma) && m.lemmaReading !== m.pronunciation;
     return (conjugatable || potentialRendaku) ? [curtiz_utils_1.kata2hira(m.lemmaReading)] : [];
-    // literal's pronunciation will handle th
+    // literal's pronunciation will handle the rest
+}
+const CHOUONPU = 'ー'; // https://en.wikipedia.org/wiki/Ch%C5%8Donpu
+/**
+ * Returns array of strings in hiragana, without chouonpu, representing possible pronunciations
+ * Tries hard to make sure the returned array has length 1.
+ */
+function morphemeToStringLiteral(m, jmdictFurigana) {
+    if (!curtiz_utils_1.hasKanji(m.literal)) {
+        if (m.literal === m.lemma) {
+    
