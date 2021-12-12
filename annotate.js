@@ -514,4 +514,10 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
     // 京都               | キョート           | キョウト           | キョウト
     // 東京               | トーキョー         | トウキョウ         | トウキョウ
     // 見よう             | ミヨー             | ミル               | 見る
-    // cant just replace c
+    // cant just replace chouonpu with equivlent in lemma! :
+    // 聞い | キー | キク | 聞く
+    function replaceChouonpuWithString(pronunciation, literal) {
+        return pronunciation.split('').map((p, i) => (p === CHOUONPU && curtiz_utils_1.hasHiragana(literal[i])) ? literal[i] : p).join('');
+    }
+    if (curtiz_utils_1.hasHiragana(m.literal)) {
+        // try to see if th
