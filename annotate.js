@@ -520,4 +520,8 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
         return pronunciation.split('').map((p, i) => (p === CHOUONPU && curtiz_utils_1.hasHiragana(literal[i])) ? literal[i] : p).join('');
     }
     if (curtiz_utils_1.hasHiragana(m.literal)) {
-        // try to see if th
+        // try to see if the chouonpu in pronunication is a hiragana in literal:
+        if (m.literal.length === m.pronunciation.length) {
+            // same length: all kanji are one-character, so we can safely split both literal and pronunciation
+            // 飛び立とう | トビタトウ | トビタトー | トビタツ | 飛び立つ
+            const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, m.lit
