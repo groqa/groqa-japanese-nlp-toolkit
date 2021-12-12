@@ -502,4 +502,10 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
     if (!m.pronunciation.includes(CHOUONPU)) {
         return [curtiz_utils_1.kata2hira(m.pronunciation)];
     }
-    // so literal has kanji 
+    // so literal has kanji and the pronunciation has a chouonpu
+    if (m.literal === m.lemma) {
+        return [curtiz_utils_1.kata2hira(m.lemmaReading)];
+    }
+    // so literal has kanji, the pronunciation has chouonpu, and the literal and lemma disagree
+    // In these markdown-like tables, the columns folow mecabUnidic.ts, and are:
+    // | literal | pronunciation | lemma reading
