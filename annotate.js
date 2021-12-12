@@ -508,4 +508,10 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
     }
     // so literal has kanji, the pronunciation has chouonpu, and the literal and lemma disagree
     // In these markdown-like tables, the columns folow mecabUnidic.ts, and are:
-    // | literal | pronunciation | lemma reading
+    // | literal | pronunciation | lemma reading| lemma |
+    // 多             | オー           | オオイ         | 多い
+    // 大阪               | オーサカ           | オオサカ           | オオサカ
+    // 京都               | キョート           | キョウト           | キョウト
+    // 東京               | トーキョー         | トウキョウ         | トウキョウ
+    // 見よう             | ミヨー             | ミル               | 見る
+    // cant just replace c
