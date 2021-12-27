@@ -533,4 +533,8 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
         if (jmdictFurigana) {
             const entries = jmdictFurigana.textToEntry.get(m.lemma);
             if (entries) {
-                const 
+                const lemmaReading = curtiz_utils_1.kata2hira(m.lemmaReading);
+                const entry = entries.find(e => e.reading === lemmaReading);
+                if (entry) {
+                    const furiganaMap = new Map(entry.furigana.map(f => typeof f === 'string' ? ['', ''] : [f.ruby, f.rt]));
+                    const reconstructedLiteral = m.literal.split('').map(c => furiganaMap.
