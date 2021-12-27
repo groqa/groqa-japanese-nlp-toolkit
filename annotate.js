@@ -537,4 +537,8 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
                 const entry = entries.find(e => e.reading === lemmaReading);
                 if (entry) {
                     const furiganaMap = new Map(entry.furigana.map(f => typeof f === 'string' ? ['', ''] : [f.ruby, f.rt]));
-                    const reconstructedLiteral = m.literal.split('').map(c => furiganaMap.
+                    const reconstructedLiteral = m.literal.split('').map(c => furiganaMap.get(c) || c).join('');
+                    if (m.pronunciation.length === reconstructedLiteral.length) {
+                        const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, reconstructedLiteral);
+                        if (!reconstructedPronunciation.includes(CHOUONPU)) {
+                            return [curtiz_utils_1.kat
