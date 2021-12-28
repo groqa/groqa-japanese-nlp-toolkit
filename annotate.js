@@ -541,4 +541,16 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
                     if (m.pronunciation.length === reconstructedLiteral.length) {
                         const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, reconstructedLiteral);
                         if (!reconstructedPronunciation.includes(CHOUONPU)) {
-                            return [curtiz_utils_1.kat
+                            return [curtiz_utils_1.kata2hira(reconstructedPronunciation)];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // No choice, オー and トー need to be mapped to both options.
+    // Other chouonpu mapped via `DUMB_CHOUONPU_MAP`.
+    const pronunciation = m.pronunciation.split('');
+    let ret = [[]];
+    for (const [i, p] of pronunciation.entries()) {
+        
