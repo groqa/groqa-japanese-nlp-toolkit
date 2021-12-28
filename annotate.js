@@ -553,4 +553,12 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
     const pronunciation = m.pronunciation.split('');
     let ret = [[]];
     for (const [i, p] of pronunciation.entries()) {
-        
+        if (p === CHOUONPU) {
+            if (pronunciation[i - 1] === 'ト' || pronunciation[i - 1] === 'オ') {
+                ret = [...ret.map(v => v.concat('オ')), ...ret.map(v => v.concat('ウ'))];
+            }
+            else {
+                ret.forEach(v => v.push(DUMB_CHOUONPU_MAP.get(curtiz_utils_1.kata2hira(pronunciation[i - 1])) || CHOUONPU));
+            }
+            continue;
+   
