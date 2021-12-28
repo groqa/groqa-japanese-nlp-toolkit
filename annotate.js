@@ -561,4 +561,15 @@ function morphemeToStringLiteral(m, jmdictFurigana) {
                 ret.forEach(v => v.push(DUMB_CHOUONPU_MAP.get(curtiz_utils_1.kata2hira(pronunciation[i - 1])) || CHOUONPU));
             }
             continue;
-   
+        }
+        ret.forEach(v => v.push(p));
+    }
+    return ret.map(v => curtiz_utils_1.kata2hira(v.join('')));
+}
+const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
+    const as = `ぁあかがさざただなはばぱまゃやらゎわ`;
+    const is = `ぃいきぎしじちぢにひびぴみり`;
+    const us = `ぅうくぐすずっつづぬふぶぷむゅゆるゔ`;
+    const es = `ぇえけげせぜてでねへべぺめれ`;
+    const os = `ぉおこごそぞとどのほぼぽもょよろを`;
+    const m = new Ma
