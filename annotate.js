@@ -572,4 +572,15 @@ const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
     const us = `ぅうくぐすずっつづぬふぶぷむゅゆるゔ`;
     const es = `ぇえけげせぜてでねへべぺめれ`;
     const os = `ぉおこごそぞとどのほぼぽもょよろを`;
-    const m = new Ma
+    const m = new Map();
+    const doer = (as, target) => as.split('').forEach(a => m.set(a, target));
+    doer(as, 'あ');
+    doer(is, 'い');
+    doer(us, 'う');
+    doer(es, 'い');
+    doer(os, 'う');
+    return m;
+})();
+function morphemesToFurigana(line, morphemes, overrides) {
+    return __awaiter(this, void 0, void 0, function* () {
+        retu
