@@ -583,4 +583,10 @@ const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
 })();
 function morphemesToFurigana(line, morphemes, overrides) {
     return __awaiter(this, void 0, void 0, function* () {
-        retu
+        return morphemesToFuriganaCore(morphemes, overrides).then(o => checkFurigana(line, o));
+    });
+}
+exports.morphemesToFurigana = morphemesToFurigana;
+/**
+ * Try very hard to convert morphemes to furigana. `overrides` is a map of morpheme literal to the furigana you want.
+ * This is useful because, e.g., Unidic always converts 日本 to ニッポン, and maybe you want ove
