@@ -595,4 +595,13 @@ exports.morphemesToFurigana = morphemesToFurigana;
  */
 function morphemesToFuriganaCore(morphemes, overrides) {
     return __awaiter(this, void 0, void 0, function* () {
-        const furigana = yield Promise.all(morphemes
+        const furigana = yield Promise.all(morphemes.map((m) => __awaiter(this, void 0, void 0, function* () {
+            const { lemma, lemmaReading, literal, pronunciation } = m;
+            if (!curtiz_utils_1.hasKanji(literal)) {
+                return [literal];
+            }
+            {
+                const hit = overrides[literal];
+                if (hit) {
+                    return hit;
+       
