@@ -604,4 +604,12 @@ function morphemesToFuriganaCore(morphemes, overrides) {
                 const hit = overrides[literal];
                 if (hit) {
                     return hit;
-       
+                }
+            }
+            const jmdictFurigana = yield exports.jmdictFuriganaPromise;
+            const { textToEntry, readingToEntry } = jmdictFurigana;
+            const literalHit = search(textToEntry, literal, 'reading', morphemeToStringLiteral(m, jmdictFurigana));
+            if (literalHit) {
+                return literalHit.furigana;
+            }
+          
