@@ -623,4 +623,13 @@ function morphemesToFuriganaCore(morphemes, overrides) {
             // for e.g. 住ん|で|い|ます but not 一本 (pronounced pon but lemma=hon: rendaku)
             // if you reach here, there's nothing ensuring that the furigana found will match `pronunciation`!
             const lemmaHit = search(textToEntry, lemma, 'reading', morphemeToStringLiteral({ lemma, lemmaReading, literal: lemma, pronunciation: lemmaReading }, jmdictFurigana));
-            if (lem
+            if (lemmaHit) {
+                const furiganaDict = new Map();
+                for (const f of lemmaHit.furigana) {
+                    if (typeof f === 'string') {
+                        continue;
+                    }
+                    furiganaDict.set(f.ruby, f.rt);
+                }
+                const chars = literal.split('');
+                let kanji = chars.filter(curtiz_utils
