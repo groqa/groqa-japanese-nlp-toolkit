@@ -612,4 +612,12 @@ function morphemesToFuriganaCore(morphemes, overrides) {
             if (literalHit) {
                 return literalHit.furigana;
             }
-          
+            const pronunciationHit = search(readingToEntry, pronunciation, 'text', [literal]);
+            if (pronunciationHit) {
+                return pronunciationHit.furigana;
+            }
+            // help with 一本/rendaku
+            if (literal.length === 1) {
+                return [{ ruby: literal, rt: morphemeToStringLiteral(m).join('・') }];
+            }
+            // for e.g. 住ん|で|い|ます but 
