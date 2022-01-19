@@ -638,4 +638,10 @@ function morphemesToFuriganaCore(morphemes, overrides) {
                 while (kanji.length) {
                     const hit = triu(kanji).find(ks => furiganaDict.has(ks.join('')));
                     if (hit) {
-                        const hitstr = h
+                        const hitstr = hit.join('');
+                        const idx = literal.indexOf(hitstr);
+                        annotatedChars[idx] = { ruby: hitstr, rt: furiganaDict.get(hitstr) || hitstr };
+                        for (let i = idx + 1; i < idx + hitstr.length; i++) {
+                            annotatedChars[i] = '';
+                        }
+                  
