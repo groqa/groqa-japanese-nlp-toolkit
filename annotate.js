@@ -644,4 +644,13 @@ function morphemesToFuriganaCore(morphemes, overrides) {
                         for (let i = idx + 1; i < idx + hitstr.length; i++) {
                             annotatedChars[i] = '';
                         }
-                  
+                        kanji = kanji.slice(hitstr.length);
+                        continue;
+                    }
+                    // no hit found, kanji won't shrink to empty, break now
+                    break;
+                }
+                if (kanji.length === 0) {
+                    return annotatedChars.filter(x => x !== '');
+                }
+      
