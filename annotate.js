@@ -653,4 +653,9 @@ function morphemesToFuriganaCore(morphemes, overrides) {
                 if (kanji.length === 0) {
                     return annotatedChars.filter(x => x !== '');
                 }
-      
+            }
+            // const lemmaReadingHit = search(readingToEntry, lemmaReading, 'text', lemma);
+            // if (lemmaReadingHit) { return lemmaReadingHit.furigana; }
+            // We couldn't rely on JMDictFurigana to help us out. The best we can do now is to use MeCab's parsing.
+            // For example: literal="帰っ" and rt="かえっ". Also 鍛え直し vs きたえなおし.
+            //
