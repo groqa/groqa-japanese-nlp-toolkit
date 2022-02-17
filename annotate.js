@@ -668,4 +668,18 @@ function morphemesToFuriganaCore(morphemes, overrides) {
                 console.log({ ret });
                 return ret;
             }
-        }))
+        })));
+        return furigana;
+    });
+}
+exports.morphemesToFuriganaCore = morphemesToFuriganaCore;
+/*
+(if kana is padded on either side, it's unambiguous, so kanji bookends are important)
+
+Consider the following literal/reading pair, where uppercase represents KANJI and lowercase kana:
+
+AxBzC = axbbzccc : this is unambiguous
+
+But:
+
+AxBzC =  axbxbzccc :
