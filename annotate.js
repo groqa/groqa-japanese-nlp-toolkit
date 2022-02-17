@@ -682,4 +682,15 @@ AxBzC = axbbzccc : this is unambiguous
 
 But:
 
-AxBzC =  axbxbzccc :
+AxBzC =  axbxbzccc : ambiguous: which x should we cut at?
+AxBzC ?= a x bxb zccc or
+AxBzC ?= axb x b zccc
+
+I.e., ambiguity when kana run in base (kanji) text appears also in the true reading of an adjancent kanji run.
+
+Is this ambiguous:
+AxBzC = axbbzxccc --- NO.
+AxBzC = axxbbzccc --- YES
+
+SIMPLE resolution: split eagerly at the first possible case.
+Bet
