@@ -704,4 +704,13 @@ function simpleConvertMecabReading(literal, reading) {
     literal = prepost.middleA;
     reading = prepost.middleB;
     const splits = splitKanaKanjiRuns(literal);
-    for (const { s, isKanji 
+    for (const { s, isKanji } of splits) {
+        if (isKanji) {
+            continue;
+        }
+        const litIdx = literal.indexOf(s);
+        const readIdx = reading.indexOf(s);
+        if (litIdx < 0 || readIdx < 0) { // bad error, return
+            return [{ ruby: literal, rt: reading }];
+        }
+        ret.push({ ruby: literal.slice(0, litIdx), rt: reading.slice(0, readId
