@@ -713,4 +713,13 @@ function simpleConvertMecabReading(literal, reading) {
         if (litIdx < 0 || readIdx < 0) { // bad error, return
             return [{ ruby: literal, rt: reading }];
         }
-        ret.push({ ruby: literal.slice(0, litIdx), rt: reading.slice(0, readId
+        ret.push({ ruby: literal.slice(0, litIdx), rt: reading.slice(0, readIdx) });
+        ret.push(s);
+        literal = literal.slice(litIdx + s.length);
+        reading = reading.slice(readIdx + s.length);
+    }
+    if (splits[splits.length - 1].isKanji) { // last kanji split would have been skipped above
+        ret.push({ ruby: literal, rt: reading });
+    }
+    if (prepost.post) {
+        ret.push(prepost.post);
