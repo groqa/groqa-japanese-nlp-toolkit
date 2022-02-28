@@ -734,4 +734,19 @@ function splitKanaKanjiRuns(s) {
         if (isKanji === current.isKanji) {
             current.s = current.s + c;
         }
-      
+        else {
+            ret.push(current);
+            current = { s: c, isKanji };
+        }
+    }
+    return ret.concat(current);
+}
+function prePostMatches(a, b) {
+    let pre = '';
+    let post = '';
+    if (a === b) {
+        return { pre, middleA: a, middleB: b, post };
+    }
+    for (let i = 0; i < a.length; i++) {
+        const c = a[i];
+        
