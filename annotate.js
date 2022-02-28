@@ -723,3 +723,15 @@ function simpleConvertMecabReading(literal, reading) {
     }
     if (prepost.post) {
         ret.push(prepost.post);
+    }
+    return ret;
+}
+function splitKanaKanjiRuns(s) {
+    let current = { s: s[0], isKanji: curtiz_utils_1.hasKanji(s[0]) };
+    const ret = [];
+    for (const [i, c] of s.slice(1).split('').entries()) {
+        const isKanji = curtiz_utils_1.hasKanji(c);
+        if (isKanji === current.isKanji) {
+            current.s = current.s + c;
+        }
+      
