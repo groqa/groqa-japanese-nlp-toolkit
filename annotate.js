@@ -749,4 +749,18 @@ function prePostMatches(a, b) {
     }
     for (let i = 0; i < a.length; i++) {
         const c = a[i];
-        
+        if (c !== b[i]) {
+            break;
+        }
+        pre += c;
+    }
+    for (let i = 0; i < a.length; i++) {
+        const c = a[a.length - 1 - i];
+        const c2 = b[b.length - 1 - i];
+        if (c !== c2) {
+            break;
+        }
+        post = c + post;
+    }
+    const middleA = a.slice(pre.length, a.length - post.length);
+    const middleB = b.slice(pre.length, b.len
