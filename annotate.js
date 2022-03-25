@@ -839,4 +839,10 @@ const tagsPromise = exports.jmdictPromise.then(({ db }) => db)
     .then(raw => JSON.parse(raw));
 const kanjidicPromise = kanjidic_1.setupSimple();
 const wanikaniGraph = JSON.parse(fs_1.readFileSync(path_1.default.join(__dirname, 'wanikani-kanji-graph.json'), 'utf8'));
-function handleSentence(sentence, ove
+function handleSentence(sentence, overrides = {}, includeWord = true, extractParticlesConj = true, nBest = 1) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!curtiz_utils_1.hasKanji(sentence) && !curtiz_utils_1.hasKana(sentence)) {
+            const resBody = sentence;
+            return [resBody];
+        }
+        const res = yield mecabJdepp(sent
