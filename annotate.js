@@ -776,4 +776,12 @@ function triu(arr) {
 function search(map, first, sub, possibleSeconds) {
     const hit = map.get(first);
     if (hit) {
-        // const possibleSeconds = findAlternativeCh
+        // const possibleSeconds = findAlternativeChouonpu(kata2hira(second));
+        const subhit = hit.find(e => {
+            const dict = curtiz_utils_1.kata2hira(e[sub]);
+            return possibleSeconds.some(second => second === dict);
+        });
+        if (subhit) {
+            return subhit;
+        }
+        console.error(`found hit for ${first} but not ${possibleSeconds}`, { hit, possib
