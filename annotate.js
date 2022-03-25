@@ -790,4 +790,10 @@ function search(map, first, sub, possibleSeconds) {
 function furiganaToRuby(fs) {
     const rubiesToHtml = (v) => v.length ? `<ruby>${v.map(o => o.ruby).join('')}<rt>${v.map(o => o.rt).join('')}</rt></ruby>` : '';
     // collapse adjacent <ruby> tags into one so macOS selection on resulting HTML works: undo JMDict-Furigana <sad>
-    const ret = fs.reduce(({ stringSoFar, rubiesSoFar }, curr) => typeof
+    const ret = fs.reduce(({ stringSoFar, rubiesSoFar }, curr) => typeof curr === 'object'
+        ? { stringSoFar, rubiesSoFar: rubiesSoFar.concat(curr) }
+        : { stringSoFar: stringSoFar + rubiesToHtml(rubiesSoFar) + curr, rubiesSoFar: [] }, { stringSoFar: '', rubiesSoFar: [] });
+    return ret.stringSoFar + rubiesToHtml(ret.rubiesSoFar);
+}
+// make sure furigana's rubys are verbatim the sentence
+function checkFurigana(sentence, furigana) {
