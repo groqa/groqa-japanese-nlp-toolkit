@@ -784,4 +784,10 @@ function search(map, first, sub, possibleSeconds) {
         if (subhit) {
             return subhit;
         }
-        console.error(`found hit for ${first} but not ${possibleSeconds}`, { hit, possib
+        console.error(`found hit for ${first} but not ${possibleSeconds}`, { hit, possibleSeconds });
+    }
+}
+function furiganaToRuby(fs) {
+    const rubiesToHtml = (v) => v.length ? `<ruby>${v.map(o => o.ruby).join('')}<rt>${v.map(o => o.rt).join('')}</rt></ruby>` : '';
+    // collapse adjacent <ruby> tags into one so macOS selection on resulting HTML works: undo JMDict-Furigana <sad>
+    const ret = fs.reduce(({ stringSoFar, rubiesSoFar }, curr) => typeof
