@@ -834,4 +834,9 @@ function contextClozeToString(c) {
 function contextClozeOrStringToString(c) {
     return typeof c === 'string' ? c : contextClozeToString(c);
 }
-const tagsPromise = exports.jmdictPromise
+const tagsPromise = exports.jmdictPromise.then(({ db }) => db)
+    .then(db => jmdict_simplified_node_1.getField(db, 'tags'))
+    .then(raw => JSON.parse(raw));
+const kanjidicPromise = kanjidic_1.setupSimple();
+const wanikaniGraph = JSON.parse(fs_1.readFileSync(path_1.default.join(__dirname, 'wanikani-kanji-graph.json'), 'utf8'));
+function handleSentence(sentence, ove
