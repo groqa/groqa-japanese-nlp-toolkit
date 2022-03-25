@@ -797,3 +797,13 @@ function furiganaToRuby(fs) {
 }
 // make sure furigana's rubys are verbatim the sentence
 function checkFurigana(sentence, furigana) {
+    const rubys = curtiz_utils_1.flatten(furigana).map(toruby);
+    if (rubys.join('').length >= sentence.length) {
+        return furigana;
+    }
+    // whitespace or some other character was stripped. add it back!
+    let start = 0;
+    let ret = [];
+    for (const fs of furigana) {
+        const chunk = fs.map(toruby).join('');
+        const hit = sentence
