@@ -816,4 +816,13 @@ function checkFurigana(sentence, furigana) {
     }
     return ret;
 }
-function toruby(f) { return typeof f === 
+function toruby(f) { return typeof f === 'string' ? f : f.ruby; }
+function jmdictIdsToWords(hits) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { db } = yield exports.jmdictPromise;
+        return jmdict_simplified_node_1.idsToWords(db, hits.map(o => o.wordId));
+    });
+}
+exports.jmdictIdsToWords = jmdictIdsToWords;
+function getTags() {
+    return __awaiter(this, void 0, void 0, function* () {
