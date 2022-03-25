@@ -825,4 +825,13 @@ function jmdictIdsToWords(hits) {
 }
 exports.jmdictIdsToWords = jmdictIdsToWords;
 function getTags() {
-    return __awaiter(this, void 0, void 0, function* () {
+    return __awaiter(this, void 0, void 0, function* () { return exports.jmdictPromise.then(({ db }) => jmdict_simplified_node_1.getTags(db)); });
+}
+exports.getTags = getTags;
+function contextClozeToString(c) {
+    return (c.left || c.right) ? `${c.left}[${c.cloze}]${c.right}` : c.cloze;
+}
+function contextClozeOrStringToString(c) {
+    return typeof c === 'string' ? c : contextClozeToString(c);
+}
+const tagsPromise = exports.jmdictPromise
