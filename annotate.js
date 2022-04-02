@@ -845,4 +845,9 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
             const resBody = sentence;
             return [resBody];
         }
-        const res = yield mecabJdepp(sent
+        const res = yield mecabJdepp(sentence, nBest);
+        return Promise.all(res.map((res) => __awaiter(this, void 0, void 0, function* () {
+            const morphemes = res.morphemes;
+            const bunsetsus = res.bunsetsus;
+            const furigana = yield morphemesToFurigana(sentence, morphemes, overrides);
+            const tags = yield tag
