@@ -850,4 +850,10 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
             const morphemes = res.morphemes;
             const bunsetsus = res.bunsetsus;
             const furigana = yield morphemesToFurigana(sentence, morphemes, overrides);
-            const tags = yield tag
+            const tags = yield tagsPromise;
+            const dictHits = yield enumerateDictionaryHits(morphemes, true, 10);
+            for (let i = 0; i < dictHits.length; i++) {
+                for (let j = 0; j < dictHits[i].results.length; j++) {
+                    const words = yield jmdictIdsToWords(dictHits[i].results[j].results);
+                    for (let k = 0; k < words.length; k++) {
+                        d
