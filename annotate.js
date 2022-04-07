@@ -856,4 +856,9 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
                 for (let j = 0; j < dictHits[i].results.length; j++) {
                     const words = yield jmdictIdsToWords(dictHits[i].results[j].results);
                     for (let k = 0; k < words.length; k++) {
-                        d
+                        dictHits[i].results[j].results[k].summary = displayWordLight(words[k], tags);
+                        if (includeWord) {
+                            const word = words[k];
+                            dictHits[i].results[j].results[k].word = word;
+                            const thisTag = dictHits[i].results[j].results[k].tags;
+                            for (const 
