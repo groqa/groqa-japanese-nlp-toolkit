@@ -874,4 +874,12 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
                 .map(c => [c, Object.assign(Object.assign({}, kanjidic[c]), { dependencies: searchMap(treeSearch(wanikaniGraph, c), c => (kanjidic[c] || null))
                         .children })]));
             let clozes = undefined;
-  
+            if (extractParticlesConj) {
+                clozes = yield identifyFillInBlanks(bunsetsus.map(o => o.morphemes));
+            }
+            const resBody = { furigana, hits: dictHits, kanjidic: kanjidicHits, clozes, tags: includeWord ? tags : undefined, bunsetsus };
+            return resBody;
+        })));
+    });
+}
+exports.handleSent
