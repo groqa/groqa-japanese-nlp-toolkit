@@ -869,3 +869,9 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
                 }
             }
             const kanjidic = yield kanjidicPromise;
+            const kanjidicHits = Object.fromEntries(sentence.split('')
+                .filter(c => c in kanjidic)
+                .map(c => [c, Object.assign(Object.assign({}, kanjidic[c]), { dependencies: searchMap(treeSearch(wanikaniGraph, c), c => (kanjidic[c] || null))
+                        .children })]));
+            let clozes = undefined;
+  
