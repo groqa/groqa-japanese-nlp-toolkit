@@ -882,4 +882,14 @@ function handleSentence(sentence, overrides = {}, includeWord = true, extractPar
         })));
     });
 }
-exports.handleSent
+exports.handleSentence = handleSentence;
+function treeSearch(tree, node, seen = new Set()) {
+    seen.add(node);
+    const children = (tree[node] || []).filter(node => !seen.has(node));
+    for (const child of children) {
+        seen.add(child);
+    }
+    return { node, children: children.map(node => treeSearch(tree, node, seen)) };
+}
+function searchMap(search, f) {
+    return { node: search.node, nodeMapped: f(search.node), c
