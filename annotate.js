@@ -903,4 +903,14 @@ if (module === require.main) {
     }
     (() => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        for (cons
+        for (const line of ['かぜひいた',
+        ]) {
+            console.log('\n===\n');
+            const xs = yield handleSentence(line);
+            for (const x of xs) {
+                if (typeof x === 'string') {
+                    continue;
+                }
+                console.log(x.furigana);
+                console.log('conj');
+                p((
