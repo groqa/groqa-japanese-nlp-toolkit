@@ -892,4 +892,15 @@ function treeSearch(tree, node, seen = new Set()) {
     return { node, children: children.map(node => treeSearch(tree, node, seen)) };
 }
 function searchMap(search, f) {
-    return { node: search.node, nodeMapped: f(search.node), c
+    return { node: search.node, nodeMapped: f(search.node), children: search.children.map(node => searchMap(node, f)) };
+}
+if (module === require.main) {
+    function renderDeconjugation(d) {
+        if ("auxiliaries" in d) {
+            return `${d.auxiliaries.join(" + ")} + ${d.conjugation}`;
+        }
+        return d.conjugation;
+    }
+    (() => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
+        for (cons
