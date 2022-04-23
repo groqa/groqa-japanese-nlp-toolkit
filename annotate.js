@@ -913,4 +913,7 @@ if (module === require.main) {
                 }
                 console.log(x.furigana);
                 console.log('conj');
-                p((
+                p((_a = x.clozes) === null || _a === void 0 ? void 0 : _a.conjugatedPhrases.map(o => o.morphemes.map(m => m.literal).join('|')));
+                console.log('deconj');
+                console.dir((_b = x.clozes) === null || _b === void 0 ? void 0 : _b.conjugatedPhrases.map(o => o.deconj.map(m => renderDeconjugation(m))), { depth: null });
+                // console.log('pa
