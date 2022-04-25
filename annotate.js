@@ -922,4 +922,9 @@ if (module === require.main) {
                 const SHOW_HITS = false;
                 if (SHOW_HITS) {
                     const MAX_LINES = 10000;
-                    const { db } = 
+                    const { db } = yield exports.jmdictPromise;
+                    const tags = JSON.parse(yield jmdict_simplified_node_1.getField(db, 'tags'));
+                    for (const fromStart of x.hits) {
+                        for (const fromEnd of fromStart.results) {
+                            console.log(`  - Vocab: ${contextClozeOrStringToString(fromEnd.run)} INFO`);
+    
