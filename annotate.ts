@@ -58,4 +58,17 @@ export const jmdictFuriganaPromise = setupJmdictFurigana(process.env['JMDICT_FUR
 export const jmdictPromise = setupJmdict(
     process.env['JMDICT_SIMPLIFIED_LEVELDB'] || 'jmdict-simplified',
     process.env['JMDICT_SIMPLIFIED_JSON'] ||
-   
+        readdirSync('.').sort().reverse().find(s => s.startsWith('jmdict-eng') && s.endsWith('.json')) ||
+        'jmdict-eng-3.1.0.json',
+    true,
+    true,
+);
+
+/**
+ * Without this limit on how many Leveldb hits jmdict-simplified-node will get, things slow way down. Not much loss in
+ * usefulness with this set to 20.
+ */
+const DICTIONARY_LIMIT = 20;
+
+/**
+ * Outer index: 1 through
