@@ -80,4 +80,9 @@ interface MecabJdeppParsed {
 }
 export async function mecabJdepp(sentence: string, nBest = 1): Promise<MecabJdeppParsed[]> {
   let rawMecab = await invokeMecab(sentence, nBest);
-  let {morphemes: allSentencesMorphemes, r
+  let {morphemes: allSentencesMorphemes, raws: allSentencesRaws} = parseMecab(rawMecab, nBest);
+  // throw away multiple sentences, we're only going to pass in one (hopefully)
+  const morphemes = allSentencesMorphemes[0];
+  const raws = allSentencesRaws[0];
+  const bunsetsus = await Promise.all(morphemes.map((attempt, idx) => addJdepp(raws[idx], attempt)))
+  return morphemes.map((attempt, idx) => ({morphemes: attempt, bunse
