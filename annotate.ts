@@ -17,3 +17,22 @@ import {
   idsToWords,
   kanjiBeginning,
   readingBeginning,
+  Sense,
+  setup as setupJmdict,
+  Tag,
+  Word,
+  Xref,
+} from 'jmdict-simplified-node';
+import {adjDeconjugate, AdjDeconjugated, Deconjugated, verbDeconjugate} from 'kamiya-codec';
+import path from 'path';
+
+import {lookup} from './chino-particles';
+import {
+  ConjugatedPhrase,
+  ContextCloze,
+  FillInTheBlanks,
+  Particle,
+  ScoreHit,
+  ScoreHits,
+  SearchMapped,
+  v
