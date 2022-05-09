@@ -49,4 +49,13 @@ export {
   Furigana,
   furiganaToString,
   JmdictFurigana,
-  
+  Ruby,
+  setup as setupJmdictFurigana
+} from 'jmdict-furigana-node';
+export {getField} from 'jmdict-simplified-node';
+
+export const jmdictFuriganaPromise = setupJmdictFurigana(process.env['JMDICT_FURIGANA']);
+export const jmdictPromise = setupJmdict(
+    process.env['JMDICT_SIMPLIFIED_LEVELDB'] || 'jmdict-simplified',
+    process.env['JMDICT_SIMPLIFIED_JSON'] ||
+   
