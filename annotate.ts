@@ -71,4 +71,13 @@ export const jmdictPromise = setupJmdict(
 const DICTIONARY_LIMIT = 20;
 
 /**
- * Outer index: 1 through
+ * Outer index: 1 through `nBest` MeCab parsings.
+ * Inner index: individual morphemes/bunsetsu
+ */
+interface MecabJdeppParsed {
+  morphemes: Morpheme[];
+  bunsetsus: Bunsetsu<Morpheme>[];
+}
+export async function mecabJdepp(sentence: string, nBest = 1): Promise<MecabJdeppParsed[]> {
+  let rawMecab = await invokeMecab(sentence, nBest);
+  let {morphemes: allSentencesMorphemes, r
