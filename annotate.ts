@@ -35,4 +35,18 @@ import {
   ScoreHit,
   ScoreHits,
   SearchMapped,
-  v
+  v1ResSentence,
+  v1ResSentenceNbest
+} from './interfaces';
+import {addJdepp, Bunsetsu} from './jdepp';
+import {setupSimple as kanjidicSetup, SimpleCharacter} from './kanjidic';
+import {invokeMecab, maybeMorphemesToMorphemes, Morpheme, parseMecab} from './mecabUnidic';
+
+export * from './interfaces';
+
+export {
+  Entry,
+  Furigana,
+  furiganaToString,
+  JmdictFurigana,
+  
