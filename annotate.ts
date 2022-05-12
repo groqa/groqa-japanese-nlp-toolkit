@@ -85,4 +85,13 @@ export async function mecabJdepp(sentence: string, nBest = 1): Promise<MecabJdep
   const morphemes = allSentencesMorphemes[0];
   const raws = allSentencesRaws[0];
   const bunsetsus = await Promise.all(morphemes.map((attempt, idx) => addJdepp(raws[idx], attempt)))
-  return morphemes.map((attempt, idx) => ({morphemes: attempt, bunse
+  return morphemes.map((attempt, idx) => ({morphemes: attempt, bunsetsus: bunsetsus[idx]}));
+}
+
+const p = (x: any) => console.dir(x, {depth: null});
+type WithSearchReading<T> = T&{ searchReading: string[]; };
+type WithSearchKanji<T> = T&{ searchKanji: string[]; };
+/**
+ * Given MeCab morphemes, return a triply-nested array of JMDict hits.
+ *
+ * The outer-most layer enumerates the *starting* morpheme, the middle layer the ending morpheme, and the fin
