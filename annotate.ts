@@ -100,4 +100,13 @@ type WithSearchKanji<T> = T&{ searchKanji: string[]; };
  * Roughly, in code (except we might not find anything for all start-to-end sequences):
  * ```js
  * for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
- *  for (let endIdx = morphemes.len
+ *  for (let endIdx = morphemes.length; endIdx > startIdx; endIdx--) {
+ *    result.push(JMDict.search(morpehemes.slice(startIdx, endIdx)));
+ *  }
+ * }
+ * ```
+ */
+export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full = true,
+                                              limit = -1): Promise<ScoreHits[]> {
+  const {db} = await jmdictPromise;
+  const s
