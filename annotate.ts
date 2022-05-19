@@ -109,4 +109,10 @@ type WithSearchKanji<T> = T&{ searchKanji: string[]; };
 export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full = true,
                                               limit = -1): Promise<ScoreHits[]> {
   const {db} = await jmdictPromise;
-  const s
+  const simplify = (c: ContextCloze) => (c.left || c.right) ? c : c.cloze;
+
+  const jmdictFurigana = await jmdictFuriganaPromise;
+  const morphemes: WithSearchKanji<WithSearchReading<Morpheme>>[] = plainMorphemes.map(
+      m => ({
+        ...m,
+        // if "symbol" POS, don't needlessly double the number of things to search for later
