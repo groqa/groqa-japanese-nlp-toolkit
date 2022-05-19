@@ -115,4 +115,10 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
   const morphemes: WithSearchKanji<WithSearchReading<Morpheme>>[] = plainMorphemes.map(
       m => ({
         ...m,
-        // if "symbol" POS, don't needlessly double the number of things to search for later
+        // if "symbol" POS, don't needlessly double the number of things to search for later in forkingPaths
+        searchKanji: unique(m.partOfSpeech[0].startsWith('symbol') ? [m.literal] : [m.literal, m.lemma]),
+        searchReading: unique(morphemeToSearchLemma(m).concat(morphemeToStringLiteral(m, jmdictFurigana)))
+      }));
+  const superhits: ScoreHits[] = [];
+  for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
+    const results: ScoreHits['results'] 
