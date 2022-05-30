@@ -121,4 +121,16 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
       }));
   const superhits: ScoreHits[] = [];
   for (let startIdx = 0; startIdx < morphemes.length; startIdx++) {
-    const results: ScoreHits['results'] 
+    const results: ScoreHits['results'] = [];
+
+    if (!full) {
+      const pos = morphemes[startIdx].partOfSpeech;
+      if (pos[0].startsWith('supplementary') || pos[0].startsWith('auxiliary')) {
+        // skip these
+        superhits.push({startIdx, results});
+        continue;
+      }
+    }
+
+    for (let endIdx = Math.min(morphemes.length, startIdx + 5); endIdx > startIdx; --endIdx) {
+   
