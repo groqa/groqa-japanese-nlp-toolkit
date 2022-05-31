@@ -138,4 +138,10 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
       const runLiteral = simplify(generateContextClozed(bunsetsuToString(morphemes.slice(0, startIdx)), runLiteralCore,
                                                         bunsetsuToString(morphemes.slice(endIdx))));
       if (!full) {
-  
+        // skip particles like は and も if they're by themselves as an optimization
+        if (runLiteralCore.length === 1 && hasKana(runLiteralCore[0]) && runLiteralCore === run[0].lemma) { continue; }
+      }
+      const scored: ScoreHit[] = [];
+
+      function helperSearchesHitsToScored(searches: string[], subhits: Word[][],
+               
