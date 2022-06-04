@@ -149,4 +149,16 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
           // help catch issues with automatic type widening and excess property checks
           const ret: ScoreHit = {
             wordId: w.id,
-            score: scoreMorphemeWord(run, searches[i], searc
+            score: scoreMorphemeWord(run, searches[i], searchKey, w),
+            search: searches[i],
+            tags: {}
+            // run: runLiteral,
+            // runIdx: [startIdx, endIdx - 1],
+          };
+          return ret;
+        })));
+      }
+      // Search reading
+      {
+        const readingSearches = forkingPaths(run.map(m => m.searchReading)).map(v => v.join(''));
+        // Consider searching renda
