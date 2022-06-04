@@ -144,4 +144,9 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
       const scored: ScoreHit[] = [];
 
       function helperSearchesHitsToScored(searches: string[], subhits: Word[][],
-               
+                                          searchKey: "kana"|"kanji"): ScoreHit[] {
+        return flatten(subhits.map((v, i) => v.map(w => {
+          // help catch issues with automatic type widening and excess property checks
+          const ret: ScoreHit = {
+            wordId: w.id,
+            score: scoreMorphemeWord(run, searches[i], searc
