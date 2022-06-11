@@ -161,4 +161,10 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
       // Search reading
       {
         const readingSearches = forkingPaths(run.map(m => m.searchReading)).map(v => v.join(''));
-        // Consider searching renda
+        // Consider searching rendaku above for non-initial morphemes? It'd be nice if "猿ちえお" (saru chi e o) found
+        // "猿知恵" (さるぢえ・さるじえ)
+
+        const readingSubhits =
+            await Promise.all(readingSearches.map(search => readingBeginning(db, search, DICTIONARY_LIMIT)));
+        scored.push(...helperSearchesHitsToScored(readingSearches, readingSubhits, 'kana'));
+     
