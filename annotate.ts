@@ -167,4 +167,21 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
         const readingSubhits =
             await Promise.all(readingSearches.map(search => readingBeginning(db, search, DICTIONARY_LIMIT)));
         scored.push(...helperSearchesHitsToScored(readingSearches, readingSubhits, 'kana'));
-     
+      }
+      // Search literals if needed, this works around MeCab mis-readings like お父さん->おちちさん
+      {
+        const kanjiSearches = forkingPaths(run.map(m => m.searchKanji)).map(v => v.join('')).filter(hasKanji);
+        const kanjiSubhits =
+            await Promise.all(kanjiSearches.map(search => kanjiBeginning(db, search, DICTIONARY_LIMIT)));
+        scored.push(...helperSearchesHitsToScored(kanjiSearches, kanjiSubhits, 'kanji'));
+      }
+
+      scored.sort((a, b) => b.score - a.score);
+      if (scored.length > 0) {
+        results.push({endIdx, run: runLiteral, results: dedupeLimit(scored, o => o.wordId, limit)});
+      }
+    }
+
+    if (results.length === 0) {
+      // we didn't find ANYTHING for this morpheme? Try character by character
+ 
