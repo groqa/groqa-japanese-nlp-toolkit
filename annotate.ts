@@ -198,4 +198,16 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
             const search = all[idx];
             for (const w of hits) {
               const score = scoreMorphemeWord([m], search, key, w)
-              scored.push({wo
+              scored.push({wordId: w.id, score, search, tags: {}});
+            }
+          }
+        }
+      }
+
+      if (scored.length > 0) {
+        scored.sort((a, b) => b.score - a.score);
+        const endIdx = startIdx + 1;
+
+        const run = morphemes.slice(startIdx, endIdx);
+        const runLiteralCore = bunsetsuToString(run);
+        const runLiteral = simp
