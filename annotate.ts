@@ -184,4 +184,12 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
 
     if (results.length === 0) {
       // we didn't find ANYTHING for this morpheme? Try character by character
- 
+      const m = morphemes[startIdx];
+
+      const scored: ScoreHit[] = [];
+
+      for (const [searches, searchFn, key] of [[m.searchReading, readingBeginning, 'kana'],
+                                               [m.searchKanji, kanjiBeginning, 'kanji'],
+      ] as const) {
+        for (const search of searches) {
+          const all = Array.from(allS
