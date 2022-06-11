@@ -192,4 +192,10 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
                                                [m.searchKanji, kanjiBeginning, 'kanji'],
       ] as const) {
         for (const search of searches) {
-          const all = Array.from(allS
+          const all = Array.from(allSubstrings(search));
+          const subhits = await Promise.all(all.map(search => searchFn(db, search, DICTIONARY_LIMIT)));
+          for (const [idx, hits] of subhits.entries()) {
+            const search = all[idx];
+            for (const w of hits) {
+              const score = scoreMorphemeWord([m], search, key, w)
+              scored.push({wo
