@@ -210,4 +210,12 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
 
         const run = morphemes.slice(startIdx, endIdx);
         const runLiteralCore = bunsetsuToString(run);
-        const runLiteral = simp
+        const runLiteral = simplify(generateContextClozed(bunsetsuToString(morphemes.slice(0, startIdx)),
+                                                          runLiteralCore, bunsetsuToString(morphemes.slice(endIdx))));
+
+        results.push({endIdx, run: runLiteral, results: dedupeLimit(scored, o => o.wordId, limit)});
+      }
+    }
+    {
+      // add relateds
+      for (const r of results) {
