@@ -219,3 +219,10 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
     {
       // add relateds
       for (const r of results) {
+        const words = await jmdictIdsToWords(r.results);
+        const xrefs = words.flatMap(w => w.sense.flatMap(s => s.related));
+        const references = await Promise.all(xrefs.flatMap(x => getXrefs(db, x).then(refs => ({refs, xref: x}))));
+
+        for (const {refs, xref} of references) {
+          for (const word of refs) {
+            r.results.push({wo
