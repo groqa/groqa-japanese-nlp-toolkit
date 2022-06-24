@@ -237,4 +237,9 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
 function scoreMorphemeWord(run: Morpheme[], searched: string, searchKey: 'kana'|'kanji', word: Word): number {
   const len = searched.length;
 
-  // if the shortest kana is shorte
+  // if the shortest kana is shorter than the search, let the cost be 0. If shortest kana is longer than search, let the
+  // overrun cost be negative. Shortest because we're being optimistic
+  const overrunPenalty =
+      Math.min(0, len - Math.min(...word[searchKey].filter(k => k.text.includes(searched)).map(k => k.text.length)));
+
+  // literal may contain kanji that lemma doesn't, e.g., 大阪's litera
