@@ -225,4 +225,16 @@ export async function enumerateDictionaryHits(plainMorphemes: Morpheme[], full =
 
         for (const {refs, xref} of references) {
           for (const word of refs) {
-            r.results.push({wo
+            r.results.push({wordId: word.id, score: 0, search: JSON.stringify({xref}), tags: {}, isXref: true})
+          }
+        }
+      }
+    }
+    superhits.push({startIdx, results});
+  }
+  return superhits;
+}
+function scoreMorphemeWord(run: Morpheme[], searched: string, searchKey: 'kana'|'kanji', word: Word): number {
+  const len = searched.length;
+
+  // if the shortest kana is shorte
