@@ -242,4 +242,8 @@ function scoreMorphemeWord(run: Morpheme[], searched: string, searchKey: 'kana'|
   const overrunPenalty =
       Math.min(0, len - Math.min(...word[searchKey].filter(k => k.text.includes(searched)).map(k => k.text.length)));
 
-  // literal may contain kanji that lemma doesn't, e.g., 大阪's litera
+  // literal may contain kanji that lemma doesn't, e.g., 大阪's literal in UniDic is katakana
+  const wordKanjis = new Set(flatten(word.kanji.map(k => k.text.split('').filter(hasKanji))));
+  const lemmaKanjis = new Set(flatten(run.map(m => m.lemma.split('').filter(hasKanji))));
+  const literalKanjis = new Set(flatten(run.map(m => m.literal.split('').filter(hasKanji))));
+  const lemmaKanjiBonus = intersecti
