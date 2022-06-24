@@ -246,4 +246,9 @@ function scoreMorphemeWord(run: Morpheme[], searched: string, searchKey: 'kana'|
   const wordKanjis = new Set(flatten(word.kanji.map(k => k.text.split('').filter(hasKanji))));
   const lemmaKanjis = new Set(flatten(run.map(m => m.lemma.split('').filter(hasKanji))));
   const literalKanjis = new Set(flatten(run.map(m => m.literal.split('').filter(hasKanji))));
-  const lemmaKanjiBonus = intersecti
+  const lemmaKanjiBonus = intersectionSize(lemmaKanjis, wordKanjis);
+  const literalKanjiBonus = intersectionSize(literalKanjis, wordKanjis);
+
+  // make sure one-morpheme particles rise to the top of the pile of 10k hits...
+  const particleBonus = +(run.length === 1 && run[0].partOfSpeech.some(pos => pos.includes('particle')) &&
+                          word.sense.some(sense => sense
