@@ -251,4 +251,12 @@ function scoreMorphemeWord(run: Morpheme[], searched: string, searchKey: 'kana'|
 
   // make sure one-morpheme particles rise to the top of the pile of 10k hits...
   const particleBonus = +(run.length === 1 && run[0].partOfSpeech.some(pos => pos.includes('particle')) &&
-                          word.sense.some(sense => sense
+                          word.sense.some(sense => sense.partOfSpeech.includes('prt')));
+
+  return overrunPenalty * 10 + literalKanjiBonus * 2 + lemmaKanjiBonus * 1 + 5 * particleBonus;
+}
+function intersection<T>(small: Set<T>, big: Set<T>): Set<T> {
+  if (small.size > big.size * 1.1) { return intersection(big, small); }
+  const ret: Set<T> = new Set();
+  for (const x of small) {
+    if (big.has(x)) { 
