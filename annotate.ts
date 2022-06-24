@@ -259,4 +259,16 @@ function intersection<T>(small: Set<T>, big: Set<T>): Set<T> {
   if (small.size > big.size * 1.1) { return intersection(big, small); }
   const ret: Set<T> = new Set();
   for (const x of small) {
-    if (big.has(x)) { 
+    if (big.has(x)) { ret.add(x) }
+  }
+  return ret;
+}
+function intersectionSize<T>(small: Set<T>, big: Set<T>): number {
+  if (small.size > big.size * 1.1) { return intersectionSize(big, small); }
+  let ret = 0;
+  for (const x of small) { ret += +big.has(x); }
+  return ret;
+}
+function unique<T>(v: T[]): T[] { return [...new Set(v)]; }
+
+const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬
