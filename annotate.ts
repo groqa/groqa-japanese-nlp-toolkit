@@ -275,4 +275,12 @@ const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱�
 const prefixNumber = (n: number) => circledNumbers[n] || `(${n + 1})`;
 export function displayWord(w: Word) {
   return w.kanji.map(k => k.text).join('・') + '「' + w.kana.map(k => k.text).join('・') + '」：' +
-         w.sense.map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/')
+         w.sense.map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/')).join('; ');
+}
+
+function printXrefs(v: Xref[]) { return v.map(x => x.join(',')).join(';'); }
+export function displayWordLight(w: Word, tags: Record<string, string>) {
+  const kanji = w.kanji.map(k => k.text).join('・');
+  const kana = w.kana.map(k => k.text).join('・');
+
+  type TagKey = {[K in keyof Sense]: Sense[K] extends Tag[] ? K : never}[keyof Sense]
