@@ -271,4 +271,8 @@ function intersectionSize<T>(small: Set<T>, big: Set<T>): number {
 }
 function unique<T>(v: T[]): T[] { return [...new Set(v)]; }
 
-const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬
+const circledNumbers = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕㉖㉗㉘㉙㉚㉛㉜㉝㉞㉟㊱㊲㊳㊴㊵㊶㊷㊸㊹㊺㊻㊼㊽㊾㊿".split('');
+const prefixNumber = (n: number) => circledNumbers[n] || `(${n + 1})`;
+export function displayWord(w: Word) {
+  return w.kanji.map(k => k.text).join('・') + '「' + w.kana.map(k => k.text).join('・') + '」：' +
+         w.sense.map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/')
