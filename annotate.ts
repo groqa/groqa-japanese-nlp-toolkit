@@ -294,4 +294,12 @@ export function displayWordLight(w: Word, tags: Record<string, string>) {
                                  .map(([k, v]) => sense[k as TagKey].length
                                                       ? ` (${v} ${sense[k as TagKey].map(k => tags[k]).join('; ')})`
                                                       : '')
-                               
+                                 .join(''))
+          .join(' ');
+  // console.error(related)
+  return `${kanji}「${kana}」| ${s}`;
+}
+export function displayWordDetailed(w: Word, tags: {[k: string]: string}) {
+  return w.kanji.concat(w.kana).map(k => k.text).join('・') + '：' +
+         w.sense
+             .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') + ' 
