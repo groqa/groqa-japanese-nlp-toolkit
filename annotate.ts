@@ -324,4 +324,11 @@ function forkingPaths<T>(v: T[][]): T[][] {
 
 const bunsetsuToString = (morphemes: Morpheme[]) => morphemes.map(m => m.literal).join('');
 function betterMorphemePredicate(m: Morpheme): boolean {
-  return !(m.partOfSpeech[0] === 'supple
+  return !(m.partOfSpeech[0] === 'supplementary_symbol') && !(m.partOfSpeech[0] === 'particle');
+}
+
+async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[], fullCloze: ContextCloze,
+                                      verbose = false): Promise<ConjugatedPhrase> {
+  const endIdx = startIdx + goodBunsetsu.length;
+  const cloze = bunsetsuToString(goodBunsetsu);
+  const jf = a
