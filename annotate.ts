@@ -313,4 +313,15 @@ export function displayWordDetailed(w: Word, tags: {[k: string]: string}) {
  *
  * Treats each sub-array in an array of arrays as a list of choices for that slot, and enumerates all paths.
  *
- * So [['hi', 'ola'], ['Sal']] => [['hi', 'Sal'], ['ola', 
+ * So [['hi', 'ola'], ['Sal']] => [['hi', 'Sal'], ['ola', 'Sal']]
+ *
+ */
+function forkingPaths<T>(v: T[][]): T[][] {
+  let ret: T[][] = [[]];
+  for (const u of v) { ret = flatten(u.map(x => ret.map(v => v.concat(x)))); }
+  return ret;
+}
+
+const bunsetsuToString = (morphemes: Morpheme[]) => morphemes.map(m => m.literal).join('');
+function betterMorphemePredicate(m: Morpheme): boolean {
+  return !(m.partOfSpeech[0] === 'supple
