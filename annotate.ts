@@ -302,4 +302,15 @@ export function displayWordLight(w: Word, tags: Record<string, string>) {
 export function displayWordDetailed(w: Word, tags: {[k: string]: string}) {
   return w.kanji.concat(w.kana).map(k => k.text).join('・') + '：' +
          w.sense
-             .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') + ' 
+             .map((sense, n) => prefixNumber(n) + ' ' + sense.gloss.map(gloss => gloss.text).join('/') + ' {*' +
+                                sense.partOfSpeech.map(pos => tags[pos]).join('; ') + '*}')
+             .join('; ') +
+         ' #' + w.id;
+}
+
+/**
+ * Cartesian product.
+ *
+ * Treats each sub-array in an array of arrays as a list of choices for that slot, and enumerates all paths.
+ *
+ * So [['hi', 'ola'], ['Sal']] => [['hi', 'Sal'], ['ola', 
