@@ -339,4 +339,9 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
       // sometimes ("ひいた" in "かぜひいた"), UniDic lemmas are weird like "引く-他動詞" eyeroll
       entries.push(...(jf.textToEntry.get(o.lemma.replace('-他動詞', '')) || []))
     }
-   
+    const lemmaReading = kata2hira(o.lemmaReading);
+    const entry = entries.find(e => e.reading === lemmaReading);
+    return entry ? entry.furigana : o.lemma === lemmaReading ? [lemmaReading] : [{ruby: o.lemma, rt: lemmaReading}];
+  });
+
+  const ret: ConjugatedPhrase = {deconj: [], startIdx, endIdx, morphemes: goodBunsetsu, cloze: fullClo
