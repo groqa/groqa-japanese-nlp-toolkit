@@ -351,4 +351,11 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
   const pos0Last = first.partOfSpeech[first.partOfSpeech.length - 1];
   const verbNotAdj = pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0Last === 'verbal_suru';
   const ichidan = first.inflectionType?.[0].includes('ichidan');
-  const iAdj = pos0.endsWith('adjecti
+  const iAdj = pos0.endsWith('adjective_i');
+
+  const deconjs: (AdjDeconjugated|Deconjugated)[] = [];
+  for (const mergeSuffixes of [true, false]) {
+    // sometimes the lemma is too helpful: "ワンダフル-wonderful", so split on dash
+    let dictionaryForm = goodBunsetsu[0].lemma.split('-')[0];
+    if (mergeSuffixes) {
+      const nonSuffixIdx = goodBunsetsu.findIndex
