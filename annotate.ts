@@ -365,4 +365,11 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
     }
 
     // Often the literal cloze will have fewer kanji than the lemma
-    if (cloze.split('').filter(hasKanji).length !== dictionaryForm.split('').filter(hasKanji).length)
+    if (cloze.split('').filter(hasKanji).length !== dictionaryForm.split('').filter(hasKanji).length) {
+      // deconjugate won't find anything. Look at lemmas and try to kana-ify the dictionaryForm
+      for (const lemma of lemmas.flat()) {
+        if (typeof lemma === 'string') { continue; }
+        const {rt} = lemma;
+        // As above, the lemma is sometimes too detailed: "引く-他動詞"
+        const ruby = lemma.ruby.split('-')[0];
+        // Replace th
