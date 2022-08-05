@@ -372,4 +372,11 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
         const {rt} = lemma;
         // As above, the lemma is sometimes too detailed: "引く-他動詞"
         const ruby = lemma.ruby.split('-')[0];
-        // Replace th
+        // Replace the kanji in the dictionary form if it's not in the literal cloze
+        if (!cloze.includes(ruby)) { dictionaryForm = dictionaryForm.replace(ruby, rt); }
+      }
+    }
+
+    if (verbose) { console.log('? ', {verbNotAdj, ichidan, iAdj, dictionaryForm, cloze}) }
+    const deconj =
+        verbNotAdj ? verbDeconjugate(cloze, dictionaryForm, ichid
