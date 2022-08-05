@@ -331,4 +331,12 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
                                       verbose = false): Promise<ConjugatedPhrase> {
   const endIdx = startIdx + goodBunsetsu.length;
   const cloze = bunsetsuToString(goodBunsetsu);
-  const jf = a
+  const jf = await jmdictFuriganaPromise;
+
+  const lemmas = goodBunsetsu.map(o => {
+    const entries = jf.textToEntry.get(o.lemma) || [];
+    if (o.lemma.endsWith('-他動詞') && o.partOfSpeech[0] === 'verb') {
+      // sometimes ("ひいた" in "かぜひいた"), UniDic lemmas are weird like "引く-他動詞" eyeroll
+      entries.push(...(jf.textToEntry.get(o.lemma.replace('-他動詞', '')) || []))
+    }
+   
