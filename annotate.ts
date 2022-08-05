@@ -358,4 +358,11 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
     // sometimes the lemma is too helpful: "ワンダフル-wonderful", so split on dash
     let dictionaryForm = goodBunsetsu[0].lemma.split('-')[0];
     if (mergeSuffixes) {
-      const nonSuffixIdx = goodBunsetsu.findIndex
+      const nonSuffixIdx = goodBunsetsu.findIndex((m, i) => i > 0 && m.partOfSpeech[0] !== 'suffix');
+      if (nonSuffixIdx >= 1) {
+        dictionaryForm += goodBunsetsu.slice(1, nonSuffixIdx).map(m => m.lemma.split('-')[0]).join('');
+      }
+    }
+
+    // Often the literal cloze will have fewer kanji than the lemma
+    if (cloze.split('').filter(hasKanji).length !== dictionaryForm.split('').filter(hasKanji).length)
