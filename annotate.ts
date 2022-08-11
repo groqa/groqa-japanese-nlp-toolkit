@@ -379,4 +379,10 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
 
     if (verbose) { console.log('? ', {verbNotAdj, ichidan, iAdj, dictionaryForm, cloze}) }
     const deconj =
-        verbNotAdj ? verbDeconjugate(cloze, dictionaryForm, ichid
+        verbNotAdj ? verbDeconjugate(cloze, dictionaryForm, ichidan) : adjDeconjugate(cloze, dictionaryForm, iAdj);
+    if (deconj.length) {
+      deconjs.push(...(deconj as Ugh<typeof deconj>));
+    } else {
+      // sometimes, the lemma has a totally different kanji: 刺される has lemma "差す-他動詞" lol.
+      // in these situations, try replacing kanji from the cloze into the dictionary form.
+      const clozeKanji = cloze.spl
