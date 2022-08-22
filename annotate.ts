@@ -385,4 +385,10 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
     } else {
       // sometimes, the lemma has a totally different kanji: 刺される has lemma "差す-他動詞" lol.
       // in these situations, try replacing kanji from the cloze into the dictionary form.
-      const clozeKanji = cloze.spl
+      const clozeKanji = cloze.split('').filter(hasKanji);
+      const dictKanji = dictionaryForm.split('').filter(hasKanji);
+      if (clozeKanji.length === dictKanji.length) {
+        // This is a very stupid way to do it but works for 刺される: replace kanji one at a time...
+        for (const [idx, clozeK] of clozeKanji.entries()) {
+          const dictK = dictKanji[idx];
+          co
