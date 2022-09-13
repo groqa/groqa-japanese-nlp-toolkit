@@ -423,4 +423,11 @@ function uniqueKey<T>(v: T[], key: (x: T) => string): T[] {
 }
 
 function* allSlices<T>(v: T[]) {
-  for (let start = 0; start < v.length; sta
+  for (let start = 0; start < v.length; start++) {
+    for (let end = start + 1; end < v.length + 1; end++) { yield {start, end, slice: v.slice(start, end)}; }
+  }
+}
+
+// Find clozes: particles and conjugated verb/adjective phrases
+export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = false): Promise<FillInTheBlanks> {
+  const sentence = bunsetsus.map(bunsetsuT
