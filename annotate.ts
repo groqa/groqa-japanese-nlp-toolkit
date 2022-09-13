@@ -396,4 +396,17 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
                                     : adjDeconjugate(cloze, newDictionaryForm, iAdj);
           if (deconj.length) {
             deconjs.push(...(deconj as Ugh<typeof deconj>));
-      
+            break;
+            // if we find something, pray it's good and bail.
+          }
+        }
+      }
+    }
+  }
+  (ret.deconj as Ugh<typeof ret['deconj']>) = uniqueKey(deconjs, x => {
+    if ('auxiliaries' in x) { return x.auxiliaries.join('/') + x.conjugation + x.result.join('/') }
+    return x.conjugation + x.result.join('/');
+  });
+  return ret;
+}
+type Ugh
