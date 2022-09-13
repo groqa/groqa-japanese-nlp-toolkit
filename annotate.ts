@@ -391,4 +391,9 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
         // This is a very stupid way to do it but works for 刺される: replace kanji one at a time...
         for (const [idx, clozeK] of clozeKanji.entries()) {
           const dictK = dictKanji[idx];
-          co
+          const newDictionaryForm = dictionaryForm.replace(dictK, clozeK);
+          const deconj = verbNotAdj ? verbDeconjugate(cloze, newDictionaryForm, ichidan)
+                                    : adjDeconjugate(cloze, newDictionaryForm, iAdj);
+          if (deconj.length) {
+            deconjs.push(...(deconj as Ugh<typeof deconj>));
+      
