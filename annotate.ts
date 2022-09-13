@@ -409,4 +409,18 @@ async function morphemesToConjPhrases(startIdx: number, goodBunsetsu: Morpheme[]
   });
   return ret;
 }
-type Ugh
+type Ugh<T> = (T extends(infer X)[] ? X : never)[];
+function uniqueKey<T>(v: T[], key: (x: T) => string): T[] {
+  const ys = new Set();
+  const ret: T[] = [];
+  for (const x of v) {
+    const y = key(x);
+    if (ys.has(y)) { continue; }
+    ys.add(y);
+    ret.push(x);
+  }
+  return ret;
+}
+
+function* allSlices<T>(v: T[]) {
+  for (let start = 0; start < v.length; sta
