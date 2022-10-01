@@ -430,4 +430,10 @@ function* allSlices<T>(v: T[]) {
 
 // Find clozes: particles and conjugated verb/adjective phrases
 export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = false): Promise<FillInTheBlanks> {
-  const sentence = bunsetsus.map(bunsetsuT
+  const sentence = bunsetsus.map(bunsetsuToString).join('');
+  const conjugatedPhrases: ConjugatedPhrase[] = [];
+  const particles: Particle[] = [];
+  for (const [bidx, fullBunsetsu] of bunsetsus.entries()) {
+    const startIdx = bunsetsus.slice(0, bidx).map(o => o.length).reduce((p, c) => p + c, 0);
+    if (!fullBunsetsu[0]) { continue; }
+    for (const {start, slice: sliceBunsetsu} of allSlices(ful
