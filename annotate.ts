@@ -455,4 +455,10 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
           (sliceBunsetsu.length > 0 &&
            (pos0.startsWith('verb') || pos0.endsWith('_verb') || pos0.startsWith('adject') ||
             pos0Last === 'verbal_suru' || pos0Last.startsWith('adjectival'))) ||
-          ((pos0.startsWith('aux') && (pos1.startsWith('d
+          ((pos0.startsWith('aux') && (pos1.startsWith('desu') || pos1.startsWith('da'))))) {
+        const middle = bunsetsuToString(sliceBunsetsu);
+        const right = sentence.slice(left.length + middle.length);
+        const cloze = generateContextClozed(left, middle, right)
+        const res = await morphemesToConjPhrases(startIdx + start, sliceBunsetsu, cloze)
+        if (verbose) { console.log('^ found', res.deconj); }
+ 
