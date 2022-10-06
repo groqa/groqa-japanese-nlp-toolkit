@@ -436,4 +436,11 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
   for (const [bidx, fullBunsetsu] of bunsetsus.entries()) {
     const startIdx = bunsetsus.slice(0, bidx).map(o => o.length).reduce((p, c) => p + c, 0);
     if (!fullBunsetsu[0]) { continue; }
-    for (const {start, slice: sliceBunsetsu} of allSlices(ful
+    for (const {start, slice: sliceBunsetsu} of allSlices(fullBunsetsu)) {
+      const left =
+          bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToString(fullBunsetsu.slice(0, start));
+      const first = sliceBunsetsu[0];
+
+      if (verbose) { console.log('g', sliceBunsetsu.map(o => o.literal).join(' ')) }
+      const pos0 = first.partOfSpeech[0] || '';
+      const pos1 = first.partOfSpeech[1] ||
