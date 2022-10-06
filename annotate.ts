@@ -443,4 +443,11 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
 
       if (verbose) { console.log('g', sliceBunsetsu.map(o => o.literal).join(' ')) }
       const pos0 = first.partOfSpeech[0] || '';
-      const pos1 = first.partOfSpeech[1] ||
+      const pos1 = first.partOfSpeech[1] || '';
+      const pos0Last = first.partOfSpeech[first.partOfSpeech.length - 1] || '';
+      /*
+      If a bunsetsu has >1 morphemes, check if it's a verb or an adjective (i or na).
+      If it's just one, make sure it's an adjective that's not a conclusive (catches 朝早く)
+      Also check for copulas (da/desu).
+      */
+      if ((sliceBunsetsu.length === 1 && pos0.starts
