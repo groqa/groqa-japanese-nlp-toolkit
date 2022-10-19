@@ -461,4 +461,11 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
         const cloze = generateContextClozed(left, middle, right)
         const res = await morphemesToConjPhrases(startIdx + start, sliceBunsetsu, cloze)
         if (verbose) { console.log('^ found', res.deconj); }
- 
+        if (res.deconj.length) { conjugatedPhrases.push(res); }
+      }
+    }
+
+    // Handle particles: identify and look up in Chino's "All About Particles" list
+    const particlePredicate = (p: Morpheme) => p.partOfSpeech[0].startsWith('particle') && p.partOfSpeech.length > 1;
+    for (const [pidx, particle] of fullBunsetsu.entries()) {
+      if (particlePredic
