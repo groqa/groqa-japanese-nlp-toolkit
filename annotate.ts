@@ -475,4 +475,9 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
             bunsetsus.slice(0, bidx).map(bunsetsuToString).join('') + bunsetsuToString(fullBunsetsu.slice(0, pidx));
         const right =
             bunsetsuToString(fullBunsetsu.slice(pidx + 1)) + bunsetsus.slice(bidx + 1).map(bunsetsuToString).join('');
- 
+        const cloze = generateContextClozed(left, particle.literal, right);
+        const chino = lookup(cloze.cloze);
+        if (particle.literal !== particle.lemma) {
+          const chinoLemma = lookup(particle.lemma);
+          for (const [chinoNum, chinoStr] of chinoLemma) {
+            if (!chino.find(([c]) => c === chinoNum)) { chino.push([chinoNum, c
