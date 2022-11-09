@@ -480,4 +480,14 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
         if (particle.literal !== particle.lemma) {
           const chinoLemma = lookup(particle.lemma);
           for (const [chinoNum, chinoStr] of chinoLemma) {
-            if (!chino.find(([c]) => c === chinoNum)) { chino.push([chinoNum, c
+            if (!chino.find(([c]) => c === chinoNum)) { chino.push([chinoNum, chinoStr]); }
+          }
+        }
+        particles.push({chino, cloze, startIdx: startIdxParticle, endIdx, morphemes: [particle]});
+      }
+    }
+  }
+  // Try to glue adjacent particles together if they are in Chino's list of particles too
+  const allMorphemes = bunsetsus.flat();
+  for (let i = 0; i < particles.length; i++) {
+    // `4` below means we'
