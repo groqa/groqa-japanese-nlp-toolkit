@@ -490,4 +490,9 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
   // Try to glue adjacent particles together if they are in Chino's list of particles too
   const allMorphemes = bunsetsus.flat();
   for (let i = 0; i < particles.length; i++) {
-    // `4` below means we'
+    // `4` below means we'll try to glue 3 particles together
+    // `j<=...` has to be `<=` because `j` will be `slice`'s 2nd arg and is exclusive (not inclusive)
+    for (let j = i + 2; (j < i + 4) && (j <= particles.length); j++) {
+      const adjacent = particles.slice(i, j);
+
+      if (!adjacent.every((curr, idx, arr) => arr[idx + 1] ? curr.endIdx === arr[idx
