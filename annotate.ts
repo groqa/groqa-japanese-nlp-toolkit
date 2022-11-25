@@ -495,4 +495,14 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
     for (let j = i + 2; (j < i + 4) && (j <= particles.length); j++) {
       const adjacent = particles.slice(i, j);
 
-      if (!adjacent.every((curr, idx, arr) => arr[idx + 1] ? curr.endIdx === arr[idx
+      if (!adjacent.every((curr, idx, arr) => arr[idx + 1] ? curr.endIdx === arr[idx + 1].startIdx : true)) {
+        // `adjacent` isn't actually adjacent
+        continue;
+      }
+
+      const combined = adjacent.map(o => o.cloze.cloze).join('');
+      const hits = lookup(combined);
+      if (hits.length) {
+        const first = adjacent[0];
+        const last = adjacent[adjacent.length - 1];
+        const left = bunsetsuToString(allMorphemes.slice(
