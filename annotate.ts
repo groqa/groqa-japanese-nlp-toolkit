@@ -505,4 +505,13 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
       if (hits.length) {
         const first = adjacent[0];
         const last = adjacent[adjacent.length - 1];
-        const left = bunsetsuToString(allMorphemes.slice(
+        const left = bunsetsuToString(allMorphemes.slice(0, first.startIdx));
+        const right = bunsetsuToString(allMorphemes.slice(last.endIdx));
+        const cloze = generateContextClozed(left, combined, right);
+
+        particles.push({
+          chino: hits,
+          cloze,
+          startIdx: first.startIdx,
+          endIdx: last.endIdx,
+          morphemes: adjacent.flat
