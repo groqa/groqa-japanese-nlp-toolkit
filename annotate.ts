@@ -546,3 +546,11 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
   // so literal has kanji
   if (!m.pronunciation.includes(CHOUONPU)) { return [kata2hira(m.pronunciation)]; }
   // so literal has kanji and the pronunciation has a chouonpu
+  if (m.literal === m.lemma) { return [kata2hira(m.lemmaReading)]; }
+  // so literal has kanji, the pronunciation has chouonpu, and the literal and lemma disagree
+
+  // In these markdown-like tables, the columns folow mecabUnidic.ts, and are:
+  // | literal | pronunciation | lemma reading| lemma |
+
+  // 多             | オー           | オオイ         | 多い
+  // 大阪            
