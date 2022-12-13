@@ -561,4 +561,12 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
   // cant just replace chouonpu with equivlent in lemma! :
   // 聞い | キー | キク | 聞く
 
-  function replaceChouonpuWithString(pronunciat
+  function replaceChouonpuWithString(pronunciation: string, literal: string): string {
+    return pronunciation.split('').map((p, i) => (p === CHOUONPU && hasHiragana(literal[i])) ? literal[i] : p).join('')
+  }
+
+  if (hasHiragana(m.literal)) {
+    // try to see if the chouonpu in pronunication is a hiragana in literal:
+
+    if (m.literal.length === m.pronunciation.length) {
+      // same l
