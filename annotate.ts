@@ -533,4 +533,9 @@ function morphemeToSearchLemma(m: Morpheme): string[] {
 
 const CHOUONPU = 'ー'; // https://en.wikipedia.org/wiki/Ch%C5%8Donpu
 /**
- * Returns array of strings in hiragana, without
+ * Returns array of strings in hiragana, without chouonpu, representing possible pronunciations
+ * Tries hard to make sure the returned array has length 1.
+ */
+function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciation'|'lemmaReading'>,
+                                 jmdictFurigana?: JmdictFurigana): string[] {
+  if (!hasKanji(m.literal)) 
