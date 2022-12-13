@@ -553,4 +553,12 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
   // | literal | pronunciation | lemma reading| lemma |
 
   // 多             | オー           | オオイ         | 多い
-  // 大阪            
+  // 大阪               | オーサカ           | オオサカ           | オオサカ
+  // 京都               | キョート           | キョウト           | キョウト
+  // 東京               | トーキョー         | トウキョウ         | トウキョウ
+  // 見よう             | ミヨー             | ミル               | 見る
+
+  // cant just replace chouonpu with equivlent in lemma! :
+  // 聞い | キー | キク | 聞く
+
+  function replaceChouonpuWithString(pronunciat
