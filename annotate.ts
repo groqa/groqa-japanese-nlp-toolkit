@@ -525,4 +525,12 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
 function morphemeToSearchLemma(m: Morpheme): string[] {
   const pos0 = m.partOfSpeech[0];
   const conjugatable = (m.inflection?.[0]) || (m.inflectionType?.[0]) || pos0.startsWith('verb') ||
-                       pos0.endsWith('_verb') || pos0.startsWith('adject')
+                       pos0.endsWith('_verb') || pos0.startsWith('adject');
+  const potentialRendaku = m.literal === m.lemma && hasKanji(m.lemma) && m.lemmaReading !== m.pronunciation;
+  return (conjugatable || potentialRendaku) ? [kata2hira(m.lemmaReading)] : [];
+  // literal's pronunciation will handle the rest
+}
+
+const CHOUONPU = 'ー'; // https://en.wikipedia.org/wiki/Ch%C5%8Donpu
+/**
+ * Returns array of strings in hiragana, without
