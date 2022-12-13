@@ -514,4 +514,15 @@ export async function identifyFillInBlanks(bunsetsus: Morpheme[][], verbose = fa
           cloze,
           startIdx: first.startIdx,
           endIdx: last.endIdx,
-          morphemes: adjacent.flat
+          morphemes: adjacent.flatMap(o => o.morphemes)
+        });
+      }
+    }
+  }
+  return {particles, conjugatedPhrases};
+}
+
+function morphemeToSearchLemma(m: Morpheme): string[] {
+  const pos0 = m.partOfSpeech[0];
+  const conjugatable = (m.inflection?.[0]) || (m.inflectionType?.[0]) || pos0.startsWith('verb') ||
+                       pos0.endsWith('_verb') || pos0.startsWith('adject')
