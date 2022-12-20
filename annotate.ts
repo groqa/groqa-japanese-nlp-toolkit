@@ -569,4 +569,7 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
     // try to see if the chouonpu in pronunication is a hiragana in literal:
 
     if (m.literal.length === m.pronunciation.length) {
-      // same l
+      // same length: all kanji are one-character, so we can safely split both literal and pronunciation
+      // 飛び立とう | トビタトウ | トビタトー | トビタツ | 飛び立つ
+      const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, m.literal);
+      if (!reconstructedPronunciation.includes(CHOUONPU)) { return [kata2hira(reconstructedPronunci
