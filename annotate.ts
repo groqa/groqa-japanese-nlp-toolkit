@@ -572,4 +572,15 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
       // same length: all kanji are one-character, so we can safely split both literal and pronunciation
       // 飛び立とう | トビタトウ | トビタトー | トビタツ | 飛び立つ
       const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, m.literal);
-      if (!reconstructedPronunciation.includes(CHOUONPU)) { return [kata2hira(reconstructedPronunci
+      if (!reconstructedPronunciation.includes(CHOUONPU)) { return [kata2hira(reconstructedPronunciation)] }
+    }
+
+    // 話し合おう | ハナシアオウ | ハナシアオー | ハナシアウ | 話し合う
+
+    if (jmdictFurigana) {
+      const entries = jmdictFurigana.textToEntry.get(m.lemma);
+      if (entries) {
+        const lemmaReading = kata2hira(m.lemmaReading);
+        const entry = entries.find(e => e.reading === lemmaReading);
+        if (entry) {
+         
