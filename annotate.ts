@@ -583,4 +583,7 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
         const lemmaReading = kata2hira(m.lemmaReading);
         const entry = entries.find(e => e.reading === lemmaReading);
         if (entry) {
-         
+          const furiganaMap = new Map(entry.furigana.map(f => typeof f === 'string' ? ['', ''] : [f.ruby, f.rt]));
+          const reconstructedLiteral = m.literal.split('').map(c => furiganaMap.get(c) || c).join('');
+          if (m.pronunciation.length === reconstructedLiteral.length) {
+            const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, reconstructedLit
