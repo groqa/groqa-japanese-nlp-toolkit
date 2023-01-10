@@ -608,3 +608,16 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
       }
       continue;
     }
+    ret.forEach(v => v.push(p));
+  }
+  return ret.map(v => kata2hira(v.join('')));
+}
+
+const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
+  const as = `ぁあかがさざただなはばぱまゃやらゎわ`;
+  const is = `ぃいきぎしじちぢにひびぴみり`;
+  const us = `ぅうくぐすずっつづぬふぶぷむゅゆるゔ`
+  const es = `ぇえけげせぜてでねへべぺめれ`;
+  const os = `ぉおこごそぞとどのほぼぽもょよろを`;
+  const m: Map<string, string> = new Map();
+  const doer = (as: stri
