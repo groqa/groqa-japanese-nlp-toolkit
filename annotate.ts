@@ -586,4 +586,17 @@ function morphemeToStringLiteral(m: Pick<Morpheme, 'literal'|'lemma'|'pronunciat
           const furiganaMap = new Map(entry.furigana.map(f => typeof f === 'string' ? ['', ''] : [f.ruby, f.rt]));
           const reconstructedLiteral = m.literal.split('').map(c => furiganaMap.get(c) || c).join('');
           if (m.pronunciation.length === reconstructedLiteral.length) {
-            const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, reconstructedLit
+            const reconstructedPronunciation = replaceChouonpuWithString(m.pronunciation, reconstructedLiteral);
+            if (!reconstructedPronunciation.includes(CHOUONPU)) { return [kata2hira(reconstructedPronunciation)] }
+          }
+        }
+      }
+    }
+  }
+
+  // No choice, オー and トー need to be mapped to both options.
+  // Other chouonpu mapped via `DUMB_CHOUONPU_MAP`.
+
+  const pronunciation = m.pronunciation.split('');
+  let ret: string[][] = [[]];
+  for (const [
