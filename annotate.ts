@@ -620,4 +620,14 @@ const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
   const es = `ぇえけげせぜてでねへべぺめれ`;
   const os = `ぉおこごそぞとどのほぼぽもょよろを`;
   const m: Map<string, string> = new Map();
-  const doer = (as: stri
+  const doer = (as: string, target: string) => as.split('').forEach(a => m.set(a, target));
+  doer(as, 'あ');
+  doer(is, 'い');
+  doer(us, 'う');
+  doer(es, 'い');
+  doer(os, 'う');
+  return m;
+})();
+
+export async function morphemesToFurigana(line: string, morphemes: Morpheme[],
+                                          overrides: Partial<Record<string, Furigana[]>>): Promi
