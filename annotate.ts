@@ -630,4 +630,11 @@ const DUMB_CHOUONPU_MAP = (function makeChouonpuMap() {
 })();
 
 export async function morphemesToFurigana(line: string, morphemes: Morpheme[],
-                                          overrides: Partial<Record<string, Furigana[]>>): Promi
+                                          overrides: Partial<Record<string, Furigana[]>>): Promise<Furigana[][]> {
+  return morphemesToFuriganaCore(morphemes, overrides).then(o => checkFurigana(line, o))
+}
+
+/**
+ * Try very hard to convert morphemes to furigana. `overrides` is a map of morpheme literal to the furigana you want.
+ * This is useful because, e.g., Unidic always converts 日本 to ニッポン, and maybe you want overrides such that:
+ * `ove
