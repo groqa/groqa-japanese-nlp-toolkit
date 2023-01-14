@@ -637,4 +637,9 @@ export async function morphemesToFurigana(line: string, morphemes: Morpheme[],
 /**
  * Try very hard to convert morphemes to furigana. `overrides` is a map of morpheme literal to the furigana you want.
  * This is useful because, e.g., Unidic always converts 日本 to ニッポン, and maybe you want overrides such that:
- * `ove
+ * `overrides = new Map([['日本', [{ruby: '日', rt: 'に'}, {ruby: '本', rt: 'ほん'}]]])`
+ * Note that `overrides` operates on a morpheme-by-morpheme basis.
+ */
+export async function morphemesToFuriganaCore(morphemes: Morpheme[],
+                                              overrides: Partial<Record<string, Furigana[]>>): Promise<Furigana[][]> {
+  const furigana: Furigan
