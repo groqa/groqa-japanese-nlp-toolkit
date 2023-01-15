@@ -642,4 +642,15 @@ export async function morphemesToFurigana(line: string, morphemes: Morpheme[],
  */
 export async function morphemesToFuriganaCore(morphemes: Morpheme[],
                                               overrides: Partial<Record<string, Furigana[]>>): Promise<Furigana[][]> {
-  const furigana: Furigan
+  const furigana: Furigana[][] = await Promise.all(morphemes.map(async m => {
+    const {lemma, lemmaReading, literal, pronunciation} = m;
+    if (!hasKanji(literal)) { return [literal]; }
+    {
+      const hit = overrides[literal];
+      if (hit) { return hit; }
+    }
+
+    const jmdictFurigana = await jmdictFuriganaPromise;
+    const {textToEntry, readingToEntry} = jmdictFurigana;
+
+    const
