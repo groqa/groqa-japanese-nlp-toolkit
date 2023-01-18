@@ -659,4 +659,10 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
     if (pronunciationHit) { return pronunciationHit.furigana; }
 
     // help with 一本/rendaku
-    if (literal
+    if (literal.length === 1) { return [{ruby: literal, rt: morphemeToStringLiteral(m).join('・')}]; }
+
+    // for e.g. 住ん|で|い|ます but not 一本 (pronounced pon but lemma=hon: rendaku)
+    // if you reach here, there's nothing ensuring that the furigana found will match `pronunciation`!
+    const lemmaHit = search(
+        textToEntry, lemma, 'reading',
+        morphemeTo
