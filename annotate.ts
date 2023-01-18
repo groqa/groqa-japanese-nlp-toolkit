@@ -653,4 +653,10 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
     const jmdictFurigana = await jmdictFuriganaPromise;
     const {textToEntry, readingToEntry} = jmdictFurigana;
 
-    const
+    const literalHit = search(textToEntry, literal, 'reading', morphemeToStringLiteral(m, jmdictFurigana));
+    if (literalHit) { return literalHit.furigana; }
+    const pronunciationHit = search(readingToEntry, pronunciation, 'text', [literal]);
+    if (pronunciationHit) { return pronunciationHit.furigana; }
+
+    // help with 一本/rendaku
+    if (literal
