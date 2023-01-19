@@ -674,4 +674,11 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
       }
 
       const chars = literal.split('');
- 
+      let kanji = chars.filter(hasKanji);
+      const annotatedChars: Furigana[] = chars.slice();
+
+      // start from all kanji characters in a string, see if that's in furiganaDict, if not, chop last
+      while (kanji.length) {
+        const hit = triu(kanji).find(ks => furiganaDict.has(ks.join('')));
+        if (hit) {
+          const hitstr = hit
