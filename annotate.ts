@@ -665,4 +665,13 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
     // if you reach here, there's nothing ensuring that the furigana found will match `pronunciation`!
     const lemmaHit = search(
         textToEntry, lemma, 'reading',
-        morphemeTo
+        morphemeToStringLiteral({lemma, lemmaReading, literal: lemma, pronunciation: lemmaReading}, jmdictFurigana));
+    if (lemmaHit) {
+      const furiganaDict: Map<string, string> = new Map();
+      for (const f of lemmaHit.furigana) {
+        if (typeof f === 'string') { continue; }
+        furiganaDict.set(f.ruby, f.rt);
+      }
+
+      const chars = literal.split('');
+ 
