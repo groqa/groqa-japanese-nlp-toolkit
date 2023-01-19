@@ -681,4 +681,11 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
       while (kanji.length) {
         const hit = triu(kanji).find(ks => furiganaDict.has(ks.join('')));
         if (hit) {
-          const hitstr = hit
+          const hitstr = hit.join('');
+          const idx = literal.indexOf(hitstr);
+          annotatedChars[idx] = {ruby: hitstr, rt: furiganaDict.get(hitstr) || hitstr};
+          for (let i = idx + 1; i < idx + hitstr.length; i++) { annotatedChars[i] = ''; }
+          kanji = kanji.slice(hitstr.length);
+          continue;
+        }
+        // no hit found, kanji won't shrink
