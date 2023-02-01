@@ -688,4 +688,12 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
           kanji = kanji.slice(hitstr.length);
           continue;
         }
-        // no hit found, kanji won't shrink
+        // no hit found, kanji won't shrink to empty, break now
+        break;
+      }
+      if (kanji.length === 0) { return annotatedChars.filter(x => x !== ''); }
+    }
+    // const lemmaReadingHit = search(readingToEntry, lemmaReading, 'text', lemma);
+    // if (lemmaReadingHit) { return lemmaReadingHit.furigana; }
+
+    // We couldn't rely on JMDictFurigana to help us out. The best we can do now is 
