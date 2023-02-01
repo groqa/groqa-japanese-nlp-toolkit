@@ -706,4 +706,21 @@ export async function morphemesToFuriganaCore(morphemes: Morpheme[],
       const ret = simpleConvertMecabReading(literal, rt);
       console.log({ret})
       return ret;
-    
+    }
+  }));
+
+  return furigana;
+}
+
+/*
+(if kana is padded on either side, it's unambiguous, so kanji bookends are important)
+
+Consider the following literal/reading pair, where uppercase represents KANJI and lowercase kana:
+
+AxBzC = axbbzccc : this is unambiguous
+
+But:
+
+AxBzC =  axbxbzccc : ambiguous: which x should we cut at?
+AxBzC ?= a x bxb zccc or
+AxBzC ?= axb x b z
