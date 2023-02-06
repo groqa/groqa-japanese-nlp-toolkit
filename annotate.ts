@@ -745,4 +745,14 @@ function simpleConvertMecabReading(literal: string, reading: string) {
   for (const {s, isKanji} of splits) {
     if (isKanji) { continue; }
 
-    const litIdx = literal.
+    const litIdx = literal.indexOf(s);
+    const readIdx = reading.indexOf(s);
+    if (litIdx < 0 || readIdx < 0) { // bad error, return
+      return [{ruby: literal, rt: reading}];
+    }
+    ret.push({ruby: literal.slice(0, litIdx), rt: reading.slice(0, readIdx)})
+    ret.push(s);
+    literal = literal.slice(litIdx + s.length);
+    reading = reading.slice(readIdx + s.length);
+  }
+  if
