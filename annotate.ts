@@ -734,4 +734,15 @@ AxBzC = axxbbzccc --- YES
 SIMPLE resolution: split eagerly at the first possible case.
 Better resolution: use Kanjidic?
 */
-function simpleConvertMecabReading(literal: string, reading: stri
+function simpleConvertMecabReading(literal: string, reading: string) {
+  const ret: Furigana[] = [];
+  const prepost = prePostMatches(literal, reading);
+  if (prepost.pre) { ret.push(prepost.pre); }
+
+  literal = prepost.middleA;
+  reading = prepost.middleB;
+  const splits = splitKanaKanjiRuns(literal);
+  for (const {s, isKanji} of splits) {
+    if (isKanji) { continue; }
+
+    const litIdx = literal.
