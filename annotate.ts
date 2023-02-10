@@ -764,4 +764,17 @@ function simpleConvertMecabReading(literal: string, reading: string) {
 function splitKanaKanjiRuns(s: string) {
   let current: {s: string, isKanji: boolean} = {s: s[0], isKanji: hasKanji(s[0])};
   const ret: (typeof current)[] = [];
-  f
+  for (const [i, c] of s.slice(1).split('').entries()) {
+    const isKanji = hasKanji(c);
+    if (isKanji === current.isKanji) {
+      current.s = current.s + c;
+    } else {
+      ret.push(current);
+      current = {s: c, isKanji};
+    }
+  }
+  return ret.concat(current);
+}
+function prePostMatches(a: string, b: string) {
+  let pre = '';
+  let post
