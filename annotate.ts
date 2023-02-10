@@ -755,4 +755,13 @@ function simpleConvertMecabReading(literal: string, reading: string) {
     literal = literal.slice(litIdx + s.length);
     reading = reading.slice(readIdx + s.length);
   }
-  if
+  if (splits[splits.length - 1].isKanji) { // last kanji split would have been skipped above
+    ret.push({ruby: literal, rt: reading});
+  }
+  if (prepost.post) { ret.push(prepost.post); }
+  return ret;
+}
+function splitKanaKanjiRuns(s: string) {
+  let current: {s: string, isKanji: boolean} = {s: s[0], isKanji: hasKanji(s[0])};
+  const ret: (typeof current)[] = [];
+  f
