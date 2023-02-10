@@ -789,4 +789,14 @@ function prePostMatches(a: string, b: string) {
     const c2 = b[b.length - 1 - i];
     if (c !== c2) { break; }
     post = c + post;
- 
+  }
+  const middleA = a.slice(pre.length, a.length - post.length);
+  const middleB = b.slice(pre.length, b.length - post.length);
+  return {pre, middleA, middleB, post};
+}
+function triu<T>(arr: T[]): T[][] {
+  const ret: T[][] = [];
+  for (let i = arr.length; i > 0; --i) { ret.push(arr.slice(0, i)); }
+  return ret;
+}
+function search(map: Jm
