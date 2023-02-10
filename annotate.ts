@@ -777,4 +777,16 @@ function splitKanaKanjiRuns(s: string) {
 }
 function prePostMatches(a: string, b: string) {
   let pre = '';
-  let post
+  let post = '';
+  if (a === b) { return {pre, middleA: a, middleB: b, post}; }
+  for (let i = 0; i < a.length; i++) {
+    const c = a[i];
+    if (c !== b[i]) { break; }
+    pre += c;
+  }
+  for (let i = 0; i < a.length; i++) {
+    const c = a[a.length - 1 - i];
+    const c2 = b[b.length - 1 - i];
+    if (c !== c2) { break; }
+    post = c + post;
+ 
