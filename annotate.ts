@@ -799,4 +799,11 @@ function triu<T>(arr: T[]): T[][] {
   for (let i = arr.length; i > 0; --i) { ret.push(arr.slice(0, i)); }
   return ret;
 }
-function search(map: Jm
+function search(map: JmdictFurigana['readingToEntry'], first: string, sub: 'reading'|'text',
+                possibleSeconds: string[]): Entry|undefined {
+  const hit = map.get(first);
+  if (hit) {
+    // const possibleSeconds = findAlternativeChouonpu(kata2hira(second));
+    const subhit = hit.find(e => {
+      const dict = kata2hira(e[sub]);
+      return possibleSeconds.some(second => seco
