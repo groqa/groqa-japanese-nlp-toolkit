@@ -806,4 +806,13 @@ function search(map: JmdictFurigana['readingToEntry'], first: string, sub: 'read
     // const possibleSeconds = findAlternativeChouonpu(kata2hira(second));
     const subhit = hit.find(e => {
       const dict = kata2hira(e[sub]);
-      return possibleSeconds.some(second => seco
+      return possibleSeconds.some(second => second === dict);
+    });
+    if (subhit) { return subhit; }
+    console.error(`found hit for ${first} but not ${possibleSeconds}`, {hit, possibleSeconds});
+  }
+}
+
+function furiganaToRuby(fs: Furigana[]): string {
+  const rubiesToHtml = (v: Ruby[]) =>
+      v.length ? `<ruby>${v.map(o => o.ruby).join('')}<rt>${v.map(o => o.rt).join('')}</rt></
