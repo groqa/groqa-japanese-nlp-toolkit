@@ -820,4 +820,12 @@ function furiganaToRuby(fs: Furigana[]): string {
   const ret = fs.reduce(({stringSoFar, rubiesSoFar}, curr) =>
                             typeof curr === 'object'
                                 ? {stringSoFar, rubiesSoFar: rubiesSoFar.concat(curr)}
-                                : {stringSoFar: stringSoFar + rubiesT
+                                : {stringSoFar: stringSoFar + rubiesToHtml(rubiesSoFar) + curr, rubiesSoFar: []},
+                        {stringSoFar: '', rubiesSoFar: [] as Ruby[]});
+  return ret.stringSoFar + rubiesToHtml(ret.rubiesSoFar);
+}
+
+// make sure furigana's rubys are verbatim the sentence
+function checkFurigana(sentence: string, furigana: Furigana[][]): Furigana[][] {
+  const rubys = flatten(furigana).map(toruby);
+  if (rubys.join('').length >
