@@ -815,4 +815,9 @@ function search(map: JmdictFurigana['readingToEntry'], first: string, sub: 'read
 
 function furiganaToRuby(fs: Furigana[]): string {
   const rubiesToHtml = (v: Ruby[]) =>
-      v.length ? `<ruby>${v.map(o => o.ruby).join('')}<rt>${v.map(o => o.rt).join('')}</rt></
+      v.length ? `<ruby>${v.map(o => o.ruby).join('')}<rt>${v.map(o => o.rt).join('')}</rt></ruby>` : '';
+  // collapse adjacent <ruby> tags into one so macOS selection on resulting HTML works: undo JMDict-Furigana <sad>
+  const ret = fs.reduce(({stringSoFar, rubiesSoFar}, curr) =>
+                            typeof curr === 'object'
+                                ? {stringSoFar, rubiesSoFar: rubiesSoFar.concat(curr)}
+                                : {stringSoFar: stringSoFar + rubiesT
