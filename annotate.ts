@@ -828,4 +828,11 @@ function furiganaToRuby(fs: Furigana[]): string {
 // make sure furigana's rubys are verbatim the sentence
 function checkFurigana(sentence: string, furigana: Furigana[][]): Furigana[][] {
   const rubys = flatten(furigana).map(toruby);
-  if (rubys.join('').length >
+  if (rubys.join('').length >= sentence.length) { return furigana; }
+  // whitespace or some other character was stripped. add it back!
+  let start = 0;
+  let ret: Furigana[][] = [];
+  for (const fs of furigana) {
+    const chunk = fs.map(toruby).join('');
+    const hit = sentence.indexOf(chunk, start);
+    if (hit < 0) { throw new Error('cannot find: ' + chunk);
