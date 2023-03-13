@@ -835,4 +835,14 @@ function checkFurigana(sentence: string, furigana: Furigana[][]): Furigana[][] {
   for (const fs of furigana) {
     const chunk = fs.map(toruby).join('');
     const hit = sentence.indexOf(chunk, start);
-    if (hit < 0) { throw new Error('cannot find: ' + chunk);
+    if (hit < 0) { throw new Error('cannot find: ' + chunk); }
+    ret.push(hit > start ? [sentence.slice(start, hit), ...fs] : fs);
+    // prepending the holes like this will keep the same number of morphemes in `furigana`
+    start = hit + chunk.length;
+  }
+  return ret;
+}
+function toruby(f: Furigana) { return typeof f === 'string' ? f : f.ruby; }
+
+export async function jmdictIdsToWords(hits: {wordId: string}[]) {
+  const {db} = await jmdictProm
