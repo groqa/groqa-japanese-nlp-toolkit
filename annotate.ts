@@ -845,4 +845,13 @@ function checkFurigana(sentence: string, furigana: Furigana[][]): Furigana[][] {
 function toruby(f: Furigana) { return typeof f === 'string' ? f : f.ruby; }
 
 export async function jmdictIdsToWords(hits: {wordId: string}[]) {
-  const {db} = await jmdictProm
+  const {db} = await jmdictPromise;
+  return idsToWords(db, hits.map(o => o.wordId));
+}
+
+export async function getTags() { return jmdictPromise.then(({db}) => getTagsDb(db)) }
+
+function contextClozeToString(c: ContextCloze): string {
+  return (c.left || c.right) ? `${c.left}[${c.cloze}]${c.right}` : c.cloze;
+}
+function contextClozeOrStringToString(
