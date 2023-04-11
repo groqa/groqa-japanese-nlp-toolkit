@@ -864,4 +864,8 @@ const tagsPromise = jmdictPromise.then(({db}) => db)
 
 const kanjidicPromise = kanjidicSetup();
 
-const wanikaniGraph: {[k: 
+const wanikaniGraph: {[k: string]: string[]}&{metadata: Record<string, string>} =
+    JSON.parse(readFileSync(path.join(__dirname, 'wanikani-kanji-graph.json'), 'utf8'));
+
+export async function handleSentence(sentence: string, overrides: Record<string, Furigana[]> = {}, includeWord = true,
+                                     extractParticlesConj = true, nBest = 1): Promise<
