@@ -854,4 +854,14 @@ export async function getTags() { return jmdictPromise.then(({db}) => getTagsDb(
 function contextClozeToString(c: ContextCloze): string {
   return (c.left || c.right) ? `${c.left}[${c.cloze}]${c.right}` : c.cloze;
 }
-function contextClozeOrStringToString(
+function contextClozeOrStringToString(c: ContextCloze|string): string {
+  return typeof c === 'string' ? c : contextClozeToString(c);
+}
+
+const tagsPromise = jmdictPromise.then(({db}) => db)
+                        .then(db => getField(db, 'tags'))
+                        .then(raw => JSON.parse(raw) as Record<string, string>);
+
+const kanjidicPromise = kanjidicSetup();
+
+const wanikaniGraph: {[k: 
