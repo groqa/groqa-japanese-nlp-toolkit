@@ -868,4 +868,13 @@ const wanikaniGraph: {[k: string]: string[]}&{metadata: Record<string, string>} 
     JSON.parse(readFileSync(path.join(__dirname, 'wanikani-kanji-graph.json'), 'utf8'));
 
 export async function handleSentence(sentence: string, overrides: Record<string, Furigana[]> = {}, includeWord = true,
-                                     extractParticlesConj = true, nBest = 1): Promise<
+                                     extractParticlesConj = true, nBest = 1): Promise<v1ResSentenceNbest> {
+  if (!hasKanji(sentence) && !hasKana(sentence)) {
+    const resBody: v1ResSentence = sentence;
+    return [resBody];
+  }
+
+  const res = await mecabJdepp(sentence, nBest);
+  return Promise.all(res.map(async res => {
+    const morphemes: Morpheme[] = res.morphemes;
+    const bunsetsus: Bunsetsu<Morpheme>[] = res.bunsets
