@@ -877,4 +877,10 @@ export async function handleSentence(sentence: string, overrides: Record<string,
   const res = await mecabJdepp(sentence, nBest);
   return Promise.all(res.map(async res => {
     const morphemes: Morpheme[] = res.morphemes;
-    const bunsetsus: Bunsetsu<Morpheme>[] = res.bunsets
+    const bunsetsus: Bunsetsu<Morpheme>[] = res.bunsetsus;
+    const furigana = await morphemesToFurigana(sentence, morphemes, overrides);
+    const tags = await tagsPromise;
+    const dictHits = await enumerateDictionaryHits(morphemes, true, 10);
+    for (let i = 0; i < dictHits.length; i++) {
+      for (let j = 0; j < dictHits[i].results.length; j++) {
+        const words = await j
