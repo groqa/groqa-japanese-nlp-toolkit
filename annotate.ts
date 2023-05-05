@@ -901,4 +901,10 @@ export async function handleSentence(sentence: string, overrides: Record<string,
     }
 
     const kanjidic = await kanjidicPromise;
-    co
+    const kanjidicHits =
+        Object.fromEntries(sentence.split('')
+                               .filter(c => c in kanjidic)
+                               .map(c => [c, {
+                                      ...kanjidic[c],
+                                      dependencies: searchMap(treeSearch(wanikaniGraph, c),
+                                                  
