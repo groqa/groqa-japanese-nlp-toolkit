@@ -883,4 +883,11 @@ export async function handleSentence(sentence: string, overrides: Record<string,
     const dictHits = await enumerateDictionaryHits(morphemes, true, 10);
     for (let i = 0; i < dictHits.length; i++) {
       for (let j = 0; j < dictHits[i].results.length; j++) {
-        const words = await j
+        const words = await jmdictIdsToWords(dictHits[i].results[j].results);
+        for (let k = 0; k < words.length; k++) {
+          dictHits[i].results[j].results[k].summary = displayWordLight(words[k], tags);
+          if (includeWord) {
+            const word = words[k]
+            dictHits[i].results[j].results[k].word = word;
+
+            const thi
