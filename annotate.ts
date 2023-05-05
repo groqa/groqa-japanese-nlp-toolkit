@@ -890,4 +890,15 @@ export async function handleSentence(sentence: string, overrides: Record<string,
             const word = words[k]
             dictHits[i].results[j].results[k].word = word;
 
-            const thi
+            const thisTag = dictHits[i].results[j].results[k].tags;
+            for (const tag of word.sense.flatMap(s =>
+                                                     s.field.concat(s.dialect).concat(s.misc).concat(s.partOfSpeech))) {
+              thisTag[tag] = tags[tag];
+            }
+          }
+        }
+      }
+    }
+
+    const kanjidic = await kanjidicPromise;
+    co
