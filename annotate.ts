@@ -907,4 +907,11 @@ export async function handleSentence(sentence: string, overrides: Record<string,
                                .map(c => [c, {
                                       ...kanjidic[c],
                                       dependencies: searchMap(treeSearch(wanikaniGraph, c),
-                                                  
+                                                              c => (kanjidic[c] || null) as SimpleCharacter | null)
+                                                        .children
+                                    }]));
+
+    let clozes: undefined|FillInTheBlanks = undefined;
+    if (extractParticlesConj) { clozes = await identifyFillInBlanks(bunsetsus.map(o => o.morphemes)); }
+    const resBody: v1ResSentence =
+       
