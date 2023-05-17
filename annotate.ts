@@ -926,4 +926,11 @@ type Search = {
 };
 function treeSearch(tree: Tree, node: string, seen: Set<string> = new Set()): Search {
   seen.add(node);
-  const children = (tree[n
+  const children = (tree[node] || []).filter(node => !seen.has(node));
+  for (const child of children) { seen.add(child); }
+
+  return { node, children: children.map(node => treeSearch(tree, node, seen)) }
+}
+
+function searchMap<T>(search: Search, f: (s: string) => T): SearchMapped<T> {
+  return {node: search.node, nodeMapped: f(search.node), children: search.children.ma
