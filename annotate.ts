@@ -914,4 +914,16 @@ export async function handleSentence(sentence: string, overrides: Record<string,
     let clozes: undefined|FillInTheBlanks = undefined;
     if (extractParticlesConj) { clozes = await identifyFillInBlanks(bunsetsus.map(o => o.morphemes)); }
     const resBody: v1ResSentence =
-       
+        {furigana, hits: dictHits, kanjidic: kanjidicHits, clozes, tags: includeWord ? tags : undefined, bunsetsus};
+    return resBody;
+  }))
+}
+
+type Tree = Record<string, string[]>;
+type Search = {
+  node: string,
+  children: Search[]
+};
+function treeSearch(tree: Tree, node: string, seen: Set<string> = new Set()): Search {
+  seen.add(node);
+  const children = (tree[n
