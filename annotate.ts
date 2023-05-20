@@ -933,4 +933,16 @@ function treeSearch(tree: Tree, node: string, seen: Set<string> = new Set()): Se
 }
 
 function searchMap<T>(search: Search, f: (s: string) => T): SearchMapped<T> {
-  return {node: search.node, nodeMapped: f(search.node), children: search.children.ma
+  return {node: search.node, nodeMapped: f(search.node), children: search.children.map(node => searchMap(node, f))};
+}
+
+if (module === require.main) {
+  function renderDeconjugation(d: AdjDeconjugated|Deconjugated) {
+    if ("auxiliaries" in d) { return `${d.auxiliaries.join(" + ")} + ${d.conjugation}`; }
+    return d.conjugation;
+  }
+  (async () => {
+    for (
+        const line of
+            ['かぜひいた',
+             // ブラックシャドー団は集団で盗みを行う窃盗
