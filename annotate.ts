@@ -964,4 +964,9 @@ if (module === require.main) {
         console.log('conj')
         p(x.clozes?.conjugatedPhrases.map(o => o.morphemes.map(m => m.literal).join('|')))
         console.log('deconj')
-        console.dir(x.clozes?.conjugatedPh
+        console.dir(x.clozes?.conjugatedPhrases.map(
+                        o => (o.deconj as (AdjDeconjugated | Deconjugated)[]).map(m => renderDeconjugation(m))),
+                    {depth: null})
+        // console.log('particles')
+        // console.dir(x.particlesConjphrases.particles.map(o => [o.startIdx, o.endIdx, o.cloze.cloze, o.chino.length]))
+        // p(x.particlesConjphrases.particles.map(o => o.chino)
