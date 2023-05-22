@@ -956,4 +956,12 @@ if (module === require.main) {
              // '昨日はさむかった',
              // 'よかった',
     ]) {
-      console.log('\n===\n')
+      console.log('\n===\n');
+      const xs = await handleSentence(line);
+      for (const x of xs) {
+        if (typeof x === 'string') { continue }
+        console.log(x.furigana)
+        console.log('conj')
+        p(x.clozes?.conjugatedPhrases.map(o => o.morphemes.map(m => m.literal).join('|')))
+        console.log('deconj')
+        console.dir(x.clozes?.conjugatedPh
