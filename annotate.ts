@@ -984,4 +984,13 @@ if (module === require.main) {
               for (const [wi, w] of words.entries()) {
                 console.log('    - ' + hits[wi].search + ' | ' + displayWordLight(w, tags));
               }
-              if (fromEnd.res
+              if (fromEnd.results.length > MAX_LINES) {
+                console.log(`    - (… ${fromEnd.results.length - MAX_LINES} omitted) INFO`);
+              }
+            }
+          }
+        }
+      }
+    }
+  })();
+}
