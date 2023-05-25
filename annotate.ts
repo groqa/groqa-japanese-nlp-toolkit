@@ -978,4 +978,10 @@ if (module === require.main) {
 
           for (const fromStart of x.hits) {
             for (const fromEnd of fromStart.results) {
-              console.log(`  - Vocab: ${contextClozeOrS
+              console.log(`  - Vocab: ${contextClozeOrStringToString(fromEnd.run)} INFO`);
+              const hits = fromEnd.results.slice(0, MAX_LINES);
+              const words = await jmdictIdsToWords(hits);
+              for (const [wi, w] of words.entries()) {
+                console.log('    - ' + hits[wi].search + ' | ' + displayWordLight(w, tags));
+              }
+              if (fromEnd.res
