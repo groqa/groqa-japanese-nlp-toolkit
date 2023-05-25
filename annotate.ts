@@ -969,4 +969,13 @@ if (module === require.main) {
                     {depth: null})
         // console.log('particles')
         // console.dir(x.particlesConjphrases.particles.map(o => [o.startIdx, o.endIdx, o.cloze.cloze, o.chino.length]))
-        // p(x.particlesConjphrases.particles.map(o => o.chino)
+        // p(x.particlesConjphrases.particles.map(o => o.chino))
+        const SHOW_HITS: boolean = false;
+        if (SHOW_HITS) {
+          const MAX_LINES = 10000;
+          const {db} = await jmdictPromise;
+          const tags: Record<string, string> = JSON.parse(await getField(db, 'tags'));
+
+          for (const fromStart of x.hits) {
+            for (const fromEnd of fromStart.results) {
+              console.log(`  - Vocab: ${contextClozeOrS
