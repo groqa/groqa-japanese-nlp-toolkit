@@ -14,4 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
-const expres
+const express_1 = __importDefault(require("express"));
+const Either_1 = require("fp-ts/lib/Either");
+const annotate_1 = require("./annotate");
+const interfaces_1 = require("./interfaces");
+const app = express_1.default();
+app.use(require('cors')({ origin: true, credentials: true }));
+app.use(require('body-parser').json());
+app.post('/api/v1/sentence', (req, res) =>
