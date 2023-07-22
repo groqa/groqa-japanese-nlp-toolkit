@@ -35,4 +35,13 @@ app.post('/api/v1/sentence', (req, res) => __awaiter(void 0, void 0, void 0, fun
     res.json(yield annotate_1.handleSentence(sentence, overrides, !!req.query.includeWord, !!req.query.includeClozes, nBest));
 }));
 app.post('/api/v1/sentences', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = interfaces_1.v1ReqSentenc
+    const body = interfaces_1.v1ReqSentences.decode(req.body);
+    if (!Either_1.isRight(body)) {
+        res.status(400).json('bad payload');
+        return;
+    }
+    const { sentences, overrides } = body.right;
+    const resBody = [];
+    for (const sentence of sentences) {
+        // don't handle MeCab nBest parsing here
+        resBody.push((yield annotate_1.handleSentence(sentence, overrides || {}, !!
