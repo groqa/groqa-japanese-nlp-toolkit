@@ -29,4 +29,10 @@ app.post('/api/v1/sentence', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     const { sentence, overrides = {}, nBest = 1 } = body.right;
     if (nBest < 1) {
-        r
+        res.status(400).json('nBest should be positive');
+        return;
+    }
+    res.json(yield annotate_1.handleSentence(sentence, overrides, !!req.query.includeWord, !!req.query.includeClozes, nBest));
+}));
+app.post('/api/v1/sentences', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = interfaces_1.v1ReqSentenc
