@@ -21,4 +21,12 @@ const interfaces_1 = require("./interfaces");
 const app = express_1.default();
 app.use(require('cors')({ origin: true, credentials: true }));
 app.use(require('body-parser').json());
-app.post('/api/v1/sentence', (req, res) =>
+app.post('/api/v1/sentence', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = interfaces_1.v1ReqSentence.decode(req.body);
+    if (!Either_1.isRight(body)) {
+        res.status(400).json('bad payload' + JSON.stringify(body.left));
+        return;
+    }
+    const { sentence, overrides = {}, nBest = 1 } = body.right;
+    if (nBest < 1) {
+        r
