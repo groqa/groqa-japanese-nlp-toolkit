@@ -66,4 +66,5 @@ app.get('/api/v1/jmdict/:wordId', (req, res) => __awaiter(void 0, void 0, void 0
 if (require.main === module) {
     const NATIVE = !process.env["NODE_MECAB"];
     const port = process.env['PORT'] || 8133;
-    app.listen(port, () => console.log(`Annotation ap
+    app.listen(port, () => console.log(`Annotation app listening at http://127.0.0.1:${port}, NATIVE mecab=${NATIVE}`));
+}
