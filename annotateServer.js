@@ -44,4 +44,14 @@ app.post('/api/v1/sentences', (req, res) => __awaiter(void 0, void 0, void 0, fu
     const resBody = [];
     for (const sentence of sentences) {
         // don't handle MeCab nBest parsing here
-        resBody.push((yield annotate_1.handleSentence(sentence, overrides || {}, !!
+        resBody.push((yield annotate_1.handleSentence(sentence, overrides || {}, !!req.query.includeWord, !!req.query.includeClozes))[0]);
+    }
+    res.json(resBody);
+}));
+app.get('/api/v1/jmdict/:wordId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { wordId } = req.params;
+    if (wordId) {
+        try {
+            res.json((yield annotate_1.jmdictIdsToWords([{ wordId }]))[0]);
+        }
+        catc
