@@ -16,4 +16,14 @@ app.post('/api/v1/sentence', async (req, res) => {
     res.status(400).json('bad payload' + JSON.stringify(body.left));
     return;
   }
-  const {sentence, overrides = {}, nBest 
+  const {sentence, overrides = {}, nBest = 1} = body.right;
+  if (nBest < 1) {
+    res.status(400).json('nBest should be positive');
+    return;
+  }
+  res.json(await handleSentence(sentence, overrides, !!req.query.includeWord, !!req.query.includeClozes, nBest));
+});
+
+app.post('/api/v1/sentences', async (req, res) => {
+  const body = v1ReqSentences.decode(req.body);
+  if (!isRigh
