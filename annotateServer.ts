@@ -35,4 +35,19 @@ app.post('/api/v1/sentences', async (req, res) => {
   for (const sentence of sentences) {
     // don't handle MeCab nBest parsing here
     resBody.push(
-        (await handleSentence(sentence, overrides || {}, !!req.query.includeWord, !!req.query.
+        (await handleSentence(sentence, overrides || {}, !!req.query.includeWord, !!req.query.includeClozes))[0]);
+  }
+  res.json(resBody);
+});
+
+app.get('/api/v1/jmdict/:wordId', async (req, res) => {
+  const {wordId} = req.params;
+  if (wordId) {
+    try {
+      res.json((await jmdictIdsToWords([{wordId}]))[0]);
+    } catch (e) {
+      console.error('error:', e);
+      res.status(404).json('id not found?');
+    }
+  } else {
+    res.status(400).json('mis
