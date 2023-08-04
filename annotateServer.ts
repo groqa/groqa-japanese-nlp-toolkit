@@ -26,4 +26,13 @@ app.post('/api/v1/sentence', async (req, res) => {
 
 app.post('/api/v1/sentences', async (req, res) => {
   const body = v1ReqSentences.decode(req.body);
-  if (!isRigh
+  if (!isRight(body)) {
+    res.status(400).json('bad payload');
+    return;
+  }
+  const {sentences, overrides} = body.right;
+  const resBody: v1ResSentence[] = [];
+  for (const sentence of sentences) {
+    // don't handle MeCab nBest parsing here
+    resBody.push(
+        (await handleSentence(sentence, overrides || {}, !!req.query.includeWord, !!req.query.
