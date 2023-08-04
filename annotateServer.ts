@@ -50,4 +50,12 @@ app.get('/api/v1/jmdict/:wordId', async (req, res) => {
       res.status(404).json('id not found?');
     }
   } else {
-    res.status(400).json('mis
+    res.status(400).json('missing id');
+  }
+})
+
+if (require.main === module) {
+  const NATIVE = !process.env["NODE_MECAB"];
+  const port = process.env['PORT'] || 8133;
+  app.listen(port, () => console.log(`Annotation app listening at http://127.0.0.1:${port}, NATIVE mecab=${NATIVE}`));
+}
