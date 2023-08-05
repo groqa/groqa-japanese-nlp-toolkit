@@ -12,4 +12,14 @@ const idxChinoParticles = fs_1.readFileSync(path_1.default.join(__dirname, 'chin
     .map((s, i) => [i + 1, s.split('・')]);
 function lookup(raw) {
     const ret = [];
-    if (raw.l
+    if (raw.length === 0) {
+        return ret;
+    }
+    const rawAlternative = raw === 'ん' ? 'の' : '';
+    for (const [idx, list] of idxChinoParticles) {
+        if (list.some(chino => chino.includes(raw) || (rawAlternative && chino.includes(rawAlternative)))) {
+            ret.push([idx, list]);
+        }
+    }
+    const scoreMatch = ([_, v]) => {
+    
