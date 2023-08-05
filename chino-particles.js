@@ -22,4 +22,9 @@ function lookup(raw) {
         }
     }
     const scoreMatch = ([_, v]) => {
-    
+        const hits = v.filter(s => s.includes(raw) || (rawAlternative && s.includes(rawAlternative)))
+            .map(s => Math.abs(s.length - raw.length));
+        return [Math.min(...hits), hits.length, v.length];
+        // Exact matches come first (minimize superfluous characters).
+        // Then total number of matches
+        // Finally total number of particles i
