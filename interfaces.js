@@ -14,4 +14,5 @@ const t = __importStar(require("io-ts"));
 __export(require("jmdict-simplified-node/interfaces"));
 exports.TFurigana = t.array(t.union([t.string, t.type({ ruby: t.string, rt: t.string })]));
 exports.PartialOverrides = t.partial({ nBest: t.number, overrides: t.record(t.string, exports.TFurigana) });
-exports.v1ReqSentence = t.intersection([t.type({ sentence: t
+exports.v1ReqSentence = t.intersection([t.type({ sentence: t.string }), exports.PartialOverrides]);
+exports.v1ReqSentences = t.intersection([t.type({ sentences: t.array(t.string) }), exports.PartialOverrides]);
