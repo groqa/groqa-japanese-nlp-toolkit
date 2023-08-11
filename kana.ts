@@ -18,4 +18,6 @@ export function hira2kata(s: string) { return s.split('').map(c => hira2kataMap.
 /*
 There are other ways of doing this. In Unicode, katakana is 96 codepoints above hiragana. So
 `String.fromCharCode(hiragana.charCodeAt(0) + 96)` will produce katakana. In speed tests though, the above Map-based
-approach had the least vari
+approach had the least variability in runtime (200 to 800 microseconds), while arithmetic-based approaches used 100 to
+1500 microseconds.
+*/
