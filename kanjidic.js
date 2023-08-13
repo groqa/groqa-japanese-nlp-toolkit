@@ -19,4 +19,13 @@ function setup() {
             console.error(`Kanjidic2 missing. Download ${KANJIDIC_FILE} from http://www.edrdg.org/wiki/index.php/KANJIDIC_Project.`);
             process.exit(1);
         }
-        const raw = (yield node_gzip_1.ungzip(fs_1.readFileSync(KANJIDIC_FILE)
+        const raw = (yield node_gzip_1.ungzip(fs_1.readFileSync(KANJIDIC_FILE))).toString();
+        const obj = yield xml2js_1.parseStringPromise(raw.slice(raw.indexOf('<kanjidic2>')));
+        return obj.kanjidic2;
+    });
+}
+exports.setup = setup;
+function setupSimple() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const dic = yield setup();
+        return Object.fromEntries(dic.character.map(c => [c.literal, 
