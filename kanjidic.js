@@ -28,4 +28,12 @@ exports.setup = setup;
 function setupSimple() {
     return __awaiter(this, void 0, void 0, function* () {
         const dic = yield setup();
-        return Object.fromEntries(dic.character.map(c => [c.literal, 
+        return Object.fromEntries(dic.character.map(c => [c.literal, normalizeCharacter(c)]));
+    });
+}
+exports.setupSimple = setupSimple;
+function normalizeCharacter(c) {
+    var _a, _b, _c, _d, _e;
+    try {
+        const nanori = ((_a = c.reading_meaning) === null || _a === void 0 ? void 0 : _a[0].nanori) || [];
+        const meanings = (((_c = (_b = c.reading_meaning) === null || _b === void 0 ? void 0 : _b[0].rmgroup[0].meaning) === null || 
