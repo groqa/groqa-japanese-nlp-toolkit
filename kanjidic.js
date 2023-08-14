@@ -36,4 +36,6 @@ function normalizeCharacter(c) {
     var _a, _b, _c, _d, _e;
     try {
         const nanori = ((_a = c.reading_meaning) === null || _a === void 0 ? void 0 : _a[0].nanori) || [];
-        const meanings = (((_c = (_b = c.reading_meaning) === null || _b === void 0 ? void 0 : _b[0].rmgroup[0].meaning) === null || 
+        const meanings = (((_c = (_b = c.reading_meaning) === null || _b === void 0 ? void 0 : _b[0].rmgroup[0].meaning) === null || _c === void 0 ? void 0 : _c.filter(s => typeof s === 'string')) || []);
+        const readings = ((_e = (_d = c.reading_meaning) === null || _d === void 0 ? void 0 : _d[0].rmgroup[0].reading) === null || _e === void 0 ? void 0 : _e.filter(o => o.$.r_type.startsWith('ja')).map(o => o._)) || [];
+        return { nanori, readings, meanings, literal: c.literal[
