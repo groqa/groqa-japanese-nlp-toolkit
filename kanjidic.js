@@ -38,4 +38,16 @@ function normalizeCharacter(c) {
         const nanori = ((_a = c.reading_meaning) === null || _a === void 0 ? void 0 : _a[0].nanori) || [];
         const meanings = (((_c = (_b = c.reading_meaning) === null || _b === void 0 ? void 0 : _b[0].rmgroup[0].meaning) === null || _c === void 0 ? void 0 : _c.filter(s => typeof s === 'string')) || []);
         const readings = ((_e = (_d = c.reading_meaning) === null || _d === void 0 ? void 0 : _d[0].rmgroup[0].reading) === null || _e === void 0 ? void 0 : _e.filter(o => o.$.r_type.startsWith('ja')).map(o => o._)) || [];
-        return { nanori, readings, meanings, literal: c.literal[
+        return { nanori, readings, meanings, literal: c.literal[0] };
+    }
+    catch (_f) {
+        console.error('FAILED TO PARSE');
+        console.error(c);
+        console.dir(c.reading_meaning, { depth: null });
+        process.exit(1);
+    }
+}
+exports.normalizeCharacter = normalizeCharacter;
+function summarizeCharacter(c) {
+    const { literal, readings, meanings, nanori } = normalizeCharacter(c);
+    return `${literal} ${mean
