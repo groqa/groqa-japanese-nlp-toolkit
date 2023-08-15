@@ -50,4 +50,15 @@ function normalizeCharacter(c) {
 exports.normalizeCharacter = normalizeCharacter;
 function summarizeCharacter(c) {
     const { literal, readings, meanings, nanori } = normalizeCharacter(c);
-    return `${literal} ${mean
+    return `${literal} ${meanings.join('；')} - ${readings.join(' ')}` +
+        (nanori.length ? ` (names: ${nanori.join(' ')})` : '');
+}
+exports.summarizeCharacter = summarizeCharacter;
+function normalizeHeader(h) {
+    return {
+        file_version: h.file_version[0],
+        database_version: h.database_version[0],
+        date_of_creation: h.date_of_creation[0]
+    };
+}
+if (require.main ===
