@@ -61,4 +61,11 @@ function normalizeHeader(h) {
         date_of_creation: h.date_of_creation[0]
     };
 }
-if (require.main ===
+if (require.main === module) {
+    (function main() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const dic = yield setup();
+            console.log(dic.character.slice(0, 10).map(summarizeCharacter).join('\n'));
+            fs_1.writeFileSync('kanjidic.json', JSON.stringify({
+                header: normalizeHeader(dic.header[0]),
+              
