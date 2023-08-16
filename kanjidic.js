@@ -68,4 +68,8 @@ if (require.main === module) {
             console.log(dic.character.slice(0, 10).map(summarizeCharacter).join('\n'));
             fs_1.writeFileSync('kanjidic.json', JSON.stringify({
                 header: normalizeHeader(dic.header[0]),
-              
+                kanjidic2: Object.fromEntries(dic.character.map(c => [c.literal, normalizeCharacter(c)]))
+            }));
+        });
+    })();
+}
