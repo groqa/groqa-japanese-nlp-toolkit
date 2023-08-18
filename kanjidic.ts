@@ -56,4 +56,12 @@ export async function setupSimple(): Promise<Record<string, SimpleCharacter>> {
 export function normalizeCharacter(c: Character): SimpleCharacter {
   try {
     const nanori = c.reading_meaning?.[0].nanori || [];
-    const meanings = (c.reading_meaning?.[0].rmgroup[0].meaning?.filter(
+    const meanings = (c.reading_meaning?.[0].rmgroup[0].meaning?.filter(s => typeof s === 'string') || []) as string[];
+    const readings =
+        c.reading_meaning?.[0].rmgroup[0].reading?.filter(o => o.$.r_type.startsWith('ja')).map(o => o._) || [];
+    return {nanori, readings, meanings, literal: c.literal[0]};
+  } catch {
+    console.error('FAILED TO PARSE');
+    console.error(c);
+    console.dir(c.reading_meaning, {depth: null});
+    process.exit(1);
