@@ -40,4 +40,12 @@ const KANJIDIC_FILE = 'kanjidic2.xml.gz';
 export async function setup(): Promise<KanjiDic2> {
   if (!existsSync(KANJIDIC_FILE)) {
     console.error(
-        `Kanjidic2 miss
+        `Kanjidic2 missing. Download ${KANJIDIC_FILE} from http://www.edrdg.org/wiki/index.php/KANJIDIC_Project.`);
+    process.exit(1);
+  }
+  const raw = (await ungzip(readFileSync(KANJIDIC_FILE))).toString();
+  const obj = await parseStringPromise(raw.slice(raw.indexOf('<kanjidic2>')));
+  return obj.kanjidic2;
+}
+
+export async function setupSimple(): Promise<Record
