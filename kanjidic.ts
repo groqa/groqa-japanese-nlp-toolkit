@@ -48,4 +48,12 @@ export async function setup(): Promise<KanjiDic2> {
   return obj.kanjidic2;
 }
 
-export async function setupSimple(): Promise<Record
+export async function setupSimple(): Promise<Record<string, SimpleCharacter>> {
+  const dic = await setup();
+  return Object.fromEntries(dic.character.map(c => [c.literal, normalizeCharacter(c)]));
+}
+
+export function normalizeCharacter(c: Character): SimpleCharacter {
+  try {
+    const nanori = c.reading_meaning?.[0].nanori || [];
+    const meanings = (c.reading_meaning?.[0].rmgroup[0].meaning?.filter(
