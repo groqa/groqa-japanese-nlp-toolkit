@@ -23,4 +23,21 @@ export interface Character {
   literal: [string];
   reading_meaning?: [ReadingMeaning];
 }
-ex
+export interface KanjiDic2 {
+  header: [Header];
+  character: Character[];
+}
+
+export interface SimpleCharacter {
+  nanori: string[];
+  readings: string[];
+  meanings: string[];
+  literal: string;
+}
+
+const KANJIDIC_FILE = 'kanjidic2.xml.gz';
+
+export async function setup(): Promise<KanjiDic2> {
+  if (!existsSync(KANJIDIC_FILE)) {
+    console.error(
+        `Kanjidic2 miss
