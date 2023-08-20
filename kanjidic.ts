@@ -65,3 +65,13 @@ export function normalizeCharacter(c: Character): SimpleCharacter {
     console.error(c);
     console.dir(c.reading_meaning, {depth: null});
     process.exit(1);
+  }
+}
+
+export function summarizeCharacter(c: Character) {
+  const {literal, readings, meanings, nanori} = normalizeCharacter(c);
+  return `${literal} ${meanings.join('；')} - ${readings.join(' ')}` +
+         (nanori.length ? ` (names: ${nanori.join(' ')})` : '');
+}
+
+function normalizeHeader(h: Header): {[k in key
