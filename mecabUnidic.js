@@ -167,3 +167,292 @@ const inflectionKeys = [
 ];
 // https://gist.github.com/masayu-a/b3ce862336e47736e84f "prepared by Irena Srdanovic, 18.1.2013 and 22.1.2013"
 const inflectionTypeKeys = [
+    "ユク", "yuku",
+    "ダ行", "da_column",
+    "ザ行変格", "zahen_verb_irregular",
+    "ダ", "da",
+    "タイ", "tai",
+    "文語ラ行変格", "classical_ra_column_change",
+    "ワ行", "wa_column",
+    "コス", "kosu",
+    "キ", "ki",
+    "文語下二段", "classical_shimonidan_verb_e_u_row",
+    "ス", "su",
+    "ハ行", "ha_column",
+    "上一段", "kamiichidan_verb_i_row",
+    "イク", "iku",
+    "マ行", "ma_column",
+    "助動詞", "auxiliary",
+    "シク", "shiku",
+    "ナ行", "na_column",
+    "ガ行", "ga_column",
+    "ム", "mu",
+    "ア行", "a_column",
+    "ザンス", "zansu",
+    "文語形容詞", "classical_adjective",
+    "タ", "ta",
+    "伝聞", "reported_speech",
+    "ナイ", "nai",
+    "ヘン", "hen",
+    "文語助動詞", "classical_auxiliary",
+    "ジ", "ji",
+    "ワア行", "wa_a_column",
+    "文語ナ行変格", "classical_na_column_change",
+    "カ行変格", "kahen_verb_irregular",
+    "ラシ", "rashi",
+    "マイ", "mai",
+    "タリ", "tari",
+    "呉レル", "kureru",
+    "形容詞", "adjective",
+    "ゲナ", "gena",
+    "一般+う", "general_u",
+    "ザマス", "zamasu",
+    "ゴトシ", "gotoshi",
+    "ヌ", "nu",
+    "文語上二段", "classical_kaminidan_verb_u_i_row",
+    "ク", "ku",
+    "サ行変格", "sahen_verb_irregular",
+    "ラ行", "ra_column",
+    "下一段", "shimoichidan_verb_e_row",
+    "完了", "final",
+    "ラシイ", "rashii",
+    "文語四段", "classical_yondan_verb",
+    "ドス", "dosu",
+    "ザ行", "za_column",
+    "ツ", "shi",
+    "ヤス", "yasu",
+    "バ行", "ba_column",
+    "断定", "assertive",
+    "ナンダ", "nanda",
+    "ケリ", "keri",
+    "文語サ行変格", "classical_sa_column_change",
+    "タ行", "ta_column",
+    "ケム", "kemu",
+    "カ行", "ka_column",
+    "ゲス", "gesu",
+    "ヤ行", "ya_column",
+    "マス", "masu",
+    "レル", "reru",
+    "サ行", "sa_column",
+    "文語下一段", "classical_shimoichidan_verb_e_row",
+    "ベシ", "beshi",
+    "アル", "aru",
+    "ヤ", "ya",
+    "五段", "godan_verb",
+    "一般", "general",
+    "デス", "desu",
+    "リ", "ri",
+    "ナリ", "nari",
+    "文語上一段", "classical_kamiichidan_verb_i_row",
+    "無変化型", "uninflected_form",
+    "ズ", "zu",
+    "ジャ", "ja",
+    "文語カ行変格", "classical_ka_column_change",
+    "イウ", "iu"
+];
+function keysToObj(keys) {
+    if (keys.length % 2 !== 0) {
+        throw new Error("Even number of keys required");
+    }
+    let ret = {};
+    for (let i = 0; i < keys.length; i += 2) {
+        ret[keys[i]] = keys[i + 1];
+    }
+    return ret;
+}
+const partOfSpeechObj = keysToObj(partOfSpeechKeys);
+const inflectionObj = keysToObj(inflectionKeys);
+const inflectionTypeObj = keysToObj(inflectionTypeKeys);
+function invokeMecab(text, numBest = 1) {
+    const native = !(process.env["NODE_MECAB"]);
+    const numBestArgs = numBest === 1 ? [] : ['-N', numBest.toString()];
+    return new Promise((resolve, reject) => {
+        let spawned;
+        if (native) {
+            spawned = spawn('mecab', ['-d', '/opt/homebrew/lib/mecab/dic/unidic'].concat(numBestArgs));
+        }
+        else {
+            const args = ['mecab-emscripten-node', '-d', process.env["UNIDIC"] || '/opt/homebrew/lib/mecab/dic/unidic'].concat(process.env["MECABRC"] ? ['-r', process.env["MECABRC"] || '/usr/local/etc/mecabrc'] : []);
+            args.push(...numBestArgs);
+            spawned = spawn('npx', args);
+        }
+        spawned.stdin.write(text);
+        spawned.stdin.write('\n'); // necessary, otherwise MeCab says `input-buffer overflow.`
+        spawned.stdin.end();
+        let arr = [];
+        spawned.stdout.on('data', (data) => arr.push(data.toString('utf8')));
+        spawned.stderr.on('data', (data) => {
+            console.log('stderr', data.toString());
+            reject(data);
+        });
+        spawned.on('close', (code) => {
+            if (code !== 0) {
+                reject(code);
+            }
+            resolve(arr.join(''));
+        });
+    });
+}
+exports.invokeMecab = invokeMecab;
+function maybeMorphemesToMorphemes(v) { return v.filter(o => !!o); }
+exports.maybeMorphemesToMorphemes = maybeMorphemesToMorphemes;
+function maybeMorphemeToMorpheme(o) {
+    if (o) {
+        return o;
+    }
+    throw new Error('Invalid morpheme found');
+}
+exports.maybeMorphemeToMorpheme = maybeMorphemeToMorpheme;
+function morphemesEq(x, y) {
+    return !!x && !!y && ultraCompressMorpheme(x) === ultraCompressMorpheme(y);
+}
+exports.morphemesEq = morphemesEq;
+function parseMorpheme(raw) {
+    if (raw.length === 7) {
+        const [literal, pronunciation, lemmaReading, lemma, partOfSpeechRaw, inflectionTypeRaw, inflectionRaw] = raw;
+        const clean = (dashed, obj) => dashed === '' ? null : dashed.split('-').map(key => {
+            const res = obj[key];
+            if (!res) {
+                console.error('Unknown MeCab Unidic key encountered, key', key, 'dashed', dashed, 'raw', raw);
+                // throw new Error('Unknown MeCab Unidic key encountered');
+                return '';
+            }
+            return res;
+        });
+        const partOfSpeech = clean(partOfSpeechRaw, partOfSpeechObj);
+        if (!partOfSpeech) {
+            // this will never happen, but `clean` does potentially return null so let's check it.
+            throw new Error('Empty part of speech encountered');
+        }
+        // These two can potentially be null, for uninflected morphemes
+        const inflectionType = clean(inflectionTypeRaw, inflectionTypeObj);
+        const inflection = clean(inflectionRaw, inflectionObj);
+        return { literal, pronunciation, lemmaReading, lemma, partOfSpeech, inflectionType, inflection };
+    }
+    else if (raw.length === 1) {
+        return null;
+    }
+    console.error('Neither 1 nor 7', raw);
+    return null;
+    // throw new Error('Unexpected number of columns in MeCab Unidic output');
+}
+exports.parseMorpheme = parseMorpheme;
+/**
+ * Outermost nesting: sentence of input
+ * Middle nesting: 1 thru nBest
+ * Innermost nesting: morphemes of sentence
+ *
+ * I.e., `output[numSentence][numParsing][numMorpheme]`.
+ *
+ * If `nBest=1`, `output[0][1]` will not exist.
+ */
+function parseMecab(rawMecab, nBest = 1) {
+    const sections = rawMecab.split('\nEOS').filter(s => !!s.trim());
+    assert(sections.length % nBest === 0);
+    const parsings = sections.map(parseMecabSection);
+    const parsingsPerSection = curtiz_utils_1.partitionBy(parsings, (_, i) => !(i % nBest));
+    const rawPerSection = curtiz_utils_1.partitionBy(sections, (_, i) => !(i % nBest));
+    return { morphemes: parsingsPerSection, raws: rawPerSection };
+}
+exports.parseMecab = parseMecab;
+function isMorpheme(x) { return !!x; }
+function parseMecabSection(result) {
+    return result.split('\n').map(line => parseMorpheme(line.split('\t'))).filter(isMorpheme);
+}
+const MORPHEMESEP = '\t';
+const BUNSETSUSEP = '::';
+const ELEMENTSEP = '-';
+function ultraCompressMorpheme(m) {
+    return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma, m.partOfSpeech.join(ELEMENTSEP),
+        (m.inflectionType || []).join(ELEMENTSEP), (m.inflection || []).join(ELEMENTSEP)].join(MORPHEMESEP) : '';
+}
+exports.ultraCompressMorpheme = ultraCompressMorpheme;
+function ultraCompressMorphemes(ms) {
+    return ms.map(ultraCompressMorpheme).join(BUNSETSUSEP);
+}
+exports.ultraCompressMorphemes = ultraCompressMorphemes;
+function decompressMorpheme(s) {
+    const split = (s) => s.split(ELEMENTSEP);
+    const nullable = (v) => v.length ? v : null;
+    if (s === '') {
+        return null;
+    }
+    let [literal, pronunciation, lemmaReading, lemma, partOfSpeech, inflectionType, inflection] = s.split(MORPHEMESEP);
+    return {
+        literal,
+        pronunciation,
+        lemmaReading,
+        lemma,
+        partOfSpeech: split(partOfSpeech),
+        inflectionType: nullable(split(inflectionType || '')),
+        inflection: nullable(split(inflection || ''))
+    };
+}
+exports.decompressMorpheme = decompressMorpheme;
+function decompressMorphemes(s) { return s.split(BUNSETSUSEP).map(decompressMorpheme); }
+exports.decompressMorphemes = decompressMorphemes;
+function goodMorphemePredicate(m) {
+    return !(m.partOfSpeech[0] === 'supplementary_symbol') &&
+        !(m.partOfSpeech[0] === 'particle' && m.partOfSpeech[1] === 'phrase_final');
+}
+exports.goodMorphemePredicate = goodMorphemePredicate;
+if (require.main === module) {
+    const readFile = require('fs').readFile;
+    const promisify = require('util').promisify;
+    const getStdin = require('get-stdin');
+    const eaw = require('eastasianwidth');
+    function formatRow(row, width) {
+        return `| ${width.map((n, i) => (row[i] || '') + ' '.repeat(n - eaw.length(row[i] || ''))).join(' | ')} |`;
+    }
+    function printMarkdownTable(table, header = []) {
+        if (header.length && header.length !== table[0].length) {
+            throw new Error('table and header have different lengths');
+        }
+        const cellLengths = table.concat([header]).filter(v => v.length).map(row => { return row.map(cell => eaw.length(cell)); });
+        let widths = Array.from(table[0], () => 0);
+        for (const l of cellLengths) {
+            widths = widths.map((curr, i) => Math.max(curr, l[i]));
+        }
+        if (header.length) {
+            console.log(formatRow(header, widths));
+            console.log(formatRow(header.map((h, i) => '-'.repeat(widths[i])), widths));
+        }
+        for (const row of table) {
+            console.log(formatRow(row, widths));
+        }
+    }
+    (function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            let text = '今日は　良い天気だ。\n\nたのしいですか。\n\n何できた？';
+            if (process.argv.length <= 2) {
+                // no arguments, read from stdin. If stdin is empty, use default.
+                text = (yield getStdin()) || text;
+            }
+            else {
+                text = (yield Promise.all(process.argv.slice(2).map(f => promisify(readFile)(f, 'utf8'))))
+                    .join('\n')
+                    .replace(/\r/g, '');
+            }
+            let nBest = 1;
+            if (process.env['MECAB_NBEST']) {
+                const candidate = Number(process.env['MECAB_NBEST']);
+                if (candidate && isFinite(candidate) && candidate > 0) {
+                    nBest = candidate;
+                }
+            }
+            // Output
+            const parseds = parseMecab(yield invokeMecab(text.trim(), nBest), nBest);
+            for (const sentence of parseds.morphemes) {
+                for (const [n, parsed] of sentence.entries()) {
+                    console.log(`\n# ${n + 1} parsing`);
+                    const table = parsed.map(m => {
+                        return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma, m.partOfSpeech.join(ELEMENTSEP),
+                            (m.inflectionType || []).join(ELEMENTSEP), (m.inflection || []).join(ELEMENTSEP)] : [];
+                    });
+                    printMarkdownTable(table, 'Literal,Pron.,Lemma Read.,Lemma,PoS,Infl. Type,Infl.'.split(','));
+                }
+            }
+            // DELETED WASM CHECK (mecab-emscripten-node)
+        });
+    })();
+}
