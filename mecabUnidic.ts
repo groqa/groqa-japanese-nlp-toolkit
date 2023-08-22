@@ -104,4 +104,28 @@ const partOfSpeechKeys = [
   "bracket_close",
   "読点",
   "comma",
- 
+  "記号",
+  "symbol",
+  "文字",
+  "character",
+  "連体詞",
+  "adnominal",
+  "未知語",
+  "unknown_words",
+  "カタカナ文",
+  "katakana",
+  "漢文",
+  "chinese_writing",
+  "言いよどみ",
+  "hesitation",
+  "web誤脱",
+  "errors_omissions",
+  "方言",
+  "dialect",
+  "ローマ字文",
+  "latin_alphabet",
+  "新規未知語",
+  "new_unknown_words"
+];
+
+// https://gist.github.com/masayu-a/3e11168f9330e2d83a68 "prepared by Irena Srdanovi
