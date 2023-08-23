@@ -142,4 +142,18 @@ const inflectionKeys = [
   "サ",         "sa",
   "セ",         "se",
   "撥音便",     "euphonic_change_n",
-  "終止形",     "conclus
+  "終止形",     "conclusive",
+  "ウ音便",     "euphonic_change_u",
+  "促音便",     "euphonic_change_t",
+  "語幹",       "word_stem",
+  "連体形",     "attributive",
+  "イ音便",     "euphonic_change_i",
+  "省略",       "abbreviation",
+  "連用形",     "continuative",
+  "ト",         "change_to",
+  "ニ",         "change_ni",
+  "長音",       "long_sound",
+  "*",          "uninflected"
+];
+
+// https://gist.github
