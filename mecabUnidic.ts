@@ -156,4 +156,14 @@ const inflectionKeys = [
   "*",          "uninflected"
 ];
 
-// https://gist.github
+// https://gist.github.com/masayu-a/b3ce862336e47736e84f "prepared by Irena Srdanovic, 18.1.2013 and 22.1.2013"
+const inflectionTypeKeys = [
+  "ユク",         "yuku",
+  "ダ行",         "da_column",
+  "ザ行変格",     "zahen_verb_irregular",
+  "ダ",           "da",
+  "タイ",         "tai",
+  "文語ラ行変格", "classical_ra_column_change",
+  "ワ行",         "wa_column",
+  "コス",         "kosu",
+  "キ",           "ki"
