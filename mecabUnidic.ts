@@ -128,4 +128,18 @@ const partOfSpeechKeys = [
   "new_unknown_words"
 ];
 
-// https://gist.github.com/masayu-a/3e11168f9330e2d83a68 "prepared by Irena Srdanovi
+// https://gist.github.com/masayu-a/3e11168f9330e2d83a68 "prepared by Irena Srdanovic, 18.1.2013 and 22.1.2013"
+const inflectionKeys = [
+  "ク語法",     "ku_wording",
+  "仮定形",     "conditional",
+  "一般",       "general",
+  "融合",       "integrated",
+  "命令形",     "imperative",
+  "已然形",     "realis",
+  "補助",       "auxiliary_inflection",
+  "意志推量形", "volitional_tentative",
+  "未然形",     "irrealis",
+  "サ",         "sa",
+  "セ",         "se",
+  "撥音便",     "euphonic_change_n",
+  "終止形",     "conclus
