@@ -225,4 +225,17 @@ const inflectionTypeKeys = [
   "マス",         "masu",
   "レル",         "reru",
   "サ行",         "sa_column",
-  "文語下一段",   "classical_shimoichi
+  "文語下一段",   "classical_shimoichidan_verb_e_row",
+  "ベシ",         "beshi",
+  "アル",         "aru",
+  "ヤ",           "ya",
+  "五段",         "godan_verb",
+  "一般",         "general",
+  "デス",         "desu",
+  "リ",           "ri",
+  "ナリ",         "nari",
+  "文語上一段",   "classical_kamiichidan_verb_i_row",
+  "無変化型",     "uninflected_form",
+  "ズ",           "zu",
+  "ジャ",         "ja",
+  "文語カ行変格", "classical_ka_column_cha
