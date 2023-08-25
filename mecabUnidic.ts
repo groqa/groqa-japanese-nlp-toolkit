@@ -189,4 +189,17 @@ const inflectionTypeKeys = [
   "ジ",           "ji",
   "ワア行",       "wa_a_column",
   "文語ナ行変格", "classical_na_column_change",
-  "カ行変格",     "k
+  "カ行変格",     "kahen_verb_irregular",
+  "ラシ",         "rashi",
+  "マイ",         "mai",
+  "タリ",         "tari",
+  "呉レル",       "kureru",
+  "形容詞",       "adjective",
+  "ゲナ",         "gena",
+  "一般+う",      "general_u",
+  "ザマス",       "zamasu",
+  "ゴトシ",       "gotoshi",
+  "ヌ",           "nu",
+  "文語上二段",   "classical_kaminidan_verb_u_i_row",
+  "ク",           "ku",
+  "サ行変格"
