@@ -257,4 +257,10 @@ export function invokeMecab(text: string, numBest: number = 1): Promise<string> 
   return new Promise((resolve, reject) => {
     let spawned;
     if (native) {
-      spawned = spawn('mecab', ['-d', '/opt/h
+      spawned = spawn('mecab', ['-d', '/opt/homebrew/lib/mecab/dic/unidic'].concat(numBestArgs))
+    } else {
+      const args =
+          ['mecab-emscripten-node', '-d', process.env["UNIDIC"] || '/opt/homebrew/lib/mecab/dic/unidic'].concat(
+              process.env["MECABRC"] ? ['-r', process.env["MECABRC"] || '/usr/local/etc/mecabrc'] : []);
+      args.push(...numBestArgs);
+      spawned
