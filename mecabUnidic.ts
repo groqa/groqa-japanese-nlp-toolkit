@@ -238,4 +238,14 @@ const inflectionTypeKeys = [
   "無変化型",     "uninflected_form",
   "ズ",           "zu",
   "ジャ",         "ja",
-  "文語カ行変格", "classical_ka_column_cha
+  "文語カ行変格", "classical_ka_column_change",
+  "イウ",         "iu"
+];
+function keysToObj(keys: string[]) {
+  if (keys.length % 2 !== 0) { throw new Error("Even number of keys required"); }
+  let ret: any = {};
+  for (let i = 0; i < keys.length; i += 2) { ret[keys[i]] = keys[i + 1]; }
+  return ret;
+}
+const partOfSpeechObj = keysToObj(partOfSpeechKeys);
+const inflectionObj = keysToObj(inflectionKey
