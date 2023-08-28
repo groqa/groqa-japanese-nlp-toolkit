@@ -263,4 +263,12 @@ export function invokeMecab(text: string, numBest: number = 1): Promise<string> 
           ['mecab-emscripten-node', '-d', process.env["UNIDIC"] || '/opt/homebrew/lib/mecab/dic/unidic'].concat(
               process.env["MECABRC"] ? ['-r', process.env["MECABRC"] || '/usr/local/etc/mecabrc'] : []);
       args.push(...numBestArgs);
-      spawned
+      spawned = spawn('npx', args);
+    }
+    spawned.stdin.write(text);
+    spawned.stdin.write('\n'); // necessary, otherwise MeCab says `input-buffer overflow.`
+    spawned.stdin.end();
+    let arr: string[] = [];
+    spawned.stdout.on('data', (data: Buffer) => arr.push(data.toString('utf8')));
+    spawned.stderr.on('data', (data: Buffer) => {
+  
