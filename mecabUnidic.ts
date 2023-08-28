@@ -248,4 +248,13 @@ function keysToObj(keys: string[]) {
   return ret;
 }
 const partOfSpeechObj = keysToObj(partOfSpeechKeys);
-const inflectionObj = keysToObj(inflectionKey
+const inflectionObj = keysToObj(inflectionKeys);
+const inflectionTypeObj = keysToObj(inflectionTypeKeys);
+
+export function invokeMecab(text: string, numBest: number = 1): Promise<string> {
+  const native = !(process.env["NODE_MECAB"]);
+  const numBestArgs = numBest === 1 ? [] : ['-N', numBest.toString()];
+  return new Promise((resolve, reject) => {
+    let spawned;
+    if (native) {
+      spawned = spawn('mecab', ['-d', '/opt/h
