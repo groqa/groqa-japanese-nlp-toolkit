@@ -271,4 +271,21 @@ export function invokeMecab(text: string, numBest: number = 1): Promise<string> 
     let arr: string[] = [];
     spawned.stdout.on('data', (data: Buffer) => arr.push(data.toString('utf8')));
     spawned.stderr.on('data', (data: Buffer) => {
-  
+      console.log('stderr', data.toString());
+      reject(data);
+    });
+    spawned.on('close', (code: number) => {
+      if (code !== 0) { reject(code); }
+      resolve(arr.join(''));
+    });
+  });
+}
+
+export interface Morpheme {
+  literal: string;
+  pronunciation: string;
+  lemmaReading: string;
+  lemma: string;
+  partOfSpeech: string[];
+  inflectionType: string[]|null;
+ 
