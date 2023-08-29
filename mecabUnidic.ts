@@ -288,4 +288,12 @@ export interface Morpheme {
   lemma: string;
   partOfSpeech: string[];
   inflectionType: string[]|null;
- 
+  inflection: string[]|null;
+}
+export type MaybeMorpheme = Morpheme|null;
+export function maybeMorphemesToMorphemes(v: MaybeMorpheme[]): Morpheme[] { return v.filter(o => !!o) as Morpheme[]; }
+export function maybeMorphemeToMorpheme(o: MaybeMorpheme): Morpheme {
+  if (o) { return o; }
+  throw new Error('Invalid morpheme found');
+}
+export function morphemesEq(x: Mayb
