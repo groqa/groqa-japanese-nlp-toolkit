@@ -296,4 +296,10 @@ export function maybeMorphemeToMorpheme(o: MaybeMorpheme): Morpheme {
   if (o) { return o; }
   throw new Error('Invalid morpheme found');
 }
-export function morphemesEq(x: Mayb
+export function morphemesEq(x: MaybeMorpheme, y: MaybeMorpheme): boolean {
+  return !!x && !!y && ultraCompressMorpheme(x) === ultraCompressMorpheme(y);
+}
+export function parseMorpheme(raw: string[]): MaybeMorpheme {
+  if (raw.length === 7) {
+    const [literal, pronunciation, lemmaReading, lemma, partOfSpeechRaw, inflectionTypeRaw, inflectionRaw] = raw;
+    const clean = (dashed: string, obj:
