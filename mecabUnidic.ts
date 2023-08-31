@@ -302,4 +302,13 @@ export function morphemesEq(x: MaybeMorpheme, y: MaybeMorpheme): boolean {
 export function parseMorpheme(raw: string[]): MaybeMorpheme {
   if (raw.length === 7) {
     const [literal, pronunciation, lemmaReading, lemma, partOfSpeechRaw, inflectionTypeRaw, inflectionRaw] = raw;
-    const clean = (dashed: string, obj:
+    const clean = (dashed: string, obj: any) => dashed === '' ? null : dashed.split('-').map(key => {
+      const res: string = obj[key];
+      if (!res) {
+        console.error('Unknown MeCab Unidic key encountered, key', key, 'dashed', dashed, 'raw', raw);
+        // throw new Error('Unknown MeCab Unidic key encountered');
+        return '';
+      }
+      return res;
+    });
+    const partOfSpeech = clean
