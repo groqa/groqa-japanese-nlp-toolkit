@@ -318,3 +318,15 @@ export function parseMorpheme(raw: string[]): MaybeMorpheme {
     }
     // These two can potentially be null, for uninflected morphemes
     const inflectionType = clean(inflectionTypeRaw, inflectionTypeObj);
+    const inflection = clean(inflectionRaw, inflectionObj);
+    return {literal, pronunciation, lemmaReading, lemma, partOfSpeech, inflectionType, inflection};
+  } else if (raw.length === 1) {
+    return null;
+  }
+  console.error('Neither 1 nor 7', raw);
+  return null;
+  // throw new Error('Unexpected number of columns in MeCab Unidic output');
+}
+
+/**
+ * Outermost nesting: sentence of input
