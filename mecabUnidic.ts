@@ -311,4 +311,10 @@ export function parseMorpheme(raw: string[]): MaybeMorpheme {
       }
       return res;
     });
-    const partOfSpeech = clean
+    const partOfSpeech = clean(partOfSpeechRaw, partOfSpeechObj);
+    if (!partOfSpeech) {
+      // this will never happen, but `clean` does potentially return null so let's check it.
+      throw new Error('Empty part of speech encountered');
+    }
+    // These two can potentially be null, for uninflected morphemes
+    const inflectionType = clean(inflectionTypeRaw, inflectionTypeObj);
