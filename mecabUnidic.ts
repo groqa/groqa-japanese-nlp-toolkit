@@ -355,4 +355,10 @@ const BUNSETSUSEP = '::';
 const ELEMENTSEP = '-';
 
 export function ultraCompressMorpheme(m: MaybeMorpheme): string {
-  return m ? [m.literal, m.pronunciation, m.lemmaReading, m.l
+  return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma, m.partOfSpeech.join(ELEMENTSEP),
+                         (m.inflectionType || []).join(ELEMENTSEP), (m.inflection || []).join(ELEMENTSEP)].join(MORPHEMESEP) : '';
+}
+export function ultraCompressMorphemes(ms: MaybeMorpheme[]): string {
+  return ms.map(ultraCompressMorpheme).join(BUNSETSUSEP);
+}
+export function decompressMorpheme(s: string): Mayb
