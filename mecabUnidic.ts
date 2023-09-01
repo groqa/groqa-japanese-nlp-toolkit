@@ -330,3 +330,13 @@ export function parseMorpheme(raw: string[]): MaybeMorpheme {
 
 /**
  * Outermost nesting: sentence of input
+ * Middle nesting: 1 thru nBest
+ * Innermost nesting: morphemes of sentence
+ *
+ * I.e., `output[numSentence][numParsing][numMorpheme]`.
+ *
+ * If `nBest=1`, `output[0][1]` will not exist.
+ */
+export function parseMecab(rawMecab: string, nBest: number = 1) {
+  const sections = rawMecab.split('\nEOS').filter(s => !!s.trim());
+  assert(sections.
