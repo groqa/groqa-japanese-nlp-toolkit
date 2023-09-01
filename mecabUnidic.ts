@@ -346,4 +346,13 @@ export function parseMecab(rawMecab: string, nBest: number = 1) {
   return {morphemes: parsingsPerSection, raws: rawPerSection};
 }
 function isMorpheme(x: MaybeMorpheme): x is Morpheme { return !!x; }
-function p
+function parseMecabSection(result: string): Morpheme[] {
+  return result.split('\n').map(line => parseMorpheme(line.split('\t'))).filter(isMorpheme);
+}
+
+const MORPHEMESEP = '\t';
+const BUNSETSUSEP = '::';
+const ELEMENTSEP = '-';
+
+export function ultraCompressMorpheme(m: MaybeMorpheme): string {
+  return m ? [m.literal, m.pronunciation, m.lemmaReading, m.l
