@@ -339,4 +339,11 @@ export function parseMorpheme(raw: string[]): MaybeMorpheme {
  */
 export function parseMecab(rawMecab: string, nBest: number = 1) {
   const sections = rawMecab.split('\nEOS').filter(s => !!s.trim());
-  assert(sections.
+  assert(sections.length % nBest === 0)
+  const parsings = sections.map(parseMecabSection);
+  const parsingsPerSection = partitionBy(parsings, (_, i) => !(i! % nBest));
+  const rawPerSection = partitionBy(sections, (_, i) => !(i! % nBest));
+  return {morphemes: parsingsPerSection, raws: rawPerSection};
+}
+function isMorpheme(x: MaybeMorpheme): x is Morpheme { return !!x; }
+function p
