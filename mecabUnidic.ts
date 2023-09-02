@@ -371,4 +371,12 @@ export function decompressMorpheme(s: string): MaybeMorpheme {
     pronunciation,
     lemmaReading,
     lemma,
-    partOfSpeech:
+    partOfSpeech: split(partOfSpeech),
+    inflectionType: nullable(split(inflectionType || '')),
+    inflection: nullable(split(inflection || ''))
+  };
+}
+export function decompressMorphemes(s: string): MaybeMorpheme[] { return s.split(BUNSETSUSEP).map(decompressMorpheme); }
+
+export function goodMorphemePredicate(m: Morpheme): boolean {
+  return !(m.partOfSpeech[0] === 'su
