@@ -361,4 +361,14 @@ export function ultraCompressMorpheme(m: MaybeMorpheme): string {
 export function ultraCompressMorphemes(ms: MaybeMorpheme[]): string {
   return ms.map(ultraCompressMorpheme).join(BUNSETSUSEP);
 }
-export function decompressMorpheme(s: string): Mayb
+export function decompressMorpheme(s: string): MaybeMorpheme {
+  const split = (s: string) => s.split(ELEMENTSEP);
+  const nullable = (v: any[]) => v.length ? v : null;
+  if (s === '') { return null; }
+  let [literal, pronunciation, lemmaReading, lemma, partOfSpeech, inflectionType, inflection] = s.split(MORPHEMESEP);
+  return {
+    literal,
+    pronunciation,
+    lemmaReading,
+    lemma,
+    partOfSpeech:
