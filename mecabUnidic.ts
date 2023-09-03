@@ -403,4 +403,13 @@ if (require.main === module) {
 
     if (header.length) {
       console.log(formatRow(header, widths));
-      console
+      console.log(formatRow(header.map((h, i) => '-'.repeat(widths[i])), widths))
+    }
+    for (const row of table) { console.log(formatRow(row, widths)); }
+  }
+
+  (async function() {
+    let text = '今日は　良い天気だ。\n\nたのしいですか。\n\n何できた？';
+    if (process.argv.length <= 2) {
+      // no arguments, read from stdin. If stdin is empty, use default.
+      text = (await getStdin()) || text;
