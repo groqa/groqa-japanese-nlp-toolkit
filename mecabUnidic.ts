@@ -389,4 +389,9 @@ if (require.main === module) {
   const getStdin = require('get-stdin');
   const eaw: {length: (s: string) => number} = require('eastasianwidth');
 
-  function forma
+  function formatRow(row: string[], width: number[]) {
+    return `| ${width.map((n, i) => (row[i] || '') + ' '.repeat(n - eaw.length(row[i] || ''))).join(' | ')} |`;
+  }
+  function printMarkdownTable(table: string[][], header: string[] = []) {
+    if (header.length && header.length !== table[0].length) {
+      throw new Error('table and header have different lengths'
