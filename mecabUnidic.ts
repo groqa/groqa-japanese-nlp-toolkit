@@ -429,4 +429,12 @@ if (require.main === module) {
       for (const [n, parsed] of sentence.entries()) {
         console.log(`\n# ${n + 1} parsing`)
         const table = parsed.map(m => {
-          return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma
+          return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma, m.partOfSpeech.join(ELEMENTSEP),
+                (m.inflectionType || []).join(ELEMENTSEP), (m.inflection || []).join(ELEMENTSEP)] : [];
+        })
+        printMarkdownTable(table, 'Literal,Pron.,Lemma Read.,Lemma,PoS,Infl. Type,Infl.'.split(','));
+      }
+    }
+    // DELETED WASM CHECK (mecab-emscripten-node)
+  })();
+}
