@@ -422,4 +422,11 @@ if (require.main === module) {
     if (process.env['MECAB_NBEST']) {
       const candidate = Number(process.env['MECAB_NBEST']);
       if (candidate && isFinite(candidate) && candidate > 0) { nBest = candidate }
-   
+    }
+    // Output
+    const parseds = parseMecab(await invokeMecab(text.trim(), nBest), nBest);
+    for (const sentence of parseds.morphemes) {
+      for (const [n, parsed] of sentence.entries()) {
+        console.log(`\n# ${n + 1} parsing`)
+        const table = parsed.map(m => {
+          return m ? [m.literal, m.pronunciation, m.lemmaReading, m.lemma
