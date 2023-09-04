@@ -413,3 +413,13 @@ if (require.main === module) {
     if (process.argv.length <= 2) {
       // no arguments, read from stdin. If stdin is empty, use default.
       text = (await getStdin()) || text;
+    } else {
+      text = (await Promise.all(process.argv.slice(2).map(f => promisify(readFile)(f, 'utf8'))))
+                 .join('\n')
+                 .replace(/\r/g, '');
+    }
+    let nBest = 1;
+    if (process.env['MECAB_NBEST']) {
+      const candidate = Number(process.env['MECAB_NBEST']);
+      if (candidate && isFinite(candidate) && candidate > 0) { nBest = candidate }
+   
