@@ -18,4 +18,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true 
+Object.defineProperty(exports, "__esModule", { value: true });
+const tape_1 = __importDefault(require("tape"));
+const annotate = __importStar(require("../annotate"));
+const p = (x) => console.dir(x, { depth: null });
+tape_1.default('chatta', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    // in this sentence, Jdepp makes ことちゃった a bunsetsu
+    const sentence =
