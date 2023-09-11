@@ -25,4 +25,12 @@ const p = (x) => console.dir(x, { depth: null });
 tape_1.default('chatta', (t) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     // in this sentence, Jdepp makes ことちゃった a bunsetsu
-    const sentence =
+    const sentence = 'それは昨日のことちゃった';
+    const x = (yield annotate.handleSentence(sentence))[0];
+    if (typeof x === 'string' || !x.clozes) {
+        throw new Error('assert');
+    }
+    const conj = (_a = x.clozes) === null || _a === void 0 ? void 0 : _a.conjugatedPhrases;
+    const deconj = conj.map(o => o.deconj);
+    t.ok(deconj.length);
+    t.ok(deconj.some(v => v.so
