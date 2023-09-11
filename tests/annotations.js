@@ -33,4 +33,13 @@ tape_1.default('chatta', (t) => __awaiter(void 0, void 0, void 0, function* () {
     const conj = (_a = x.clozes) === null || _a === void 0 ? void 0 : _a.conjugatedPhrases;
     const deconj = conj.map(o => o.deconj);
     t.ok(deconj.length);
-    t.ok(deconj.some(v => v.so
+    t.ok(deconj.some(v => v.some(o => o.result.includes('ちゃった'))));
+    t.end();
+}));
+tape_1.default('denwa suru', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    // in this sentence, Jdepp makes 電話 し ます a bunsetsu
+    const sentence = '彼に電話します';
+    const res = (yield annotate.handleSentence(sentence))[0];
+    if (typeof res === 'string' || !res.clozes) {
+        throw new Error
