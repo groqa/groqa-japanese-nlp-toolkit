@@ -42,4 +42,13 @@ tape_1.default('denwa suru', (t) => __awaiter(void 0, void 0, void 0, function* 
     const sentence = '彼に電話します';
     const res = (yield annotate.handleSentence(sentence))[0];
     if (typeof res === 'string' || !res.clozes) {
-        throw new Error
+        throw new Error('assert');
+    }
+    const conj = (_b = res.clozes) === null || _b === void 0 ? void 0 : _b.conjugatedPhrases;
+    const deconj = conj.map(o => o.deconj);
+    t.ok(deconj.length > 0);
+    t.ok(deconj.some(v => v.some(o => o.result.includes('します'))));
+    t.end();
+}));
+tape_1.default('...da', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    const sentence = '買っ
