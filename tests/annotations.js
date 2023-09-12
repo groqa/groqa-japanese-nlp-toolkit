@@ -60,3 +60,16 @@ tape_1.default('...da', (t) => __awaiter(void 0, void 0, void 0, function* () {
     const deconj = conj.map(o => o.deconj);
     t.ok(deconj.some(v => v.some(o => o.result.includes('だ'))));
     t.end();
+}));
+/*
+
+ブラウンは急いで出かける --- で is NOT a particle
+*/
+tape_1.default('another suru verb', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    const sentence = 'お待ちしておりました';
+    const res = (yield annotate.handleSentence(sentence))[0];
+    if (typeof res === 'string' || !res.clozes) {
+        throw new Error('assert');
+    }
+    const conj = res.clozes.conjugatedPhrases;
+    const d
