@@ -51,4 +51,12 @@ tape_1.default('denwa suru', (t) => __awaiter(void 0, void 0, void 0, function* 
     t.end();
 }));
 tape_1.default('...da', (t) => __awaiter(void 0, void 0, void 0, function* () {
-    const sentence = '買っ
+    const sentence = '買ったんだ';
+    const res = (yield annotate.handleSentence(sentence))[0];
+    if (typeof res === 'string' || !res.clozes) {
+        throw new Error('assert');
+    }
+    const conj = res.clozes.conjugatedPhrases;
+    const deconj = conj.map(o => o.deconj);
+    t.ok(deconj.some(v => v.some(o => o.result.includes('だ'))));
+    t.end();
