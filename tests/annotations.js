@@ -91,4 +91,13 @@ tape_1.default('adj+te', (t) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 tape_1.default('o+verb+suru needs suru', (t) => __awaiter(void 0, void 0, void 0, function* () {
     var _c;
-    const sentence =
+    const sentence = 'その依頼お引き受けしましょう';
+    const res = (yield annotate.handleSentence(sentence))[0];
+    if (typeof res === 'string' || !res.clozes) {
+        throw new Error('assert');
+    }
+    const conj = res.clozes.conjugatedPhrases;
+    const deconj = conj.map(o => o.deconj);
+    // p(deconj)
+    t.ok(deconj.some(v => v.some(o => o.result.includes('しましょう'))));
+    const hit = conj.find(
