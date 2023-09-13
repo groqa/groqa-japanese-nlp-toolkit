@@ -100,4 +100,13 @@ tape_1.default('o+verb+suru needs suru', (t) => __awaiter(void 0, void 0, void 0
     const deconj = conj.map(o => o.deconj);
     // p(deconj)
     t.ok(deconj.some(v => v.some(o => o.result.includes('しましょう'))));
-    const hit = conj.find(
+    const hit = conj.find(o => o.deconj.some(d => d.result.includes('しましょう')));
+    t.ok(hit);
+    if (!hit) {
+        throw new Error('assert');
+    }
+    const f = (_c = res.furigana) === null || _c === void 0 ? void 0 : _c.slice(hit.startIdx, hit.endIdx);
+    const fstring = f.flat().map(f => typeof f === 'string' ? f : f.ruby).join('');
+    t.ok(fstring === 'しましょう');
+    t.end();
+})
