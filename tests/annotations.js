@@ -72,4 +72,12 @@ tape_1.default('another suru verb', (t) => __awaiter(void 0, void 0, void 0, fun
         throw new Error('assert');
     }
     const conj = res.clozes.conjugatedPhrases;
-    const d
+    const deconj = conj.map(o => o.deconj);
+    // p(deconj)
+    t.ok(deconj.some(v => v.some(o => o.result.includes('しておりました'))));
+    t.end();
+}));
+tape_1.default('adj+te', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    const sentence = 'ブラウンは急いで出かける';
+    const res = (yield annotate.handleSentence(sentence))[0];
+    if (typeof res === 'string' || !res.clo
