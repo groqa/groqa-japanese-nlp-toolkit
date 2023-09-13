@@ -80,4 +80,15 @@ tape_1.default('another suru verb', (t) => __awaiter(void 0, void 0, void 0, fun
 tape_1.default('adj+te', (t) => __awaiter(void 0, void 0, void 0, function* () {
     const sentence = 'ブラウンは急いで出かける';
     const res = (yield annotate.handleSentence(sentence))[0];
-    if (typeof res === 'string' || !res.clo
+    if (typeof res === 'string' || !res.clozes) {
+        throw new Error('assert');
+    }
+    const conj = res.clozes.conjugatedPhrases;
+    const deconj = conj.map(o => o.deconj);
+    // p(deconj)
+    t.ok(deconj.some(v => v.some(o => o.result.includes('急いで'))));
+    t.end();
+}));
+tape_1.default('o+verb+suru needs suru', (t) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    const sentence =
