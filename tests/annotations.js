@@ -109,4 +109,4 @@ tape_1.default('o+verb+suru needs suru', (t) => __awaiter(void 0, void 0, void 0
     const fstring = f.flat().map(f => typeof f === 'string' ? f : f.ruby).join('');
     t.ok(fstring === 'しましょう');
     t.end();
-})
+}));
