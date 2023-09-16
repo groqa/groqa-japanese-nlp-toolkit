@@ -19,4 +19,12 @@ test('chatta', async t => {
 test('denwa suru', async t => {
   // in this sentence, Jdepp makes 電話 し ます a bunsetsu
   const sentence = '彼に電話します';
-  co
+  const res = (await annotate.handleSentence(sentence))[0];
+  if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
+  const conj = res.clozes?.conjugatedPhrases;
+  const deconj = conj.map(o => o.deconj);
+  t.ok(deconj.length > 0);
+  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('します'))));
+  t.end();
+});
+test('...da', async t 
