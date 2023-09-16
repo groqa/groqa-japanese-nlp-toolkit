@@ -27,4 +27,10 @@ test('denwa suru', async t => {
   t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('します'))));
   t.end();
 });
-test('...da', async t 
+test('...da', async t => {
+  const sentence = '買ったんだ';
+  const res = (await annotate.handleSentence(sentence))[0];
+  if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
+  const conj = res.clozes.conjugatedPhrases;
+  const deconj = conj.map(o => o.deconj);
+  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('だ'))))
