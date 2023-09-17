@@ -47,4 +47,14 @@ test('another suru verb', async t => {
   const res = (await annotate.handleSentence(sentence))[0];
   if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
   const conj = res.clozes.conjugatedPhrases;
-  const deconj = conj.
+  const deconj = conj.map(o => o.deconj);
+  // p(deconj)
+  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('しておりました'))));
+  t.end();
+});
+
+test('adj+te', async t => {
+  const sentence = 'ブラウンは急いで出かける';
+  const res = (await annotate.handleSentence(sentence))[0];
+  if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
+  const conj = res.clozes.conjugatedPhra
