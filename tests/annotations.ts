@@ -33,4 +33,18 @@ test('...da', async t => {
   if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
   const conj = res.clozes.conjugatedPhrases;
   const deconj = conj.map(o => o.deconj);
-  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('だ'))))
+  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('だ'))));
+  t.end();
+});
+
+/*
+
+ブラウンは急いで出かける --- で is NOT a particle
+*/
+
+test('another suru verb', async t => {
+  const sentence = 'お待ちしておりました';
+  const res = (await annotate.handleSentence(sentence))[0];
+  if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
+  const conj = res.clozes.conjugatedPhrases;
+  const deconj = conj.
