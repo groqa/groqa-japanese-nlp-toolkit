@@ -67,4 +67,12 @@ test('adj+te', async t => {
 test('o+verb+suru needs suru', async t => {
   const sentence = 'その依頼お引き受けしましょう';
   const res = (await annotate.handleSentence(sentence))[0];
-  if (typeof res === 'string' || !res.clozes) { throw new Error
+  if (typeof res === 'string' || !res.clozes) { throw new Error('assert') }
+  const conj = res.clozes.conjugatedPhrases;
+  const deconj = conj.map(o => o.deconj);
+  // p(deconj)
+  t.ok(deconj.some(v => (v as Ugh<typeof v>).some(o => o.result.includes('しましょう'))));
+
+  const hit = conj.find(o => (o.deconj as Ugh<typeof o.deconj>).some(d => d.result.includes('しましょう')));
+  t.ok(hit);
+  if (!h
