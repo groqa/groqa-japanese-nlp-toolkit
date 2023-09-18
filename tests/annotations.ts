@@ -75,4 +75,9 @@ test('o+verb+suru needs suru', async t => {
 
   const hit = conj.find(o => (o.deconj as Ugh<typeof o.deconj>).some(d => d.result.includes('しましょう')));
   t.ok(hit);
-  if (!h
+  if (!hit) { throw new Error('assert') }
+  const f = res.furigana?.slice(hit.startIdx, hit.endIdx);
+  const fstring = f.flat().map(f => typeof f === 'string' ? f : f.ruby).join('');
+  t.ok(fstring === 'しましょう');
+  t.end();
+});
