@@ -16,4 +16,9 @@ This library processes a sentence like this:
 
 And provides the following:
 - Furigana like へましたらリーダーに<ruby>切<rt>き</rt></ruby>られるだけ;
-- Morpheme and 
+- Morpheme and bunsetsu boundaries (input didn't have spaces, so these are inferred):
+  - へま し たら │ リーダー に │ 切ら れる だけ (spaces are morpheme boundaries, `|` bunsetsu boundaryes)
+- Bunsetsu dependencies, allowing you to reconstruct the hierarchical structure;
+- Conjugation of verbs and adjectives;
+- A list of particles;
+- A long list of dictionary entries broken dow
