@@ -21,4 +21,9 @@ And provides the following:
 - Bunsetsu dependencies, allowing you to reconstruct the hierarchical structure;
 - Conjugation of verbs and adjectives;
 - A list of particles;
-- A long list of dictionary entries broken dow
+- A long list of dictionary entries broken down by starting morpheme and ending morpheme;
+- Kanji and their breakdowns per Kanjidic2.
+
+To use, make sure you have git and then install Node.js. Install MeCab, Unidic, and J.DepP. Also install the required libraries listed above. Have a look at the 'Setup' and 'API' sections below for a comprehensive guide.
+
+Please check out the tests and the TypeScript interfaces to see what
