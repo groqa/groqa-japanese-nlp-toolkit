@@ -26,4 +26,4 @@ And provides the following:
 
 To use, make sure you have git and then install Node.js. Install MeCab, Unidic, and J.DepP. Also install the required libraries listed above. Have a look at the 'Setup' and 'API' sections below for a comprehensive guide.
 
-Please check out the tests and the TypeScript interfaces to see what
+Please check out the tests and the TypeScript interfaces to see what data is located where. It provides a *lot* of information that *might* be related to your text. The aim of the tool is rather to provide you with (a lot of) seemingly irrelevant information than risk omitting data that is useful to the *learner*. This tool's power lies in its ability to provide a comprehensive linguistic background to your input.
